@@ -19,7 +19,7 @@ class Para:
 string_len = input('')
 string = input('')
 array = []
-index_array = []
+index_array = [0] * int(string_len)
 
 for i in range(0, int(string_len)):
     if string[i] == "(":
@@ -29,12 +29,9 @@ for i in range(0, int(string_len)):
         temp_para = Para(')', i + 1)
         temp_para.assign_index = temp_popped_para.index
         temp_popped_para.assign_index = temp_para.index
-        print('temp_popped_para.assign_index = ' + str(temp_popped_para.assign_index))
-        print('temp_para.assign_index = ' + str(temp_para.assign_index))
-        print("temp_para.index - 1 = " + str(temp_para.index - 1))
-        print("temp_popped_para.index - 1 = " + str(temp_popped_para.index - 1))
-        index_array.insert(temp_para.index - 1, temp_para.assign_index)
-        index_array.insert(temp_popped_para.index - 1, temp_popped_para.assign_index)
-        print("----------")
+
+        index_array[temp_para.index - 1] = temp_para.assign_index
+        index_array[temp_popped_para.index - 1] = temp_popped_para.assign_index
+
 
 print(index_array)
