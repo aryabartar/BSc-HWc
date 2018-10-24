@@ -1,12 +1,15 @@
 def push(main_stack, min_stack, number):
-    if number <= min_stack[-1]:
+    if min_stack.is_empty():
         min_stack.push(number)
+    else:
+        if number <= min_stack.container[-1]:
+            min_stack.push(number)
     main_stack.push(number)
 
 
 def pop(main_stack, min_stack):
     popped_number = main_stack.pop()
-    if min_stack.top() == popped_number :
+    if min_stack.top() == popped_number:
         min_stack.pop()
 
 
@@ -20,24 +23,28 @@ class Stack:
     def pop(self):
         return self.container.pop()
 
-    def top(self) :
+    def top(self):
         return self.container[-1]
 
-def detect_string(string, stack):
+    def is_empty(self):
+        if len(self.container) == 0:
+            return True
+        return False
+
+
+def detect_string(string, main_stack, min_stack):
     splitted_string = string.split(" ")
-    main_stack = Stack()
-    min_stack = Stack()
     if splitted_string[0] == "push":
-        pass
+        push(main_stack, min_stack, int(splitted_string[1]))
     elif splitted_string[0] == "pop":
-        pass
+        pop(main_stack, min_stack)
     elif splitted_string[0] == "spell":
-        pass
-    return stack
+        print(min_stack.top())
 
 
-stack = Stack()
 
+main_stack = Stack()
+min_stack = Stack()
 number_of_execution = int(input(''))
 for i in range(0, number_of_execution):
-    stack = detect_string(input(), stack)
+    detect_string(input(), main_stack, min_stack)

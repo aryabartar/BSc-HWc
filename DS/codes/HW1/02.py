@@ -10,11 +10,10 @@ def pop(queue, undo_queue):
 
 def undo(queue, undo_queue):
     if undo_queue[-1][0]:
-        queue = queue + [undo_queue.pop()[1]]
+        queue.insert(0 ,undo_queue.pop()[1])
     else:
         queue.pop()
         undo_queue.pop()
-    return queue
 
 
 def detect_string(input_string, queue, undo_queue):
@@ -27,10 +26,8 @@ def detect_string(input_string, queue, undo_queue):
         print(pop(queue, undo_queue))
 
     elif splitted_string[0] == "undo":
-        queue = undo(queue, undo_queue)
+        undo(queue, undo_queue)
 
-    print(queue)
-    print(undo_queue)
 
 
 queue = []
