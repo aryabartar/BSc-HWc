@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f50f2a9c-8b84-4c41-9aed-fce30506ce16" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/SE1_Project Proposal_9427027.pdf" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project proposal (1).zip" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project proposal.docx" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/project proposal.pdf" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DS/codes/HW1/03.py" afterPath="$PROJECT_DIR$/DS/codes/HW1/03.py" />
     </list>
@@ -14,7 +18,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/BSC_HWS$01.coverage" NAME="01 Coverage Results" MODIFIED="1540142836079" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DS/codes/HW1" />
-    <SUITE FILE_PATH="coverage/BSC_HWS$03.coverage" NAME="03 Coverage Results" MODIFIED="1540354836906" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DS/codes/HW1" />
+    <SUITE FILE_PATH="coverage/BSC_HWS$03.coverage" NAME="03 Coverage Results" MODIFIED="1540356810170" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DS/codes/HW1" />
     <SUITE FILE_PATH="coverage/BSC_HWS$02.coverage" NAME="02 Coverage Results" MODIFIED="1540312061527" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DS/codes/HW1" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
@@ -43,8 +47,8 @@
       <file leaf-file-name="03.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DS/codes/HW1/03.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="741">
+              <caret line="33" column="29" lean-forward="false" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -123,16 +127,6 @@
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BSC_HWS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BSC_HWS" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="BSC_HWS" />
@@ -421,6 +415,14 @@
       <option name="presentableId" value="Default" />
       <updated>1540140664455</updated>
     </task>
+    <task id="LOCAL-00001" summary="Para class created.">
+      <created>1540354889169</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1540354889169</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -453,6 +455,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Para class created." />
+    <option name="LAST_COMMIT_MESSAGE" value="Para class created." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -535,8 +541,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DS/codes/HW1/03.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="741">
+          <caret line="33" column="29" lean-forward="false" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
           <folding />
         </state>
       </provider>
