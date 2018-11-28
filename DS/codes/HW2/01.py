@@ -23,7 +23,7 @@ def max_heapify(array, i, heap_size=None):
         temp = array[max]
         array[max] = array[i]
         array[i] = temp
-        max_heapify(array, max , heap_size)
+        max_heapify(array, max, heap_size)
     # print("======")
 
 
@@ -48,17 +48,19 @@ def sort_heap(heap_array):
 
     # print(heap_array)
 
-    # for_number = input("")
-    # for i in range(0, int(for_number)):
-    #     user_input = input("").split(" ")
-    #     if user_input[0] == "1":
-    #         insert_heap(int(user_input[1]), heap_array)
-    #     else:
-    #         print(heap_array)
-    #         # return_index = len(heap_array) - int(len(max_heap_array) / 3)
-    #         # print(return_index)
-    #         # print(max_heap_array[return_index])
-    #     # print(max_heap_array)
 
+heap_array = [0]
+for_number = input("")
+for i in range(0, int(for_number)):
+    user_input = input("").split(" ")
+    if user_input[0] == "1":
+        insert_heap(int(user_input[1]), heap_array)
+    else:
+        sort_heap(heap_array)
+        return_index = len(heap_array) - int(len(heap_array) / 3)
+        if return_index < 3:
+            print("No reviews yet")
+        else:
+            print(heap_array[return_index])
 
-sort_heap([0, 1, 7, 9, 21, 8, 5, 9])
+# sort_heap([0, 1, 7, 9, 21, 8, 5, 9])
