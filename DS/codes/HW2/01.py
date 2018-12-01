@@ -1,55 +1,90 @@
-def max_heapify(array, i, heap_size=None):
-    if heap_size is None:
-        heap_size = len(array)
+class Node:
+    data = 0
+    l_count = 0
+    r_count = 0
+    left = None
+    right = None
 
-    max = i
-    if 2 * i < heap_size:
-        if array[i] < array[2 * i]:
-            max = 2 * i
-    if 2 * i + 1 < heap_size:
-        if array[max] < array[2 * i + 1]:
-            max = 2 * i + 1
-    if not max == i:
-        temp = array[max]
-        array[max] = array[i]
-        array[i] = temp
-        max_heapify(array, max, heap_size)
+    def set_data(self, data):
+        self.data = data
 
 
-def build_max_heap(heap_array):
-    for i in reversed(range(1, int(len(heap_array) / 2) + 1)):
-        max_heapify(heap_array, i)
+class BST2:
+    root = None
+    itr = None
+    req = None
+    flag = None
+    kk = None
+
+    def insert_data(self, data):
+        p_traverse = self.root
+        current_parent = self.root
+
+        while not p_traverse is None:
+            current_parent = p_traverse
+            if data < p_traverse.data:
+                p_traverse.lcount = p_traverse.lcount + 1
+                p_traverse = p_traverse.left
+            else:
+                p_traverse = p_traverse.right
+
+        if self.root is None:
+            temp_node = Node()
+            temp_node.set_data(data)
+            self.root = temp_node
+
+        elif data < current_parent.data:
+            temp_node = Node()
+            temp_node.set_data(data)
+            current_parent.left = temp_node
+        else:
+            temp_node = Node()
+            temp_node.set_data(data)
+            current_parent.right = temp_node
+
+    def get_kth_min2(self, k):
+        req = -1
+        kk = k
+        pTraverse = self.root
+        while pTraverse:
+            if pTraverse.lCount + 1 == kk:
+                req = pTraverse.data
+                break
+
+            elif kk > pTraverse.lCount:
+
+                kk = kk - (pTraverse.lCount + 1)
+                pTraverse = pTraverse.right
+
+            else:
+                pTraverse = pTraverse.left
+
+        return req
+
+    def display2(self, root):
+        if not root is None and self.flag:
+            self.display2(root.right)
+            self.itr += 1
+            if self.itr == self.kk:
+                self.req = root.data
+                self.flag = False
+
+            self.display2(root.left)
 
 
-def insert_heap(number, heap_array):
-    heap_array.append(number)
-
-
-def sort_heap(heap_array):
-    build_max_heap(heap_array)
-
-    for i in reversed(range(2, len(heap_array))):
-        heap_array[1], heap_array[i] = heap_array[i], heap_array[1]
-        max_heapify(heap_array, 1, i)
-
-
-heap_array = [0]
-for_number = input("")
-prime_i = 0
-
-for i in range(0, int(for_number)):
-    user_input = input("").split(" ")
-
-    if user_input[0] == "1":
-        insert_heap(int(user_input[1]), heap_array)
-        prime_i += 1
+s = input()
+size = int(s)
+tree = BST2()
+j = 0
+for i in range(0, size):
+    s = input().split(" ")
+    if s[0] == "1":
+        t = int(s[1])
+        tree.insert_data(t)
+        j += 1
 
     else:
-        if len(heap_array) <= 3:
+        if j < 3:
             print("No reviews yet")
         else:
-            sort_heap(heap_array)
-            return_index = len(heap_array) - int(prime_i / 3)
-            # print("i : " + str(i))
-            print(heap_array[return_index])
-            # print(heap_array)
+            print(tree.get_kth_min2(j - (j / 3) + 1))
