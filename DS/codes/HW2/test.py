@@ -1,2 +1,4 @@
-for i in reversed(range(1, 22)) :
-    print(i)
+a = 1
+b = 2
+print(a + b)
+ali = "Samad"
