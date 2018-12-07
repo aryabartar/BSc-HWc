@@ -68,9 +68,10 @@ def BFS(edges, vertexes, s):
                 queue.enqueue(v)
         u.set_black()
 
+    return vertexes
 
-def get_edges_and_vertex():
-    number_of_v = int(input(""))
+
+def get_edges_and_vertex(number_of_v):
     edges = {}
     vertexes = [None]
 
@@ -90,7 +91,37 @@ def get_edges_and_vertex():
     return edges, vertexes
 
 
-edges, vertexes = get_edges_and_vertex()
+def get_biggest_d(vertexes):
+    max_d = vertexes[1].d
+    return_v = vertexes[1]
+    for v in vertexes:
+        if v is None:
+            continue
+        if v.d > max_d:
+            max_d = v.d
+            return_v = v
 
-BFS(edges, vertexes, vertexes[2])
-print(vertexes)
+    return return_v
+
+
+def reset_vertexes(vertexes):
+    for v in vertexes:
+        if v is None:
+            continue
+        v.color = None
+        v.p = None
+        v.d = None
+
+
+number_of_v = int(input(""))
+edges, vertexes = get_edges_and_vertex(number_of_v)
+
+vertexes = BFS(edges, vertexes, vertexes[1])
+v = get_biggest_d(vertexes)
+
+reset_vertexes(vertexes)
+
+vertexes = vertexes = BFS(edges, vertexes, v)
+v = get_biggest_d(vertexes)
+
+print(v.d)
