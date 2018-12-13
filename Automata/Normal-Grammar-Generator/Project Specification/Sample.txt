@@ -1,0 +1,18 @@
+#G1
+#Removing Useless Productions
+({'S', 'A', 'B', 'C'}, {'a','b'}, {('S','aS'), ('S','A'), ('S','C'), ('A', 'a'), ('B','aa'), ('C','aCb')})
+#Result:
+({'S', 'A'}, {'a','b'}, {('S','aS'), ('S','A'), ('A','a')})
+
+#G2
+#Removing Unit-Productions
+({'S', 'A', 'B'}, {'a','b'}, {('S','Aa'), ('S', 'B'), ('B', 'A'), ('B', 'bb'), ('A', 'a'), ('A', 'bc'), ('A', 'B')})
+#Result: 
+({'S', 'A', 'B'}, {'a','b'}, {('S','a'), ('S','bc'), ('S','bb'), ('S', 'Aa'), ('A', 'a'), ('A', 'bb'), ('A', 'bc'), ('B', 'a'), ('B', 'bb'), ('B', 'bc')})
+
+#G3
+#Removing Lambda Productions
+({'S', 'T'}, {'a','b','λ'}, {('S','aTb'), ('T', 'aTb'), ('T','λ')})
+#Result: 
+({'S', 'T'}, {'a','b'}, {('S','aTb'), ('S','ab'), ('T', 'aTb'), ('T','ab')})
+
