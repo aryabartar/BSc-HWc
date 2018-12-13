@@ -95,6 +95,7 @@ def remove_l_production(dict):
     return manipulate_dictionary(dict)
 
 
+# Maybe has bug in dependency graph
 def remove_unit_productions(dict):
     def manipulate_dictionary(dict):
         for key in dict:
@@ -154,9 +155,35 @@ def remove_unit_productions(dict):
     return manipulate_dictionary(return_removed_version(dependency_dict, non_unit_production_dict))
 
 
+def remove_useless_productions(dict):
+    def has_terminal(production_list):
+        print(production_list)
+        for item in production_list:
+            if item.lower() == item:
+                print(item)
+                return True
+        return False
+
+    def find_symbols_dont_derive_final(dict):
+        symbol_list = []
+        for key in dict:
+            if has_terminal(dict[key]):
+                symbol_list.append(key)
+
+        print(symbol_list)
+        # while True:
+        #     for key in dict:
+        #         if key in symbol_list:
+        #             continue
+
+    find_symbols_dont_derive_final(dict)
+    return dict
+
+
 dict = read_files()
 
 # dict = remove_l_production(dict)
 # dict = remove_unit_productions(dict)
-dict = remove_unit_productions(dict)
-print(dict)
+# dict = remove_unit_productions(dict)
+dict = remove_useless_productions(dict)
+# print(dict)
