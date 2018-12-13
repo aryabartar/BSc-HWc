@@ -96,9 +96,29 @@ def remove_l_production(dict):
 
 
 def remove_unit_productions(dict):
-    return dict
+    def find_non_unit_production_array(production_list):
+        temp_list = []
+        for item in production_list:
+            if not (item.upper() == item and len(item) == 1):
+                temp_list.append(item)
+        return temp_list
+
+    non_unit_production_dict = {}
+    for key in dict:
+        non_unit_production_dict[key] = find_non_unit_production_array(dict[key])
+    return non_unit_production_dict
 
 
 dict = read_files()
+
+
 # dict = remove_l_production(dict)
-dict = remove_unit_productions(dict)
+# dict = remove_unit_productions(dict)
+
+def find_dependencies(dict):
+    temp_list = []
+    for key in dict:
+        pass
+
+
+find_dependencies(dict)
