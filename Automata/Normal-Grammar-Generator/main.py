@@ -95,12 +95,10 @@ def remove_l_production(dict):
     return manipulate_dictionary(dict)
 
 
+def remove_unit_productions(dict):
+    return dict
+
+
 dict = read_files()
-print(dict)
-dict = remove_l_production(dict)
-print(dict)
-
-# indexes = [0, 1, 3]
-# str = 'ABaC'
-
-# make_permutation(str, indexes)
+# dict = remove_l_production(dict)
+dict = remove_unit_productions(dict)
