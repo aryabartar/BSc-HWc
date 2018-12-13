@@ -1,7 +1,6 @@
-SAa
 SB
-BA
-Bbb
-Aa
-Abc
-AB
+SAB
+AC
+Cc
+Bb
+Ff

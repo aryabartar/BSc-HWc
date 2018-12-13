@@ -96,6 +96,38 @@ def remove_l_production(dict):
 
 
 def remove_unit_productions(dict):
+    def manipulate_dictionary(dict):
+        for key in dict:
+            dict[key] = list(set(dict[key]))
+        return dict
+
+    def find_unit_production_array(production_list):
+        temp_list = []
+        for item in production_list:
+            if item.upper() == item and len(item) == 1:
+                temp_list.append(item)
+        return temp_list
+
+    def find_recursive_dependency(raw_dict, key, dependency_list):
+        if key in dependency_list:
+            return True
+        dependency_list.append(key)
+        for item in raw_dict[key]:
+            find_recursive_dependency(raw_dict, item, dependency_list)
+
+    def find_dependencies(dict):
+        temp_dict = {}
+        for key in dict:
+            temp_dict[key] = find_unit_production_array(dict[key])
+
+        for key in temp_dict:
+            dependency_list = []
+            find_recursive_dependency(temp_dict, key, dependency_list)
+            dependency_list.remove(key)
+            temp_dict[key] = dependency_list
+
+        return temp_dict
+
     def find_non_unit_production_array(production_list):
         temp_list = []
         for item in production_list:
@@ -103,22 +135,28 @@ def remove_unit_productions(dict):
                 temp_list.append(item)
         return temp_list
 
+    def return_removed_version(dependency_dict, non_unit_production_dict):
+        temp_dict = {}
+        for key in dependency_dict:
+            temp_dict[key] = non_unit_production_dict[key]
+
+        for key in dependency_dict:
+            for value in dependency_dict[key]:
+                temp_dict[key] += non_unit_production_dict[value]
+        return temp_dict
+
     non_unit_production_dict = {}
     for key in dict:
         non_unit_production_dict[key] = find_non_unit_production_array(dict[key])
-    return non_unit_production_dict
+
+    dependency_dict = find_dependencies(dict)
+
+    return manipulate_dictionary(return_removed_version(dependency_dict, non_unit_production_dict))
 
 
 dict = read_files()
 
-
 # dict = remove_l_production(dict)
 # dict = remove_unit_productions(dict)
-
-def find_dependencies(dict):
-    temp_list = []
-    for key in dict:
-        pass
-
-
-find_dependencies(dict)
+dict = remove_unit_productions(dict)
+print(dict)
