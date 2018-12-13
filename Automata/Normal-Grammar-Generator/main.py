@@ -14,6 +14,15 @@ def read_files():
 
 
 def remove_l_production(dict):
+    def manipulate_dictionary(dict):
+        for key in dict:
+            dict[key] = list(set(dict[key]))
+            while 'l' in dict[key]:
+                dict[key].remove('l')
+            while '' in dict[key]:
+                dict[key].remove('')
+        return dict
+
     def make_i_empty(string, i):
         temp = list(string)
         temp[i] = " "
@@ -45,7 +54,6 @@ def remove_l_production(dict):
         return permute_string
 
     def permute(v, item):
-        # permute_list = [item]
         permute_chars_index = []
         chars = item
 
@@ -60,6 +68,7 @@ def remove_l_production(dict):
             if item == "l":
                 v.append(key)
                 break
+
     # TODO : should you repeate this multiple times?!
     for i in range(0, len(dict.keys())):
         for key in dict:
@@ -77,11 +86,13 @@ def remove_l_production(dict):
                     break
 
     for key in dict:
+        temp_list = []
         for item in dict[key]:
             item = permute(v, item)
-            dict[key] = item
+            temp_list += item
+        dict[key] = temp_list
 
-    return dict
+    return manipulate_dictionary(dict)
 
 
 dict = read_files()
