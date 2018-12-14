@@ -164,11 +164,13 @@ def remove_useless_productions(dict):
                 del dict[key]
 
         for key in list(dict):
+            for_remove_list = []
             for production in dict[key]:
                 temp_list = list(production)
                 for i in deleted_variables:
                     if i in temp_list:
-                        dict[key].remove(production)
+                        for_remove_list.append(production)
+            dict[key] = [x for x in dict[key] if x not in for_remove_list]
 
         return dict
 
