@@ -1,8 +1,6 @@
-SAB
+SaS
+SA
 SC
-AaB
-AC
-Bb
-BAa
-CAC
-CCb
+Aa
+Baa
+CaCb

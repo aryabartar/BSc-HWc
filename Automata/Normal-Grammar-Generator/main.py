@@ -95,7 +95,7 @@ def remove_l_production(dict):
     return manipulate_dictionary(dict)
 
 
-# Maybe has bug in dependency graph
+# TODO: Maybe has bug in dependency graph
 def remove_unit_productions(dict):
     def manipulate_dictionary(dict):
         for key in dict:
@@ -193,6 +193,43 @@ def remove_useless_productions(dict):
                 return True
         return False
 
+    def make_ready_for_dependency_graph(dict):
+        temp_dict = {}
+        for key in dict:
+            temp_list = []
+            for item in dict[key]:
+                for i in list(item):
+                    if i.upper() == i:
+                        temp_list.append(i)
+            temp_dict[key] = list(set(temp_list))
+
+        return temp_dict
+
+    def find_dependency(variable, dict, dependency_list):
+        for item in dict[variable]:
+            dependency_list.append(item)
+            if variable not in dependency_list:
+                find_dependency(item, dict, dependency_list)
+
+    def delete_unreachable_variables(dict, dependency_list):
+        deleted_list = []
+        for key in list(dict):
+            if key == 'S':
+                continue
+
+            if key not in dependency_list:
+                del dict[key]
+                deleted_list.append(key)
+
+        for key in list(dict):
+            for production in dict[key]:
+                temp_list = list(production)
+                for i in deleted_list:
+                    if i in temp_list:
+                        dict[key].remove(production)
+
+        return dict
+
     def find_symbols_dont_derive_final(dict):
         symbol_list = []
         for key in dict:
@@ -208,7 +245,16 @@ def remove_useless_productions(dict):
                         symbol_list.append(key)
 
         dict = delete_non_final_variables(dict, symbol_list)
-        print(dict)
+        dependency_ready_dict = make_ready_for_dependency_graph(dict)
+
+        s_dependency = []
+        find_dependency('S', dependency_ready_dict, s_dependency)
+        s_dependency = list(set(s_dependency))
+
+        if 'S' in s_dependency:
+            s_dependency.remove('S')
+
+        delete_unreachable_variables(dict, s_dependency)
 
     find_symbols_dont_derive_final(dict)
     return dict
@@ -220,4 +266,4 @@ dict = read_files()
 # dict = remove_unit_productions(dict)
 # dict = remove_unit_productions(dict)
 dict = remove_useless_productions(dict)
-# print(dict)
+print(dict)
