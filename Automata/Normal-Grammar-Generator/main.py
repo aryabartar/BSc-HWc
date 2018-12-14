@@ -156,6 +156,22 @@ def remove_unit_productions(dict):
 
 
 def remove_useless_productions(dict):
+    def delete_non_final_variables(dict, final_array):
+        deleted_variables = []
+        for key in list(dict):
+            if key not in final_array:
+                deleted_variables.append(key)
+                del dict[key]
+
+        for key in list(dict):
+            for production in dict[key]:
+                temp_list = list(production)
+                for i in deleted_variables:
+                    if i in temp_list:
+                        dict[key].remove(production)
+
+        return dict
+
     def is_final_variable(production_list, symbol_list):
 
         for item in production_list:
@@ -183,21 +199,16 @@ def remove_useless_productions(dict):
             if has_terminal(dict[key]):
                 symbol_list.append(key)
 
-        print(symbol_list)
         for i in range(0, len(dict)):
             for key in dict:
                 if key in symbol_list:
                     continue
                 else:
-                    print("\n")
-                    print("key is : " + key)
-                    print(dict[key])
-                    print("Symbol list is : ", symbol_list)
                     if is_final_variable(dict[key], symbol_list):
                         symbol_list.append(key)
-                    print("\n")
 
-        print(symbol_list)
+        dict = delete_non_final_variables(dict, symbol_list)
+        print(dict)
 
     find_symbols_dont_derive_final(dict)
     return dict
