@@ -300,22 +300,22 @@ def remove_useless_productions(dict):
     return dict
 
 
-for i in range(3, 4):
+for i in range(1, 11):
     dict = read_files("test-cases/{number}.txt".format(number=i))
 
     print("\nAfter removing lambda : ")
     dict = remove_l_production(dict)
     show_grammar_output(dict)
 
-    # print("\nAfter removing unit productions : ")
-    # dict = remove_unit_productions(dict)
-    # show_grammar_output(dict)
-    #
-    # print("\nAfter removing useless productions : ")
-    # dict = remove_useless_productions(dict)
-    # show_grammar_output(dict)
-    #
-    # print("\nFINAL Normal form is : ")
-    # show_grammar_output(dict)
+    print("\nAfter removing unit productions : ")
+    dict = remove_unit_productions(dict)
+    show_grammar_output(dict)
+
+    print("\nAfter removing useless productions : ")
+    dict = remove_useless_productions(dict)
+    show_grammar_output(dict)
+
+    print("\nFINAL Normal form is : ")
+    show_grammar_output(dict)
 
     print("\n___________\n")

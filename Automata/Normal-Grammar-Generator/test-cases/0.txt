@@ -1,12 +1,6 @@
-SAB
-SAC
-AaAb
-AbAa
+SaS
+SA
+SC
 Aa
-BbbA
-BaaB
-BAB
-CabCA
-CaDb
-DbD
-DaC
+Baa
+CaCb
