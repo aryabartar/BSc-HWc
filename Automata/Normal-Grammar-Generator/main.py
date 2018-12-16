@@ -13,6 +13,20 @@ def read_files():
     return dict
 
 
+def show_grammar_output(dict):
+    for key in dict:
+        print(key + "-> ", end='')
+        is_first_value = True
+        for production_value in dict[key]:
+            if is_first_value:
+                print(production_value, end='')
+                is_first_value = False
+            else:
+                print(" | " + production_value, end='')
+
+        print('')
+
+
 def remove_l_production(dict):
     def manipulate_dictionary(dict):
         for key in dict:
@@ -266,6 +280,5 @@ dict = read_files()
 
 # dict = remove_l_production(dict)
 # dict = remove_unit_productions(dict)
-# dict = remove_unit_productions(dict)
 dict = remove_useless_productions(dict)
-print(dict)
+show_grammar_output(dict)
