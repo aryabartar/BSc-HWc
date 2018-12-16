@@ -1,5 +1,9 @@
-def read_files():
-    text_file = open("test-cases/0.txt", "r").read()
+from os import walk
+
+
+def read_files(file_address):
+    print("reading file : ", file_address)
+    text_file = open(file_address, "r").read()
     lines = text_file.split("\n")
 
     dict = {}
@@ -10,7 +14,18 @@ def read_files():
             dict[line[0]] = dict[line[0]] + [line[1:]]
             pass
 
+    print("\ninput is : ")
+    show_grammar_output(dict)
+
     return dict
+
+
+def get_pdf_list():
+    f = []
+    for (dirpath, dirnames, filenames) in walk("./test-cases"):
+        f.extend(filenames)
+        break
+    return f
 
 
 def show_grammar_output(dict):
@@ -28,13 +43,18 @@ def show_grammar_output(dict):
 
 
 def remove_l_production(dict):
-    def manipulate_dictionary(dict):
+    def manipulate_dictionary(dictm,just_has_has_lambda_variables):
         for key in dict:
             dict[key] = list(set(dict[key]))
             while 'l' in dict[key]:
                 dict[key].remove('l')
             while '' in dict[key]:
                 dict[key].remove('')
+
+        for key in dict :
+            for item in dict[key] :
+                if item in just_has_has_lambda_variables:
+                    dict[key].remove(item)
         return dict
 
     def make_i_empty(string, i):
@@ -77,9 +97,13 @@ def remove_l_production(dict):
         return make_permutation(chars, permute_chars_index)
 
     v = []
-    for key in dict:
+    just_has_has_lambda_variables = []
+    for key in list(dict):
         for item in dict[key]:
             if item == "l":
+                if len(dict[key]) == 1:
+                    just_has_has_lambda_variables.append(key)
+                    del (dict[key])
                 v.append(key)
                 break
 
@@ -106,7 +130,7 @@ def remove_l_production(dict):
             temp_list += item
         dict[key] = temp_list
 
-    return manipulate_dictionary(dict)
+    return manipulate_dictionary(dict,just_has_has_lambda_variables)
 
 
 # TODO: Maybe has bug in dependency graph
@@ -276,9 +300,22 @@ def remove_useless_productions(dict):
     return dict
 
 
-dict = read_files()
+for i in range(3, 4):
+    dict = read_files("test-cases/{number}.txt".format(number=i))
 
-# dict = remove_l_production(dict)
-# dict = remove_unit_productions(dict)
-dict = remove_useless_productions(dict)
-show_grammar_output(dict)
+    print("\nAfter removing lambda : ")
+    dict = remove_l_production(dict)
+    show_grammar_output(dict)
+
+    # print("\nAfter removing unit productions : ")
+    # dict = remove_unit_productions(dict)
+    # show_grammar_output(dict)
+    #
+    # print("\nAfter removing useless productions : ")
+    # dict = remove_useless_productions(dict)
+    # show_grammar_output(dict)
+    #
+    # print("\nFINAL Normal form is : ")
+    # show_grammar_output(dict)
+
+    print("\n___________\n")
