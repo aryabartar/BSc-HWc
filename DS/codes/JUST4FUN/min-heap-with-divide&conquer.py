@@ -2,26 +2,24 @@ def split_array(A):
     A1 = [0]
     A2 = [0]
 
-    p1 = 2
+    p1 = 1
     j = 1
-
     while True:
         try:
             for i in range(0, j):
-                A1.append(A[p1 + i])
+                A1.append(A[p1 + j + i - 1])
             p1 *= 2
             j *= 2
 
         except:
             break
 
-    p2 = 3
+    p2 = 2
     j = 1
-
     while True:
         try:
             for i in range(0, j):
-                A2.append(A[p2 + i])
+                A2.append(A[p2 + j + i - 1])
             p2 *= 2
             j *= 2
 
@@ -31,12 +29,35 @@ def split_array(A):
     return A1, A2
 
 
+#
 # def min_heap(A):
 #     if len(A) < 2:
 #         return False
 #
 #     A1, A2 = split_array(A)
-#     print(A1)
+#     A1 = min_heap(A1)
+#     A2 = min_heap(A2)
 
 
-print(split_array([0, 1, 4, 7, 5, 8, 8, 11, 22, 33, 44, 55, 0]))
+def merge_arrays(A1, A2):
+    A = [0, 0]
+    j = 1
+    p = 1
+
+    while True:
+        try:
+            for i in range(p, p + j):
+                A.append(A1[i])
+            for i in range(p, p + j):
+                A.append(A2[i])
+            p *= 2
+            j *= 2
+        except:
+            break
+
+    return A
+
+
+A1, A2 = split_array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+# print(A1)
+print(merge_arrays(A1, A2))
