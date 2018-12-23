@@ -16,7 +16,7 @@
     <SUITE FILE_PATH="coverage/BSC_hws$02.coverage" NAME="02 Coverage Results" MODIFIED="1543685878733" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BSC-HWS/DS/codes/HW2" />
     <SUITE FILE_PATH="coverage/BSC_hws$test.coverage" NAME="test Coverage Results" MODIFIED="1544094782123" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BSC-HWS/DS/codes/HW2" />
     <SUITE FILE_PATH="coverage/BSC_hws$03.coverage" NAME="03 Coverage Results" MODIFIED="1544183386776" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BSC-HWS/DS/codes/HW2" />
-    <SUITE FILE_PATH="coverage/BSC_hws$min_heap_with_divide_conquer.coverage" NAME="min-heap-with-divide&amp;conquer Coverage Results" MODIFIED="1545592227244" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DS/codes/JUST4FUN" />
+    <SUITE FILE_PATH="coverage/BSC_hws$min_heap_with_divide_conquer.coverage" NAME="min-heap-with-divide&amp;conquer Coverage Results" MODIFIED="1545593949629" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DS/codes/JUST4FUN" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="929617900">
@@ -48,13 +48,13 @@
           <entry key="Python Console" value="31" />
           <entry key="dummy" value="2" />
           <entry key="gitignore" value="1" />
-          <entry key="py" value="8800" />
+          <entry key="py" value="9222" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="3" />
-          <entry key="Python" value="8831" />
+          <entry key="Python" value="9253" />
         </counts>
       </usages-collector>
     </session>
@@ -82,12 +82,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DS/codes/JUST4FUN/min-heap-with-divide&amp;conquer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="789">
-              <caret line="46" column="8" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
+            <state relative-caret-position="775">
+              <caret line="39" column="4" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="4" />
               <folding>
-                <marker date="1545592874711" expanded="true" signature="21:518" ph="..." />
-                <marker date="1545592874711" expanded="true" signature="536:543" ph="..." />
-                <marker date="1545592874711" expanded="true" signature="688:693" ph="..." />
+                <marker date="1545594239067" expanded="true" signature="19:475" ph="..." />
+                <marker date="1545594239067" expanded="true" signature="491:496" ph="..." />
+                <marker date="1545594239067" expanded="true" signature="691:696" ph="..." />
               </folding>
             </state>
           </provider>
@@ -366,7 +366,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2985808" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2985808" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39901745" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -375,7 +375,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.47379914" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.1643013" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.3297062" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -413,12 +413,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DS/codes/JUST4FUN/min-heap-with-divide&amp;conquer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="789">
-          <caret line="46" column="8" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
+        <state relative-caret-position="775">
+          <caret line="39" column="4" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="4" />
           <folding>
-            <marker date="1545592874711" expanded="true" signature="21:518" ph="..." />
-            <marker date="1545592874711" expanded="true" signature="536:543" ph="..." />
-            <marker date="1545592874711" expanded="true" signature="688:693" ph="..." />
+            <marker date="1545594239067" expanded="true" signature="19:475" ph="..." />
+            <marker date="1545594239067" expanded="true" signature="491:496" ph="..." />
+            <marker date="1545594239067" expanded="true" signature="691:696" ph="..." />
           </folding>
         </state>
       </provider>

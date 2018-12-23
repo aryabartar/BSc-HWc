@@ -29,14 +29,18 @@ def split_array(A):
     return A1, A2
 
 
-#
-# def min_heap(A):
-#     if len(A) < 2:
-#         return False
-#
-#     A1, A2 = split_array(A)
-#     A1 = min_heap(A1)
-#     A2 = min_heap(A2)
+def min_heap(A):
+    if len(A) < 2:
+        return False
+
+    A1, A2 = split_array(A)
+    A1 = min_heap(A1)
+    A2 = min_heap(A2)
+
+    merge_arrays(A1, A2)
+    min_heapify(A)
+
+    return A
 
 
 def merge_arrays(A1, A2):
@@ -57,7 +61,3 @@ def merge_arrays(A1, A2):
 
     return A
 
-
-A1, A2 = split_array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
-# print(A1)
-print(merge_arrays(A1, A2))
