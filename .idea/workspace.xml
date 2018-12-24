@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1332fbc4-5500-4f50-bc3e-44ecd759f20b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/DS/codes/JUST4FUN/max-sum-subarray.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DS/codes/JUST4FUN/max-selfreversed-string.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,9 +16,10 @@
     <SUITE FILE_PATH="coverage/BSC_hws$03__1_.coverage" NAME="03 (1) Coverage Results" MODIFIED="1545590153182" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DS/codes/HW2" />
     <SUITE FILE_PATH="coverage/BSC_hws$02.coverage" NAME="02 Coverage Results" MODIFIED="1543685878733" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BSC-HWS/DS/codes/HW2" />
     <SUITE FILE_PATH="coverage/BSC_hws$test.coverage" NAME="test Coverage Results" MODIFIED="1544094782123" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BSC-HWS/DS/codes/HW2" />
+    <SUITE FILE_PATH="coverage/BSC_hws$max_selfreversed_string.coverage" NAME="max-selfreversed-string Coverage Results" MODIFIED="1545634193461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DS/codes/JUST4FUN" />
     <SUITE FILE_PATH="coverage/BSC_hws$03.coverage" NAME="03 Coverage Results" MODIFIED="1544183386776" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/BSC-HWS/DS/codes/HW2" />
     <SUITE FILE_PATH="coverage/BSC_hws$min_heap_with_divide_conquer.coverage" NAME="min-heap-with-divide&amp;conquer Coverage Results" MODIFIED="1545593949629" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DS/codes/JUST4FUN" />
-    <SUITE FILE_PATH="coverage/BSC_hws$max_sum_subarray.coverage" NAME="max-sum-subarray Coverage Results" MODIFIED="1545631542388" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DS/codes/JUST4FUN" />
+    <SUITE FILE_PATH="coverage/BSC_hws$max_sum_subarray.coverage" NAME="max-sum-subarray Coverage Results" MODIFIED="1545632935423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DS/codes/JUST4FUN" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="929617900">
@@ -36,13 +37,13 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gitignore" value="2" />
-          <entry key="py" value="7" />
+          <entry key="py" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Python" value="7" />
+          <entry key="Python" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -50,13 +51,13 @@
           <entry key="Python Console" value="31" />
           <entry key="dummy" value="2" />
           <entry key="gitignore" value="1" />
-          <entry key="py" value="9313" />
+          <entry key="py" value="10163" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="3" />
-          <entry key="Python" value="9344" />
+          <entry key="Python" value="10194" />
         </counts>
       </usages-collector>
     </session>
@@ -95,11 +96,24 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DS/codes/JUST4FUN/max-sum-subarray.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="61" column="62" selection-start-line="61" selection-start-column="62" selection-end-line="61" selection-end-column="62" />
+            <state relative-caret-position="-2024">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/DS/codes/JUST4FUN/max-selfreversed-string.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="819">
+              <caret line="31" column="50" selection-start-line="31" selection-start-column="50" selection-end-line="31" selection-end-column="50" />
+              <folding>
+                <marker date="1545634206584" expanded="true" signature="34:509" ph="..." />
+                <marker date="1545634206584" expanded="true" signature="533:538" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -133,6 +147,7 @@
         <option value="$PROJECT_DIR$/DS/codes/JUST4FUN/min-heap-with-divide&amp;conquare.py" />
         <option value="$PROJECT_DIR$/DS/codes/JUST4FUN/min-heap-with-divide&amp;conquer.py" />
         <option value="$PROJECT_DIR$/DS/codes/JUST4FUN/max-sum-subarray.py" />
+        <option value="$PROJECT_DIR$/DS/codes/JUST4FUN/max-selfreversed-string.py" />
       </list>
     </option>
   </component>
@@ -219,7 +234,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.max-sum-subarray">
+  <component name="RunManager" selected="Python.max-selfreversed-string">
     <configuration name="03 (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="BSC-hws" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -256,6 +271,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/BSC-HWS/DS/codes/HW2/03.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="max-selfreversed-string" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="BSC-hws" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DS/codes/JUST4FUN" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DS/codes/JUST4FUN/max-selfreversed-string.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -308,42 +345,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="BSC-hws" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/BSC-HWS/DS/codes/HW2" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/BSC-HWS/DS/codes/HW2/test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
-      <item itemvalue="Python.test" />
       <item itemvalue="Python.03" />
       <item itemvalue="Python.03 (1)" />
       <item itemvalue="Python.min-heap-with-divide&amp;conquer" />
       <item itemvalue="Python.max-sum-subarray" />
+      <item itemvalue="Python.max-selfreversed-string" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.max-selfreversed-string" />
         <item itemvalue="Python.max-sum-subarray" />
         <item itemvalue="Python.min-heap-with-divide&amp;conquer" />
         <item itemvalue="Python.03 (1)" />
         <item itemvalue="Python.03" />
-        <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
   </component>
@@ -387,7 +402,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.0" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.27565503" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.3297062" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -437,8 +452,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DS/codes/JUST4FUN/max-sum-subarray.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="61" column="62" selection-start-line="61" selection-start-column="62" selection-end-line="61" selection-end-column="62" />
+        <state relative-caret-position="-2024">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DS/codes/JUST4FUN/max-selfreversed-string.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="819">
+          <caret line="31" column="50" selection-start-line="31" selection-start-column="50" selection-end-line="31" selection-end-column="50" />
+          <folding>
+            <marker date="1545634206584" expanded="true" signature="34:509" ph="..." />
+            <marker date="1545634206584" expanded="true" signature="533:538" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
