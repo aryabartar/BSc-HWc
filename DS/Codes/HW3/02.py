@@ -1,5 +1,5 @@
 def find_min_insertions(str, l, h):
-    print(l, " ", h)
+
     if l > h:
         return 1000000
     if l == h:
@@ -13,8 +13,8 @@ def find_min_insertions(str, l, h):
     if str[l] == str[h]:
         return find_min_insertions(str, l + 1, h - 1)
     else:
-        return min(find_min_insertions(str, l, h - 1),
-                   find_min_insertions(str, l + 1, h) + 1)
+        return (min(find_min_insertions(str, l, h - 1),
+                    find_min_insertions(str, l + 1, h)) + 1)
 
 
 str = "geeks"
