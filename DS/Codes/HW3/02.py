@@ -4,7 +4,7 @@ def compare_strings(str1, str2):
     return str2
 
 
-def find_min_insertions(str, l, h):
+def find_min_insertions(matrix, str, l, h):
     # print("------")
     # print(l, " ", h)
 
@@ -13,30 +13,38 @@ def find_min_insertions(str, l, h):
     if l == h:
         return str[l]
     if l == h - 1:
+        if matrix[l][h] != 0:
+            return matrix[l][h]
+
         if str[l] == str[h]:
-            return str[l:h + 1]
+            matrix[l][h] = str[l:h + 1]
+            return matrix[l][h]
         else:
             str1 = str[h] + str[l:h + 1]
             str2 = str[l:h + 1] + str[l]
-            # print("This is chosen : " , compare_strings(str1 , str2))
-            return compare_strings(str1 , str2)
+            matrix[l][h] = compare_strings(str1, str2)
+            return matrix[l][h]
+
+    if matrix[l][h] != 0:
+        return matrix[l][h]
 
     if str[l] == str[h]:
-        # print(find_min_insertions(str, l + 1, h - 1))
-        return str[l] + find_min_insertions(str, l + 1, h - 1) + str[l]
+        # print("OOOOOOPPPPSSS")
+        matrix[l][h] = str[l] + find_min_insertions(matrix, str, l + 1, h - 1) + str[l]
+        return matrix[l][h]
     else:
-        str1 = find_min_insertions(str, l, h - 1)
-        str2 = find_min_insertions(str, l + 1, h)
+        str1 = find_min_insertions(matrix, str, l, h - 1)
+        str2 = find_min_insertions(matrix, str, l + 1, h)
         # print("str1 is : ", str1)
         # print("str2 is : ", str2)
 
         temp_str1 = str[h] + str1 + str[h]
         temp_str2 = str[l] + str2 + str[l]
-        if len(str1) > len(str2):
+        if len(str1) < len(str2):
             # print("1 is chosen : " + temp_str1)
             return temp_str1
 
-        elif len(str1) < len(str2):
+        elif len(str1) > len(str2):
             # print("2 is chosen : " + temp_str2)
             return temp_str2
 
@@ -46,11 +54,13 @@ def find_min_insertions(str, l, h):
                 # print("2 is chosen : " + temp_str1)
                 return temp_str1
             else:
-                temp_str = str[l] + str2 + str[l]
                 # print("2 is chosen : " + temp_str2)
                 return temp_str2
 
 
 str = input()
-print(find_min_insertions(str, 0, len(str) - 1))
+w = len(str)
+matrix = [[0 for x in range(w)] for y in range(w)]
+print(find_min_insertions(matrix, str, 0, len(str) - 1))
+# print(matrix)
 # print(compare_strings("A" , "B"))
