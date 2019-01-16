@@ -1,6 +1,6 @@
 def get_weights():
-    # input()  # Nothing :D
-    weights = [int(x) for x in [1, 2, 3, 4]]
+    input()  # Nothing :D
+    weights = [int(x) for x in input().split(" ")]
     weights.sort()
 
     return weights
@@ -25,16 +25,34 @@ def F():
 
 
 def divide(weights):
-    max_s = 30
     res = 0
-
+    # print("ddd")
     for i in range(0, len(weights)):
-        print(i)
+        # print("i is : ", i)
+        max_s = int(weights[i] * (weights[i] + 1) / 2) + 1
+        # max_s = 1000
         for s in range(weights[i], max_s):
-            res += B(weights[0:i + 1], s - weights[i]) * B(weights[i + 1:], s)
+            lowers = B(weights[0:i], s - weights[i])
+            highers = B(weights[i + 1:], s)
+
+            # print("lowers is : ", lowers)
+            # print("highers : ", highers)
+            # print("weights[0:i + 1] is : ", weights[0:i])
+            # print("s - weights[i] is : ", s - weights[i])
+            # print("weights[i + 1:] is : ", weights[i + 1:])
+            # print("s is : ", s)
+
+            res += lowers * highers
+
+            # print("\n")
+
+        # print("res is : ", res)
+        # print("---------")
 
     return res
 
 
 weights = get_weights()
-print("res is : ", divide([1, 2, 3, 4]))
+print(divide(weights))
+
+
