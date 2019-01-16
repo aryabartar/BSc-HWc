@@ -1,3 +1,11 @@
+def get_weights():
+    # input()  # Nothing :D
+    weights = [int(x) for x in [1, 2, 3, 4]]
+    weights.sort()
+
+    return weights
+
+
 def B(weights, sum1):
     def mask(lst, m):
         m = m.zfill(len(lst))
@@ -12,26 +20,21 @@ def B(weights, sum1):
     return len(list(subset_sum(weights, sum1)))
 
 
+def F():
+    pass
+
 
 def divide(weights):
-    max_s = 3000000
+    max_s = 30
     res = 0
 
     for i in range(0, len(weights)):
+        print(i)
         for s in range(weights[i], max_s):
-            res += B(i, s - weights[i], weights) * F(len(weights) - 1 - i, s, weights)
+            res += B(weights[0:i + 1], s - weights[i]) * B(weights[i + 1:], s)
+
+    return res
 
 
-def get_weights():
-    input()  # Nothing :D
-    weights = [int(x) for x in input().split(" ")]
-    weights.sort()
-
-    return weights
-
-
-# weights = get_weights()
-# divide(weights)
-# print(B([1, 2, 3, 4], 3, 5))
-
-
+weights = get_weights()
+print("res is : ", divide([1, 2, 3, 4]))
