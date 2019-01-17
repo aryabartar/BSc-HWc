@@ -1,42 +1,46 @@
-MAX_ELEMENT = 30
 comb = [0] * 33
 for i in range(0, 31):
-    comb[i] = [0] * (MAX_ELEMENT + 32)
+    comb[i] = [0] * 32
 
 
 def divide(weights):
-    MAX_SUM = 30000
-
     weights.sort()
-    ret = 0
+    numbers = 0
     i = 0
     while i < len(weights) - 1:
-        ways_below = get_different_sums(weights[0: i])
-        group_size = 1
+
+        gp_size = 0
         for j in range(i + 1, len(weights)):
+            gp_size += 1
+            # print("weights j is : ", weights[j])
+            # print("weights i is : ", weights[i])
             if weights[j] != weights[i]:
                 break
-            group_size += 1
 
-        for g in range(0, group_size):
-            print(g)
-            ways_above = get_different_sums(weights[i + g + 1: len(weights)])
-            for s in range(weights[i] * (g + 1), MAX_SUM + 1):
-                print(s)
+        for t in range(0, gp_size + 1):
+            # print(t)
+            asghar = get_different_sums(weights[0: i])
+            akbar = get_different_sums(weights[i + t + 1: len(weights)])
+            for s in range(weights[i] * (t + 1), weights[-1] ** 2):
+                # print(s)
                 try:
-                    ret += comb1(group_size, g + 1) * ways_below[s - weights[i] * (g + 1)] * ways_above[s]
+                    numbers += comb1(gp_size, t + 1) * asghar[s - weights[i] * (t + 1)] * akbar[s]
                 except:
                     pass
-        i += group_size
-    return ret
+
+        i += gp_size
+    return numbers
 
 
 def comb1(n, k):
     if comb[n][k] > 0:
         return comb[n][k]
-    if k == 0 or n == k:
+    if k == 0:
         return 1
-    comb[n][k] = comb1(n - 1, k - 1) + comb1(n - 1, k)
+    elif n == k:
+        return 1
+
+    comb[n][k] = comb1(n - 1, k) + comb1(n - 1, k - 1)
     return comb[n][k]
 
 
@@ -66,4 +70,5 @@ def get_weights():
 
     return weights
 
-print(divide([1, 2, 3, 4, 5, 5]))
+
+print(divide([7, 7, 8, 9, 10, 11, 1, 2, 2, 3, 4, 5, 6]))
