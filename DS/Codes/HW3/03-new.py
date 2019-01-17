@@ -4,30 +4,28 @@ for i in range(0, 31):
 
 
 def divide(weights):
-    weights.sort()
     numbers = 0
     i = 0
-    while i < len(weights) - 1:
-
+    while i < len(weights):
         gp_size = 0
+        asghar = get_different_sums(weights[0: i])
         for j in range(i + 1, len(weights)):
             gp_size += 1
-            # print("weights j is : ", weights[j])
-            # print("weights i is : ", weights[i])
             if weights[j] != weights[i]:
                 break
+            gp_size += 1
 
-        for t in range(0, gp_size + 1):
-            # print(t)
-            asghar = get_different_sums(weights[0: i])
+        for t in range(0, gp_size):
+            # print(g)
             akbar = get_different_sums(weights[i + t + 1: len(weights)])
-            for s in range(weights[i] * (t + 1), weights[-1] ** 2):
+            for s in range(weights[i] * (t + 1), 30001):
                 # print(s)
                 try:
-                    numbers += comb1(gp_size, t + 1) * asghar[s - weights[i] * (t + 1)] * akbar[s]
+                    numbers += comb1(gp_size, t + 1) * \
+                               asghar[s - weights[i] * (t + 1)] * \
+                               akbar[s]
                 except:
                     pass
-
         i += gp_size
     return numbers
 
@@ -71,4 +69,4 @@ def get_weights():
     return weights
 
 
-print(divide([7, 7, 8, 9, 10, 11, 1, 2, 2, 3, 4, 5, 6]))
+print(divide([1, 2, 3, 4, 5, 5]))
