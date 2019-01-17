@@ -1,3 +1,4 @@
+maximum_sum = 30001
 comb = [0] * 33
 for i in range(0, 31):
     comb[i] = [0] * 32
@@ -6,17 +7,22 @@ for i in range(0, 31):
 def divide(weights, partitions):
     i = 0
     while i < len(weights) - 1:
-        gp_size = 1
+
+        gp_size = 0
+
         for j in range(i + 1, len(weights)):
-            if weights[j] != weights[i]:
-                break
             gp_size += 1
+            if weights[j] != weights[i]:
+                gp_size -= 1
+                break
 
         asghar = get_different_sums(weights[0: i])
+
         for size in range(0, gp_size):
             # print(g)
-            akbar = get_different_sums(weights[i + size + 1: len(weights)])
-            for s in range(weights[i] * (size + 1), 30001):
+            akbar = get_different_sums(weights[size + i + 1: len(weights)])
+
+            for s in range(weights[i] * (size + 1), maximum_sum):
                 # print(s)
                 try:
                     partitions += comb1(gp_size, size + 1) * \
@@ -25,7 +31,9 @@ def divide(weights, partitions):
                 except:
                     # nothing
                     pass
+
         i += gp_size
+
     return partitions
 
 
@@ -49,8 +57,7 @@ def get_sums(weights):
 
 
 def get_different_sums(weights):
-    sum_ways = [0] * (get_sums(weights) + 1)
-    sum_ways[0] = 1
+    sum_ways = [1] + [0] * (get_sums(weights) + 1)
     for i in range(0, len(weights)):
         # print(i)
         j = get_sums(weights)
