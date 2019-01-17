@@ -9,7 +9,7 @@ def get_weights():
 
 def nCr(n,r):
     f = math.factorial
-    return f(n) / f(r) / f(n-r)
+    return int(f(n) / f(r) / f(n-r))
 
 
 
@@ -27,13 +27,17 @@ def B(weights, sum1):
     return len(list(subset_sum(weights, sum1)))
 
 
-def F():
-    pass
+def get_repeat_numbers(weights) :
+    a = [0]*(weights[-1]+1)
 
+    for item in weights:
+        a[item] += 1
+    return a
 
 def divide(weights):
     res = 0
-    # print("ddd")
+    repeat_numbers = get_repeat_numbers(weights)
+    print(repeat_numbers)
     for i in range(0, len(weights)):
         print("i is : ", i)
         max_s = int(weights[i] * (weights[i] + 1)) + 1
@@ -59,8 +63,8 @@ def divide(weights):
     return res
 
 
-weights = get_weights()
-print(divide(weights))
+# weights = get_weights()
+print(divide([1 , 2 , 3 , 4 , 5 , 5]))
 
 
 
