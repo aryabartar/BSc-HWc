@@ -21,24 +21,6 @@ def get_inputs():
     return transfer_information, paths
 
 
-# def check_error(paths):
-#     city_number = 0
-#     for path in paths:
-#         if len(path.cities) > city_number:
-#             city_number = len(path.cities)
-#     for path in paths:
-#         for i in path.cities:
-#             if i > city_number + 1000:
-#                 raise ValueError('A very specific bad thing happened.')
-#                 pass
-
-
-# def print_paths(paths):
-#     print("---\nPrinting paths information : ")
-#     for path in paths:
-#         print(path.print_information())
-
-
 def get_city_numbers(paths):
     max_city_number = 0
     for path in paths:
@@ -49,7 +31,7 @@ def get_city_numbers(paths):
 
 def get_adjacency_matrix(paths):
     def initialize_adjencency_matrix(paths):
-        MAX_NUMBER = 1000000000  # TODO:Change this if we have bugs
+        MAX_NUMBER = 1000000001
         city_numbers = get_city_numbers(paths)
         adjacency_matrix = \
             [[MAX_NUMBER for x in range(city_numbers + 1 + 1000)] for y in range(city_numbers + 1 + 1000)]
@@ -80,8 +62,8 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
 
     def initialize_dijkstra(adjacency_matrix, start):
         cities_set = get_city_set(adjacency_matrix)
-        dijkstra_list = [1000000000] * (len(cities_set) + 1)
-        dijkstra_parent_list = [1000000000] * (len(cities_set) + 1)
+        dijkstra_list = [1000000001] * (len(cities_set) + 1)
+        dijkstra_parent_list = [1000000001] * (len(cities_set) + 1)
         cities_set.remove(start)
 
         for city in cities_set:
@@ -96,10 +78,9 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
     not_visited.remove(start)
 
     while len(not_visited) != 1:
-        # print("running while")
-        minimum_cost = 1000000000
+        minimum_cost = 1000000001
         minimum_index_for_updating = -1
-        # print(not_visited)
+
         for i in not_visited:
             if dijkstra_list[i] <= minimum_cost:
                 minimum_cost = dijkstra_list[i]
@@ -112,24 +93,30 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
         for city in not_visited:
             if (adjacency_matrix[minimum_index_for_updating][city] + dijkstra_list[minimum_index_for_updating]) < \
                     dijkstra_list[city]:
-                dijkstra_list[city] = adjacency_matrix[minimum_index_for_updating][city]
+                dijkstra_list[city] = adjacency_matrix[minimum_index_for_updating][city] + dijkstra_list[
+                    minimum_index_for_updating]
                 dijkstra_parent_list[city] = minimum_index_for_updating
 
-        current_city = finish
-        sum = 0
-        while current_city != start:
-            parent = dijkstra_parent_list[current_city]
-            sum += path_length_matrix[parent][current_city]
-            current_city = dijkstra_parent_list[current_city]
+    current_city = finish
+    sum = 0
+    while current_city != start:
+        # print(current_city)
+        parent = dijkstra_parent_list[current_city]
+        sum += path_length_matrix[parent][current_city]
+        current_city = dijkstra_parent_list[current_city]
 
+    # print(dijkstra_list)
     return dijkstra_list[finish], sum
 
 
 transfer_information, paths = get_inputs()
 adjacency_matrix, path_length_matrix = get_adjacency_matrix(paths)
+# for i in adjacency_matrix[0:20]:
+#     print(i[0:20])
+# print(adjacency_matrix[1:20][0:20])
 minimum_cost, sum = dijkstra(adjacency_matrix, transfer_information[2], transfer_information[1], path_length_matrix)
 
-if minimum_cost == 1000000000 or sum == 1000000000:
+if minimum_cost == 1000000001 or sum == 1000000001:
     print("-1 -1")
 else:
     print(str(minimum_cost) + " " + str(sum))
