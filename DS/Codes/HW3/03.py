@@ -10,7 +10,9 @@ class Path:
 
 def get_inputs():
     transfer_information = [int(x) for x in input().split(" ")]
+    transfer_information[0], transfer_information[2] = transfer_information[2], transfer_information[0]
     paths = []
+
 
     for i in range(0, transfer_information[0]):
         cost = int(input().split()[0])
