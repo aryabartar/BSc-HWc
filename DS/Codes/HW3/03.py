@@ -127,7 +127,8 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
 transfer_information, paths = get_inputs()
 adjacency_matrix, path_length_matrix = get_adjacency_matrix(paths)
 minimum_cost, sum = dijkstra(adjacency_matrix, transfer_information[2], transfer_information[1], path_length_matrix)
-if minimum_cost == 10000:
-    print("1- 1-")
+
+if minimum_cost == 10000 or minimum_cost == 10000:
+    print("-1 -1")
 else:
     print(str(minimum_cost) + " " + str(sum))
