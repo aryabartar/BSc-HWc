@@ -84,7 +84,7 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
     not_visited = get_city_set(adjacency_matrix)
     not_visited.remove(start)
 
-    print(dijkstra_parent_list[0:20])
+    # print(dijkstra_parent_list[0:20])
     while len(not_visited) != 1:
         minimum_cost = 10000000000000
         minimum_index_for_updating = -1
@@ -104,18 +104,14 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
                 dijkstra_list[city] = adjacency_matrix[minimum_index_for_updating][city] + dijkstra_list[
                     minimum_index_for_updating]
 
-                if dijkstra_parent_list[city] == MAX_NUMBER :
-                    dijkstra_parent_list[city] = path_length_matrix[minimum_index_for_updating][city] + dijkstra_parent_list[minimum_index_for_updating]
-                else :
-                    # print("Running else and path_length_matrix[minimum_index_for_updating][city] is : " ,
-                    #       path_length_matrix[minimum_index_for_updating][city])
-                    dijkstra_parent_list[city] = path_length_matrix[minimum_index_for_updating][city]+ dijkstra_parent_list[minimum_index_for_updating]
+                dijkstra_parent_list[city] = path_length_matrix[minimum_index_for_updating][city] + \
+                                             dijkstra_parent_list[minimum_index_for_updating]
 
-                # print("minimum is : ", minimum_index_for_updating, " City is : ", city)
-                # print(dijkstra_parent_list)
-                # print("")
+            elif (adjacency_matrix[minimum_index_for_updating][city] + dijkstra_list[minimum_index_for_updating]) == \
+                    dijkstra_list[city]:
+                dijkstra_parent_list[city] = path_length_matrix[minimum_index_for_updating][city] + \
+                                             dijkstra_parent_list[minimum_index_for_updating]
 
-    # print("jdfkjfd" , path_length_matrix[3][1])
     return dijkstra_list[finish], dijkstra_parent_list[finish]
 
 
@@ -127,7 +123,6 @@ minimum_cost, sum = dijkstra(adjacency_matrix,
                              path_length_matrix)
 
 if minimum_cost == MAX_NUMBER or sum == MAX_NUMBER:
-    # print(minimum_cost, " ", sum)
     print("-1 -1")
 else:
     print(str(minimum_cost) + " " + str(sum))
