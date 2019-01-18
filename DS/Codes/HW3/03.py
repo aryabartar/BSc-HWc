@@ -40,16 +40,19 @@ def get_adjacency_matrix(paths):
         city_numbers = get_city_numbers(paths)
         adjacency_matrix = \
             [[MAX_NUMBER for x in range(city_numbers + 1)] for y in range(city_numbers + 1)]
-        return adjacency_matrix
+        path_length_matrix = \
+            [[MAX_NUMBER for x in range(city_numbers + 1)] for y in range(city_numbers + 1)]
+        return adjacency_matrix, path_length_matrix
 
-    adjacency_matrix = initialize_adjencency_matrix(paths)
+    adjacency_matrix, path_length_matrix = initialize_adjencency_matrix(paths)
     for path in paths:
         for i in range(0, len(path.cities)):
             for j in range(i + 1, len(path.cities)):
                 if path.cost < adjacency_matrix[path.cities[i]][path.cities[j]]:
                     adjacency_matrix[path.cities[i]][path.cities[j]] = path.cost
+                    path_length_matrix[path.cities[i]][path.cities[j]] = j - i
 
-    return adjacency_matrix
+    return adjacency_matrix, path_length_matrix
 
 
 def dijkstra(adjacency_matrix, start, finish):
@@ -61,7 +64,7 @@ def dijkstra(adjacency_matrix, start, finish):
 
     def initialize_dijkstra(adjacency_matrix, start):
         cities_set = get_city_set(adjacency_matrix)
-        dijkstra_list = [10000] * (len(cities_set) + 2)
+        dijkstra_list = [10000] * (len(cities_set) + 1)
         cities_set.remove(start)
 
         for city in cities_set:
@@ -74,16 +77,30 @@ def dijkstra(adjacency_matrix, start, finish):
     not_visited.remove(start)
 
     while len(not_visited) != 1:
-        minimum_for_updating = min(not_visited)
-        not_visited.remove(minimum_for_updating)
+        # print("running while")
+        minimum_cost = 10000
+        minimum_index_for_updating = -1
+        # print(not_visited)
+        for i in not_visited:
+            if dijkstra_list[i] <= minimum_cost:
+                minimum_cost = dijkstra_list[i]
+                minimum_index_for_updating = i
+
+        not_visited.remove(minimum_index_for_updating)
+        visited.add(minimum_index_for_updating)
 
         for city in not_visited:
-            if adjacency_matrix[minimum_for_updating][city] < dijkstra_list[city]:
-                dijkstra_list[city] = adjacency_matrix[minimum_for_updating][city]
+            if (adjacency_matrix[minimum_index_for_updating][city] + dijkstra_list[minimum_index_for_updating]) < \
+                    dijkstra_list[city]:
+                dijkstra_list[city] = adjacency_matrix[minimum_index_for_updating][city]
 
+    print(dijkstra_list)
     return dijkstra_list[finish]
 
 
 transfer_information, paths = get_inputs()
-adjacency_matrix = get_adjacency_matrix(paths)
-dijkstra(adjacency_matrix, transfer_information[2], transfer_information[1])
+adjacency_matrix, path_length_matrix = get_adjacency_matrix(paths)
+
+print(path_length_matrix)
+minimum_cost = dijkstra(adjacency_matrix, transfer_information[2], transfer_information[1])
+print(minimum_cost)
