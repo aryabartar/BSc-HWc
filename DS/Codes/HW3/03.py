@@ -3,6 +3,10 @@ class Path:
         self.cost = cost
         self.cities = cities
 
+    def print_information(self):
+        return "Cost is : " + str(self.cost) + "| Paths are : " + \
+               str(self.cities)
+
 
 def get_inputs():
     transfer_information = [int(x) for x in input().split(" ")]
@@ -10,9 +14,12 @@ def get_inputs():
     paths = []
     for i in range(0, transfer_information[0]):
         cost = int(input().split()[0])
-        paths = [int(x) for x in input().split(" ")]
+        path_cities = [int(x) for x in input().split(" ")]
 
-        p = Path(cost, paths)
-        paths.append(p)
+        paths.append(Path(cost, path_cities))
 
     return transfer_information, paths
+
+
+transfer_information, paths = get_inputs()
+print(transfer_information, paths)
