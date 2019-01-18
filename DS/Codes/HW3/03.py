@@ -1,3 +1,6 @@
+MAX_NUMBER = 1000000000000
+
+
 class Path:
     def __init__(self, cost, cities):
         self.cost = cost
@@ -31,7 +34,6 @@ def get_city_numbers(paths):
 
 def get_adjacency_matrix(paths):
     def initialize_adjencency_matrix(paths):
-        MAX_NUMBER = 1000000001
         city_numbers = get_city_numbers(paths)
         adjacency_matrix = \
             [[MAX_NUMBER for x in range(city_numbers + 1 + 1000)] for y in range(city_numbers + 1 + 1000)]
@@ -40,6 +42,7 @@ def get_adjacency_matrix(paths):
         return adjacency_matrix, path_length_matrix
 
     adjacency_matrix, path_length_matrix = initialize_adjencency_matrix(paths)
+
     for path in paths:
         for i in range(0, len(path.cities)):
             for j in range(i + 1, len(path.cities)):
@@ -47,6 +50,9 @@ def get_adjacency_matrix(paths):
                     if path.cost < adjacency_matrix[path.cities[i]][path.cities[j]]:
                         adjacency_matrix[path.cities[i]][path.cities[j]] = path.cost
                         path_length_matrix[path.cities[i]][path.cities[j]] = j - i
+                    elif j - i < path_length_matrix[path.cities[i]][path.cities[j]] and \
+                            path.cost == adjacency_matrix[path.cities[i]][path.cities[j]]:
+                        path_length_matrix[path.cities[i]][path.cities[j]] = j - 1
                 except:
                     pass
 
@@ -62,13 +68,13 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
 
     def initialize_dijkstra(adjacency_matrix, start):
         cities_set = get_city_set(adjacency_matrix)
-        dijkstra_list = [1000000001] * (len(cities_set) + 1)
-        dijkstra_parent_list = [1000000001] * (len(cities_set) + 1)
+        dijkstra_list = [MAX_NUMBER] * (len(cities_set) + 1)
+        dijkstra_parent_list = [MAX_NUMBER] * (len(cities_set) + 1)
         cities_set.remove(start)
 
         for city in cities_set:
             dijkstra_list[city] = adjacency_matrix[start][city]
-            dijkstra_parent_list[city] = start
+            dijkstra_parent_list[city] = dijkstra_parent_list[start][city]
 
         return dijkstra_list, dijkstra_parent_list
 
@@ -78,7 +84,7 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
     not_visited.remove(start)
 
     while len(not_visited) != 1:
-        minimum_cost = 1000000001
+        minimum_cost = 10000000000000
         minimum_index_for_updating = -1
 
         for i in not_visited:
@@ -95,7 +101,10 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
                     dijkstra_list[city]:
                 dijkstra_list[city] = adjacency_matrix[minimum_index_for_updating][city] + dijkstra_list[
                     minimum_index_for_updating]
-                dijkstra_parent_list[city] = minimum_index_for_updating
+
+                dijkstra_parent_list[city] = dijkstra_parent_list[minimum_index_for_updating][city]
+            # print(dijkstra_list)
+            # print(dijkstra_list)
 
     current_city = finish
     sum = 0
@@ -111,12 +120,13 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
 
 transfer_information, paths = get_inputs()
 adjacency_matrix, path_length_matrix = get_adjacency_matrix(paths)
-# for i in adjacency_matrix[0:20]:
-#     print(i[0:20])
-# print(adjacency_matrix[1:20][0:20])
-minimum_cost, sum = dijkstra(adjacency_matrix, transfer_information[2], transfer_information[1], path_length_matrix)
+minimum_cost, sum = dijkstra(adjacency_matrix,
+                             transfer_information[2],
+                             transfer_information[1],
+                             path_length_matrix)
 
-if minimum_cost == 1000000001 or sum == 1000000001:
+if minimum_cost == MAX_NUMBER or sum == MAX_NUMBER:
+    # print(minimum_cost, " ", sum)
     print("-1 -1")
 else:
     print(str(minimum_cost) + " " + str(sum))
