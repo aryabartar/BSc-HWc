@@ -66,7 +66,7 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
             a.add(i)
         return a
 
-    def initialize_dijkstra(adjacency_matrix, start):
+    def initialize_dijkstra(adjacency_matrix, start, path_length_matrix):
         cities_set = get_city_set(adjacency_matrix)
         dijkstra_list = [MAX_NUMBER] * (len(cities_set) + 1)
         dijkstra_parent_list = [MAX_NUMBER] * (len(cities_set) + 1)
@@ -74,15 +74,17 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
 
         for city in cities_set:
             dijkstra_list[city] = adjacency_matrix[start][city]
-            dijkstra_parent_list[city] = dijkstra_parent_list[start][city]
+            if path_length_matrix[start][city] != MAX_NUMBER:
+                dijkstra_parent_list[city] = path_length_matrix[start][city]
 
         return dijkstra_list, dijkstra_parent_list
 
-    dijkstra_list, dijkstra_parent_list = initialize_dijkstra(adjacency_matrix, start)
+    dijkstra_list, dijkstra_parent_list = initialize_dijkstra(adjacency_matrix, start, path_length_matrix)
     visited = {start}
     not_visited = get_city_set(adjacency_matrix)
     not_visited.remove(start)
 
+    print(dijkstra_parent_list[0:20])
     while len(not_visited) != 1:
         minimum_cost = 10000000000000
         minimum_index_for_updating = -1
@@ -102,20 +104,19 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
                 dijkstra_list[city] = adjacency_matrix[minimum_index_for_updating][city] + dijkstra_list[
                     minimum_index_for_updating]
 
-                dijkstra_parent_list[city] = dijkstra_parent_list[minimum_index_for_updating][city]
-            # print(dijkstra_list)
-            # print(dijkstra_list)
+                if dijkstra_parent_list[city] == MAX_NUMBER :
+                    dijkstra_parent_list[city] = path_length_matrix[minimum_index_for_updating][city] + dijkstra_parent_list[minimum_index_for_updating]
+                else :
+                    # print("Running else and path_length_matrix[minimum_index_for_updating][city] is : " ,
+                    #       path_length_matrix[minimum_index_for_updating][city])
+                    dijkstra_parent_list[city] = path_length_matrix[minimum_index_for_updating][city]+ dijkstra_parent_list[minimum_index_for_updating]
 
-    current_city = finish
-    sum = 0
-    while current_city != start:
-        # print(current_city)
-        parent = dijkstra_parent_list[current_city]
-        sum += path_length_matrix[parent][current_city]
-        current_city = dijkstra_parent_list[current_city]
+                # print("minimum is : ", minimum_index_for_updating, " City is : ", city)
+                # print(dijkstra_parent_list)
+                # print("")
 
-    # print(dijkstra_list)
-    return dijkstra_list[finish], sum
+    # print("jdfkjfd" , path_length_matrix[3][1])
+    return dijkstra_list[finish], dijkstra_parent_list[finish]
 
 
 transfer_information, paths = get_inputs()
