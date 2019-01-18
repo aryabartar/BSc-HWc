@@ -55,7 +55,7 @@ def get_adjacency_matrix(paths):
     return adjacency_matrix, path_length_matrix
 
 
-def dijkstra(adjacency_matrix, start, finish):
+def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
     def get_city_set(adjacency_matrix):
         a = set()
         for i in range(1, len(adjacency_matrix)):
@@ -65,13 +65,16 @@ def dijkstra(adjacency_matrix, start, finish):
     def initialize_dijkstra(adjacency_matrix, start):
         cities_set = get_city_set(adjacency_matrix)
         dijkstra_list = [10000] * (len(cities_set) + 1)
+        dijkstra_parent_list = [10000] * (len(cities_set) + 1)
         cities_set.remove(start)
 
         for city in cities_set:
             dijkstra_list[city] = adjacency_matrix[start][city]
-        return dijkstra_list
+            dijkstra_parent_list[city] = start
 
-    dijkstra_list = initialize_dijkstra(adjacency_matrix, start)
+        return dijkstra_list, dijkstra_parent_list
+
+    dijkstra_list, dijkstra_parent_list = initialize_dijkstra(adjacency_matrix, start)
     visited = {start}
     not_visited = get_city_set(adjacency_matrix)
     not_visited.remove(start)
@@ -93,14 +96,19 @@ def dijkstra(adjacency_matrix, start, finish):
             if (adjacency_matrix[minimum_index_for_updating][city] + dijkstra_list[minimum_index_for_updating]) < \
                     dijkstra_list[city]:
                 dijkstra_list[city] = adjacency_matrix[minimum_index_for_updating][city]
+                dijkstra_parent_list[city] = minimum_index_for_updating
 
-    print(dijkstra_list)
-    return dijkstra_list[finish]
+        current_city = finish
+        sum = 0
+        while current_city != start:
+            parent = dijkstra_parent_list[current_city]
+            sum += path_length_matrix[parent][current_city]
+            current_city = dijkstra_parent_list[current_city]
+
+    return dijkstra_list[finish], sum
 
 
 transfer_information, paths = get_inputs()
 adjacency_matrix, path_length_matrix = get_adjacency_matrix(paths)
-
-print(path_length_matrix)
-minimum_cost = dijkstra(adjacency_matrix, transfer_information[2], transfer_information[1])
-print(minimum_cost)
+minimum_cost, sum = dijkstra(adjacency_matrix, transfer_information[2], transfer_information[1], path_length_matrix)
+print(str(minimum_cost) + " " + str(sum))
