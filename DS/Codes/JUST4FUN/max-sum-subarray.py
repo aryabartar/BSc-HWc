@@ -8,7 +8,7 @@ def maximum(a, b, c):
 
 
 def max_crossing_subarray(ar, low, mid, high):
-    left_sum = -10000 #big value
+    left_sum = -1000000 #big value
     sum = 0
 
     for i in range(mid, low - 1, -1):
@@ -16,7 +16,7 @@ def max_crossing_subarray(ar, low, mid, high):
         if (sum > left_sum):
             left_sum = sum
 
-    right_sum = -10000#big value
+    right_sum = -1000000#big value
     sum = 0
 
     for i in range(mid + 1, high + 1):

@@ -49,7 +49,7 @@ def get_city_numbers(paths):
 
 def get_adjacency_matrix(paths):
     def initialize_adjencency_matrix(paths):
-        MAX_NUMBER = 10000  # TODO:Change this if we have bugs
+        MAX_NUMBER = 1000000000  # TODO:Change this if we have bugs
         city_numbers = get_city_numbers(paths)
         adjacency_matrix = \
             [[MAX_NUMBER for x in range(city_numbers + 1 + 1000)] for y in range(city_numbers + 1 + 1000)]
@@ -80,8 +80,8 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
 
     def initialize_dijkstra(adjacency_matrix, start):
         cities_set = get_city_set(adjacency_matrix)
-        dijkstra_list = [10000] * (len(cities_set) + 1)
-        dijkstra_parent_list = [10000] * (len(cities_set) + 1)
+        dijkstra_list = [1000000000] * (len(cities_set) + 1)
+        dijkstra_parent_list = [1000000000] * (len(cities_set) + 1)
         cities_set.remove(start)
 
         for city in cities_set:
@@ -97,7 +97,7 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
 
     while len(not_visited) != 1:
         # print("running while")
-        minimum_cost = 10000
+        minimum_cost = 1000000000
         minimum_index_for_updating = -1
         # print(not_visited)
         for i in not_visited:
@@ -105,6 +105,7 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
                 minimum_cost = dijkstra_list[i]
                 minimum_index_for_updating = i
 
+        # print(minimum_index_for_updating)
         not_visited.remove(minimum_index_for_updating)
         visited.add(minimum_index_for_updating)
 
@@ -128,7 +129,7 @@ transfer_information, paths = get_inputs()
 adjacency_matrix, path_length_matrix = get_adjacency_matrix(paths)
 minimum_cost, sum = dijkstra(adjacency_matrix, transfer_information[2], transfer_information[1], path_length_matrix)
 
-if minimum_cost == 10000 or minimum_cost == 10000:
+if minimum_cost == 1000000000 or sum == 1000000000:
     print("-1 -1")
 else:
     print(str(minimum_cost) + " " + str(sum))
