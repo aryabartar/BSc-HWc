@@ -8,6 +8,12 @@ class Path:
                str(self.cities)
 
 
+def print_paths(paths):
+    print("---\nPrinting paths information : ")
+    for path in paths:
+        print(path.print_information())
+
+
 def get_inputs():
     transfer_information = [int(x) for x in input().split(" ")]
 
@@ -22,4 +28,5 @@ def get_inputs():
 
 
 transfer_information, paths = get_inputs()
-print(transfer_information, paths)
+print_paths(paths)
+print(transfer_information)
