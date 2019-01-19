@@ -1,3 +1,8 @@
+import math
+from functools import reduce
+import operator as op
+
+
 class Information:
     def __init__(self):
         self.comb = [[0 for i in range(0, 33)] for j in range(0, 32)]
@@ -12,18 +17,22 @@ def get_weights():
     return weights
 
 
-def get_different_combinations(info, n, k):
-    if info.comb[n][k] > 0:
-        return info.comb[n][k]
-    elif k == 0:
+def ncr(info ,n, r):
+    r = min(r, n-r)
+    numer = reduce(op.mul, range(n, n-r, -1), 1)
+    denom = reduce(op.mul, range(1, r+1), 1)
+    return numer / denom
+
+
+def nCr(n, r):
+    if r == 0:
         return 1
-    elif n == k:
+    elif n == r:
         return 1
-    else:
-        c1 = get_different_combinations(info, n - 1, k - 1)
-        c2 = get_different_combinations(info, n - 1, k)
-        info.comb[n][k] = summation([c1, c2])
-        return summation([c1, c2])
+
+    f = math.factorial
+
+    return int(f(n) / f(r) / f(n - r))
 
 
 def get_different_sums(weights):
@@ -45,7 +54,7 @@ def get_different_sums(weights):
 def summation(*args):
     s = 0
     for i in args:
-        for j in i :
+        for j in i:
             s += j
     return s
 
@@ -71,12 +80,11 @@ def divide(weights, partitions):
             akbar = get_different_sums(weights[i + size + 1: len(weights)])
             temp_partitions = 0
 
-            for s in range(weights[i] * weights_size, 22000):
+            for s in range(weights[i] * weights_size, 18000):
                 try:
-                    partitions += get_different_combinations(info, gp_size, size + 1) * \
+                    partitions += int(ncr(info, gp_size, size + 1)) * \
                                   asghar[s - weights[i] * (size + 1)] * \
                                   akbar[s]
-
                 except:
                     try:
                         temp_partitions += asghar[s - weights[i] * (size + 1)] * \
@@ -90,3 +98,7 @@ def divide(weights, partitions):
 
 partitions = 0
 print(divide(get_weights(), partitions))
+
+# info = Information()
+#
+# print(get_different_combinations(info , 3 , 3))
