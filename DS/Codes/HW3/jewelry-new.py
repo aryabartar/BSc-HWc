@@ -5,7 +5,6 @@ import operator as op
 
 class Information:
     def __init__(self):
-        self.comb = [[0 for i in range(0, 33)] for j in range(0, 32)]
         self.partitions = 0
 
 
@@ -50,7 +49,7 @@ def nCr(n, r):
     return int(f(n) / f(r) / f(n - r))
 
 
-def get_different_sums(weights):
+def get_different_sums_p(weights):
     sum = 0
     for item in weights:
         sum += item
@@ -89,10 +88,10 @@ def divide(weights, partitions):
     while i < len(weights) - 1:
         gp_size = update_group_size(1, i + 1, i)
 
-        asghar = get_different_sums(weights[0: i])
+        asghar = get_different_sums_p(weights[0: i])
         for size in range(0, gp_size):
             weights_size = size + 1
-            akbar = get_different_sums(weights[i + size + 1: len(weights)])
+            akbar = get_different_sums_p(weights[i + size + 1: len(weights)])
             temp_partitions = 0
 
             for s in range(weights[i] * weights_size, 16000):
@@ -111,9 +110,50 @@ def divide(weights, partitions):
     return partitions
 
 
+def get_different_sums(weights):
+    def adjust_size(number, lenngth):
+        number = ("0" * (lenngth - len(number))) + number
+        return number
+
+    if len(weights) != 0:
+        # print(weights)
+        sums_array = [0 for i in range(0, weights[-1])]
+
+        counter = adjust_size('0', len(weights))
+        one = '1'
+        # print(sums_array)
+        while counter != '1' + '0' * len(weights):
+            counter = adjust_size(counter, len(weights))
+
+            temp_sum = 0
+            for i in range(0, len(weights)):
+                if counter[i] == '1':
+                    temp_sum += weights[i]
+            # print("temp sum is : ", temp_sum)
+            # print("counter is : ", counter, )
+            # print("sums array is : ", sums_array, "\n")
+            flag = False
+
+            while flag is False:
+                try:
+                    sums_array[temp_sum] += 1
+                    flag = True
+                except:
+                    sums_array.append(0)
+
+            counter = bin(int(one, 2) + int(counter, 2))[2:]
+
+        sums_array.append(0)
+        return sums_array
+    else:
+        return [1, 0]
+
+
 partitions = 0
 print(divide(get_weights(), partitions))
 
 # info = Information()
 #
 # print(get_different_combinations(info , 3 , 3))
+# print(get_different_sums_p([]))
+# print(get_different_sums([]))
