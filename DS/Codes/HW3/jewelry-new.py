@@ -22,8 +22,8 @@ def get_different_combinations(info, n, k):
     else:
         c1 = get_different_combinations(info, n - 1, k - 1)
         c2 = get_different_combinations(info, n - 1, k)
-        info.comb[n][k] = c1 + c2
-        return c1 + c2
+        info.comb[n][k] = summation([c1, c2])
+        return summation([c1, c2])
 
 
 def get_different_sums(weights):
@@ -42,8 +42,17 @@ def get_different_sums(weights):
     return sum_ways
 
 
+def summation(*args):
+    s = 0
+    for i in args:
+        for j in i :
+            s += j
+    return s
+
+
 def divide(weights, partitions):
     def update_group_size(gp_size, j, i):
+        gp_size = 1
         while j < len(weights) and weights[i] == weights[j]:
             gp_size += 1
             j += 1
@@ -54,15 +63,15 @@ def divide(weights, partitions):
     i = 0
 
     while i < len(weights) - 1:
-        gp_size = 1
-        gp_size = update_group_size(gp_size, i + 1, i)
+        gp_size = update_group_size(1, i + 1, i)
 
         asghar = get_different_sums(weights[0: i])
         for size in range(0, gp_size):
+            weights_size = size + 1
             akbar = get_different_sums(weights[i + size + 1: len(weights)])
             temp_partitions = 0
 
-            for s in range(weights[i] * (size + 1), 23000):
+            for s in range(weights[i] * weights_size, 22000):
                 try:
                     partitions += get_different_combinations(info, gp_size, size + 1) * \
                                   asghar[s - weights[i] * (size + 1)] * \
