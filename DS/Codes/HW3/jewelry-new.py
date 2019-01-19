@@ -17,10 +17,25 @@ def get_weights():
     return weights
 
 
-def ncr(info ,n, r):
-    r = min(r, n-r)
-    numer = reduce(op.mul, range(n, n-r, -1), 1)
-    denom = reduce(op.mul, range(1, r+1), 1)
+def get_different_combinations(info, n, k):
+    if info.comb[n][k] > 0:
+        return info.comb[n][k]
+    elif k == 0:
+        return 1
+    elif n == k:
+        return 1
+    else:
+        r = min(k, n - k)
+        numer = reduce(op.mul, range(n, n - r, -1), 1)
+        denom = reduce(op.mul, range(1, r + 1), 1)
+        info.comb[n][k] = numer / denom
+        return numer / denom
+
+
+def ncr(info, n, r):
+    r = min(r, n - r)
+    numer = reduce(op.mul, range(n, n - r, -1), 1)
+    denom = reduce(op.mul, range(1, r + 1), 1)
     return numer / denom
 
 
@@ -68,7 +83,7 @@ def divide(weights, partitions):
         return gp_size
 
     info = Information()
-    temp_partitions = 0
+    # temp_partitions = 0
     i = 0
 
     while i < len(weights) - 1:
@@ -80,9 +95,9 @@ def divide(weights, partitions):
             akbar = get_different_sums(weights[i + size + 1: len(weights)])
             temp_partitions = 0
 
-            for s in range(weights[i] * weights_size, 18000):
+            for s in range(weights[i] * weights_size, 16000):
                 try:
-                    partitions += int(ncr(info, gp_size, size + 1)) * \
+                    partitions += int(get_different_combinations(info, gp_size, size + 1)) * \
                                   asghar[s - weights[i] * (size + 1)] * \
                                   akbar[s]
                 except:
@@ -91,7 +106,7 @@ def divide(weights, partitions):
                                            akbar[s]
                     except:
                         pass
-            info.partitions += temp_partitions
+            # info.partitions += temp_partitions
         i += gp_size
     return partitions
 
