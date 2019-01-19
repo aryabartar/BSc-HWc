@@ -1,7 +1,6 @@
-maximum_sum = 30001
-comb = [0] * 33
-for i in range(0, 31):
-    comb[i] = [0] * 32
+class Information:
+    def __init__(self):
+        self.comb = [[0 for i in range(0, 33)] for j in range(0, 32)]
 
 
 def get_weights():
@@ -12,16 +11,18 @@ def get_weights():
     return weights
 
 
-def comb1(n, k):
-    if comb[n][k] > 0:
-        return comb[n][k]
-    if k == 0:
+def comb1(info, n, k):
+    if info.comb[n][k] > 0:
+        return info.comb[n][k]
+    elif k == 0:
         return 1
     elif n == k:
         return 1
-
-    comb[n][k] = comb1(n - 1, k) + comb1(n - 1, k - 1)
-    return comb[n][k]
+    else:
+        c1 = comb1(info, n - 1, k - 1)
+        c2 = comb1(info, n - 1, k)
+        info.comb[n][k] = c1 + c2
+        return c1 + c2
 
 
 def get_sums(weights):
@@ -46,6 +47,7 @@ def get_different_sums(weights):
 
 
 def divide(weights, partitions):
+    info = Information()
     i = 0
     while i < len(weights) - 1:
         gp_size = 1
@@ -63,7 +65,7 @@ def divide(weights, partitions):
             for s in range(weights[i] * (size + 1), 25000):
                 # print(s)
                 try:
-                    partitions += comb1(gp_size, size + 1) * \
+                    partitions += comb1(info, gp_size, size + 1) * \
                                   asghar[s - weights[i] * (size + 1)] * \
                                   akbar[s]
                 except:

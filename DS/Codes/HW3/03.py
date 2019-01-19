@@ -84,8 +84,7 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
     not_visited = get_city_set(adjacency_matrix)
     not_visited.remove(start)
 
-    # print(dijkstra_parent_list[0:20])
-    while len(not_visited) != 1:
+    while len(not_visited) != 0:
         minimum_cost = 10000000000000
         minimum_index_for_updating = -1
 
@@ -109,8 +108,10 @@ def dijkstra(adjacency_matrix, start, finish, path_length_matrix):
 
             elif (adjacency_matrix[minimum_index_for_updating][city] + dijkstra_list[minimum_index_for_updating]) == \
                     dijkstra_list[city]:
-                dijkstra_parent_list[city] = path_length_matrix[minimum_index_for_updating][city] + \
-                                             dijkstra_parent_list[minimum_index_for_updating]
+                if path_length_matrix[minimum_index_for_updating][city] + dijkstra_parent_list[
+                    minimum_index_for_updating] < dijkstra_parent_list[city]:
+                    dijkstra_parent_list[city] = path_length_matrix[minimum_index_for_updating][city] + \
+                                                 dijkstra_parent_list[minimum_index_for_updating]
 
     return dijkstra_list[finish], dijkstra_parent_list[finish]
 
