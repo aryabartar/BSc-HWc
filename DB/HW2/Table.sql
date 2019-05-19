@@ -49,6 +49,46 @@ CREATE TABLE car_insurance(
 ;
 
 CREATE TABLE building_insurance(
+    ID CHAR(10),
+    address VARCHAR(1024), 
+    area NUMERIC(10,2), 
+    year NUMERIC(4,0), 
+    PRIMARY KEY(ID), 
+    FOREIGN KEY(ID) REFERENCES insurance(ID)
+)
+;
 
+CREATE TABLE life_insurance(
+    ID CHAR(10), 
+    first_name VARCHAR(256), 
+    last_name VARCHAR(256), 
+    year NUMERIC(4,0), 
+    person_id NUMERIC(10,0), 
+    PRIMARY KEY (ID), 
+    FOREIGN KEY (ID) REFERENCES insurance(ID)
+)
+;
+
+CREATE TABLE insurer(
+    ID CHAR(10), 
+    first_name VARCHAR(256), 
+    last_name VARCHAR(256), 
+    age NUMERIC(3,0), #It is better to handle in view
+    gender VARCHAR(256), 
+    phone NUMERIC(11,0), 
+    address VARCHAR(1024), 
+    password VARCHAR(124), 
+    CHECK (LEN(password) > 8), 
+    PRIMARY KEY (ID)
+)
+;
+
+CREATE TABLE message_answer (
+    ID CHAR(10), 
+    insurerID CHAR(10),
+    message VARCHAR(1024), 
+    answer VARCHAR(1024), 
+    PRIMARY KEY (ID , insurerID), 
+    FOREIGN KEY (insurerID) REFERENCES insurer(ID)
 )
 ;
