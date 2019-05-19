@@ -92,3 +92,14 @@ CREATE TABLE message_answer (
     FOREIGN KEY (insurerID) REFERENCES insurer(ID)
 )
 ;
+
+CREATE TABLE buy_insurance(
+    insuranceID CHAR(10), 
+    insurerID CHAR(10), 
+    date TIMESTAMP, 
+    paid NUMERIC(10,2), 
+    PRIMARY KEY (insuranceID), 
+    FOREIGN KEY (insuranceID) REFERENCES insurance(ID), 
+    FOREIGN KEY (insurerID) REFERENCES insurer(ID)
+)
+;
