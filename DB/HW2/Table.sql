@@ -1,19 +1,19 @@
 CREATE TABLE branch(
     ID CHAR(10),
-    name VARCHAR(128),
-    head VARCHAR(128),
-    deputy VARCHAR(128), 
+    name VARCHAR(256),
+    head VARCHAR(256),
+    deputy VARCHAR(256), 
     PRIMARY KEY (ID)
 )
 ;
 
 CREATE TABLE employee(
     ID CHAR(10), 
-    first_name VARCHAR(128),
-    last_name VARCHAR(128), 
+    first_name VARCHAR(256),
+    last_name VARCHAR(256), 
     phone NUMERIC(11,0), 
     address VARCHAR(1024),
-    branch_ID CHAR(5), 
+    branch_ID CHAR(10), 
     PRIMARY key (ID),
     FOREIGN KEY (branch_ID) REFERENCES branch(ID)
 )
@@ -75,10 +75,10 @@ CREATE TABLE insurer(
     last_name VARCHAR(256), 
     age NUMERIC(3,0), #It is better to handle in view
     gender VARCHAR(256), 
-    phone NUMERIC(11,0), 
-    address VARCHAR(1024), 
+    phone CHAR(10), 
+    address VARCHAR(256), 
     password VARCHAR(124), 
-    CHECK (LEN(password) > 8), 
+    CHECK (LEN(password) > 7), 
     PRIMARY KEY (ID)
 )
 ;
