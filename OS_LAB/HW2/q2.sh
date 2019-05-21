@@ -1,3 +1,5 @@
+#!/bin/bash
+
 X=0
 while [ $X -lt 10 ]
 do 

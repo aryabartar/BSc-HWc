@@ -1,4 +1,5 @@
 #!/bin/bash
+
 read -p "Input a number: " INPUT_NUM
 sum=0
 

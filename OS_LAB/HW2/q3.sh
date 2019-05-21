@@ -1,3 +1,5 @@
+#!/bin/bash
+
 INPUT1=1
 INPUT2=$INPUT1+1
 INPUT3=$INPUT2+1

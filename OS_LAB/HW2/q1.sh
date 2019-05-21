@@ -1,3 +1,5 @@
+#!/bin/bash
+
 read -p "Input: " INPUT1 INPUT2
 if [ $INPUT1 -gt 10 ]; then
     echo "Value is greater than 10!"
