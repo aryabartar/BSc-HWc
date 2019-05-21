@@ -8,7 +8,7 @@ if ! [ -f $FILE_ADDRESS ]; then
     exit 2
 fi
 
-if  [[ "$FILE_ADDRESS" == "*.java" ]]
+if ! [[ $FILE_ADDRESS == *.java || $FILE_ADDRESS == *.js ]]
 then
     echo "This file type is not supported!"
 fi
