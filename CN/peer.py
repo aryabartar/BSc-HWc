@@ -1,34 +1,46 @@
 import socket
 import threading
 import time
+import sys
 
 def listen_to_UDP(): 
-    # serverPort = 12000
-    serverPort = 12002
+    
+    if sys.argv[1] == '1' :
+        serverPort = 12000
+    else:
+        serverPort = 12001
+
     serverSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     serverSocket.bind(('', serverPort))
-    print ("Server mode, Listening.")
     
-    while 1:
-        print ("Peer is in while, listening")
+    while True:
         message, clientAddress = serverSocket.recvfrom(2048)
         modifiedMessage = message.upper()
         serverSocket.sendto(modifiedMessage, clientAddress)
 
 def send_UDP_broadcast():
     serverName = '255.255.255.255'
-    serverPort = 12000
+    SEND_HELLO_INTERVAL = 4
+
+    if sys.argv[1] == '1':
+        serverPort = 12001
+    else:
+        serverPort = 12000
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+    sock.settimeout(0.4)
 
     while True: 
-        time.sleep(3)
+        time.sleep(SEND_HELLO_INTERVAL)
+        print (time.time())
         message = "hello".encode()
-        sock.sendto(message,(serverName, 12000))
-        # sock.sendto(message,(serverName, 12001))
-        modifiedMessage, serverAddress = sock.recvfrom(2048)
-        print (modifiedMessage)
+        try:
+            sock.sendto(message,(serverName, serverPort))
+            modifiedMessage, serverAddress = sock.recvfrom(2048)
+            print (modifiedMessage.decode(), "\n\n")
+        except socket.timeout:
+            print ("UDP hello message send timeout.\n\n")
     
     sock.close()
 
@@ -43,6 +55,7 @@ def create_and_run_threads():
 
     interval_send_thread.start()
     rcv_UDP_thread.start()
+
 
 create_and_run_threads()
 # time.sleep(1000000)
