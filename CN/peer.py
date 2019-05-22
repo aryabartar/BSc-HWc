@@ -11,14 +11,11 @@ def create_and_listen_on_TCP(client_UPD_address):
         """
         message = "Accept"
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        sock.sendto(message, client_UPD_address)
-
-
-
+        sock.sendto(message.encode(), client_UPD_address)
     
-    sock = socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # Allocates random free port and accepts request only from specified IP
-    sock.bind(('', 0)) 
+    sock.bind((client_UPD_address[0], 0)) 
     sock.listen(1)
 
     while True:
@@ -27,6 +24,11 @@ def create_and_listen_on_TCP(client_UPD_address):
         print ("Connection established with {}".format(addr))
        
 
+def connect_to_TCP(server_address):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    print ("HERE")
+    sock.connect(server_address)
+    print ("Connection with server established!")
 
 def listen_to_UDP():
     if sys.argv[1] == '1':
@@ -41,10 +43,11 @@ def listen_to_UDP():
         message, clientAddress = serverSocket.recvfrom(2048)
         message = message.decode()
 
+        print (message)
         if message == "hello":
-            print(clientAddress)
-        modifiedMessage = message.upper()
-        serverSocket.sendto(modifiedMessage.encode(), clientAddress)
+            create_and_listen_on_TCP(clientAddress)
+        elif message == "Accept":
+            connect_to_TCP (clientAddress)
 
 
 def send_UDP_broadcast():
@@ -63,11 +66,11 @@ def send_UDP_broadcast():
     while True:
         time.sleep(SEND_HELLO_INTERVAL)
         print(time.time())
+        
         message = "hello".encode()
         try:
             sock.sendto(message, (serverName, serverPort))
-            modifiedMessage, serverAddress = sock.recvfrom(2048)
-            print(modifiedMessage.decode(), "\n\n")
+        
         except socket.timeout:
             print("UDP hello message send timeout.\n\n")
 
@@ -88,4 +91,3 @@ def create_and_run_threads():
 
 
 create_and_run_threads()
-# time.sleep(1000000)
