@@ -1,10 +1,14 @@
 import socket
 
-serverName = ''
+serverName = '255.255.255.255'
 serverPort = 12000
-clientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+
 message = "hello".encode()
-clientSocket.sendto(message,(serverName, serverPort))
-modifiedMessage, serverAddress = clientSocket.recvfrom(2048)
+sock.sendto(message,(serverName, serverPort))
+sock.sendto(message,(serverName, 12001))
+modifiedMessage, serverAddress = sock.recvfrom(2048)
 print (modifiedMessage)
-clientSocket.close()
+sock.close()
