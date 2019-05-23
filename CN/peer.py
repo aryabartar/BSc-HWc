@@ -4,11 +4,14 @@ import time
 import sys
 import json
 
-import chatClient
-import chatServer
+import chat
 
 sem = threading.Semaphore()
+users_sockets = {}
 
+def give_user_name (sock) :
+    users_sockets[sock] = "Random user"
+    return users_sockets[sock]
 
 def create_and_listen_on_TCP(client_UPD_address):
     def inform_client_from_server(client_UPD_address, TCP_portno):
@@ -18,6 +21,7 @@ def create_and_listen_on_TCP(client_UPD_address):
         message = str(json.dumps({"Accept": "OK", "portno": TCP_portno}))
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.sendto(message.encode(), client_UPD_address)
+        sock.close()
 
     TCP_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # Allocates random free port and accepts request only from specified IP
@@ -26,15 +30,13 @@ def create_and_listen_on_TCP(client_UPD_address):
 
     inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
     connection_sock, addr = TCP_sock.accept()
-    
-    chatServer.start_chat(connection_sock)
+    chat.start_chat(connection_sock, give_user_name(connection_sock))
 
 
-
-def connect_to_TCP(server_ip , server_port):
+def connect_to_TCP(server_ip, server_port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((server_ip, server_port))
-    chatClient.start_chat(sock)
+    chat.start_chat(sock, give_user_name(sock))
 
 
 def listen_to_UDP(sock):
@@ -71,7 +73,6 @@ def send_UDP_broadcast(sock):
     while True:
         sem.acquire()
         sem.release()
-
 
         message = "hello".encode()
         try:
