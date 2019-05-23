@@ -5,13 +5,17 @@ import sys
 import json
 
 import chat
+import funnyName
 
-sem = threading.Semaphore()
+sem = threading.Semaphore(1)
 users_sockets = {}
 
-def give_user_name (sock) :
-    users_sockets[sock] = "Random user"
-    return users_sockets[sock]
+
+def create_TCP_socket():
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    random_name = funnyName.get_name()
+    return sock, random_name
+
 
 def create_and_listen_on_TCP(client_UPD_address):
     def inform_client_from_server(client_UPD_address, TCP_portno):
@@ -23,20 +27,20 @@ def create_and_listen_on_TCP(client_UPD_address):
         sock.sendto(message.encode(), client_UPD_address)
         sock.close()
 
-    TCP_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    TCP_sock, random_user_name = create_TCP_socket()
     # Allocates random free port and accepts request only from specified IP
     TCP_sock.bind(('', 0))
     TCP_sock.listen(1)
-
+        
     inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
     connection_sock, addr = TCP_sock.accept()
-    chat.start_chat(connection_sock, give_user_name(connection_sock))
+    chat.start_chat(connection_sock, random_user_name)
 
 
 def connect_to_TCP(server_ip, server_port):
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock, random_user_name = create_TCP_socket()
     sock.connect((server_ip, server_port))
-    chat.start_chat(sock, give_user_name(sock))
+    chat.start_chat(sock, random_user_name)
 
 
 def listen_to_UDP(sock):
@@ -52,18 +56,16 @@ def listen_to_UDP(sock):
         message = message.decode()
 
         sem.acquire()
-
         if message == "hello":
             create_and_listen_on_TCP(clientAddress)
         elif check_accept_protocol(message)[0]:
             connect_to_TCP(clientAddress[0], check_accept_protocol(message)[1])
-
         sem.release()
 
 
 def send_UDP_broadcast(sock):
     serverName = '255.255.255.255'
-    SEND_HELLO_INTERVAL = 2
+    SEND_HELLO_INTERVAL = 1
 
     if sys.argv[1] == '1':
         serverPort = 12001
