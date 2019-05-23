@@ -1,6 +1,8 @@
 import socket
 import threading
+
 from sys import stdout
+from socket import SHUT_RDWR
 
 user_name = None
 write = stdout.write
@@ -9,24 +11,39 @@ write = stdout.write
 def talk(sock):
     while True:
         message = input("-> ")
+
+        if message == "LEAVE":
+            print("\nYou left the chat.\n")
+            sock.shutdown(SHUT_RDWR)
+            sock.close()
+            break
+
         message = "\n{username} says: {message}".format(
             username=user_name, message=message)
         sock.sendall(message.encode())
 
 
 def listen(sock):
+
     while True:
         message = sock.recv(2048).decode()
+        if not message:
+            break
+
         write("\033[F")
         stdout.flush()
+
         print(message)
+
         write("-> ")
         stdout.flush()
-        # print("->", end=" ")
+
+    print("Partner left the chat!")
+    sock.close()
 
 
 def print_welcome(username):
-    print("\nChat started!\nYour random name is: {username} :D\n".format(
+    print("\nChat started!\nYour random name is: {username} \n".format(
         username=username))
 
 
