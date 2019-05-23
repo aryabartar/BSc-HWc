@@ -4,20 +4,11 @@ import time
 import sys
 import json
 
+import chatClient
+import chatServer
+
 sem = threading.Semaphore()
 
-
-def start_chat_as_client(sock):
-    while True:
-        message= input("::")
-        sock.send(message.encode())
-
-
-def start_chat_as_server(sock):
-    while True:
-        print(sock)
-        message = sock.recv(1024)
-        print(message)
 
 def create_and_listen_on_TCP(client_UPD_address):
     def inform_client_from_server(client_UPD_address, TCP_portno):
@@ -36,15 +27,14 @@ def create_and_listen_on_TCP(client_UPD_address):
     inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
     connection_sock, addr = TCP_sock.accept()
     
-    start_chat_as_server(connection_sock)
+    chatServer.start_chat(connection_sock)
 
 
 
 def connect_to_TCP(server_ip , server_port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((server_ip, server_port))
-    start_chat_as_client(sock)
-    print("Connection with server established!")
+    chatClient.start_chat(sock)
 
 
 def listen_to_UDP(sock):
@@ -56,11 +46,9 @@ def listen_to_UDP(sock):
             return True, None
 
     while True:
-        print("Running listen_to_UDP while")
         message, clientAddress = sock.recvfrom(2048)
         message = message.decode()
 
-        print(message)
         sem.acquire()
 
         if message == "hello":
@@ -84,8 +72,6 @@ def send_UDP_broadcast(sock):
         sem.acquire()
         sem.release()
 
-        print("Running send_UDP_broadcast while")
-        print(time.time())
 
         message = "hello".encode()
         try:
