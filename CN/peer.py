@@ -2,43 +2,46 @@ import socket
 import threading
 import time
 import sys
+import json
 
 sem = threading.Semaphore()
 
 
 def create_and_listen_on_TCP(client_UPD_address):
-    def inform_client_from_server(client_UPD_address):
+    def inform_client_from_server(client_UPD_address, TCP_portno):
         """
         This method sends an UDP message to ask one client to establish a TCP connection.
         """
-        time.sleep(1)
-        message = "Accept"
-        print("Sendong accept!")
+        message = str(json.dumps({"Accept": "OK", "portno": TCP_portno}))
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.sendto(message.encode(), client_UPD_address)
-        print("client address was:", client_UPD_address)
         print("Accept sent!")
 
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    TCP_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # Allocates random free port and accepts request only from specified IP
-    sock.bind(('', 0))
-    sock.listen(1)
-    print("BB")
+    TCP_sock.bind(('', 0))
+    TCP_sock.listen(1)
+
     while True:
-        inform_client_from_server(client_UPD_address)
-        print("CC")
-        connection_sock, addr = sock.accept()
+        print 
+        inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
+        connection_sock, addr = TCP_sock.accept()
         print("Connection established with {}".format(addr))
 
 
-def connect_to_TCP(server_address):
+def connect_to_TCP(server_ip , server_port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    print("EE")
-    sock.connect(server_address)
+    sock.connect((server_ip, server_port))
     print("Connection with server established!")
 
 
 def listen_to_UDP(sock):
+    def check_accept_protocol(message):
+        message_dict = json.loads(message)
+        if message_dict['Accept']:
+            return True, message_dict['portno']
+        else:
+            return True, None
 
     while True:
         print("Running listen_to_UDP while")
@@ -46,14 +49,14 @@ def listen_to_UDP(sock):
         message = message.decode()
 
         print(message)
+        sem.acquire()
+
         if message == "hello":
-            sem.acquire()
-            print("AA")
             create_and_listen_on_TCP(clientAddress)
-        elif message == "Accept":
-            print("DD")
-            connect_to_TCP(clientAddress)
-            sem.release()
+        elif check_accept_protocol(message)[0]:
+            connect_to_TCP(clientAddress[0], check_accept_protocol(message)[1])
+
+        sem.release()
 
 
 def send_UDP_broadcast(sock):

@@ -1,6 +1,4 @@
-import socket
+def a():
+    return "a", "b"
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-sock.bind(('', 10002))
-sock
+print(a()[1])
