@@ -7,6 +7,18 @@ import json
 sem = threading.Semaphore()
 
 
+def start_chat_as_client(sock):
+    while True:
+        message= input("::")
+        sock.send(message.encode())
+
+
+def start_chat_as_server(sock):
+    while True:
+        print(sock)
+        message = sock.recv(1024)
+        print(message)
+
 def create_and_listen_on_TCP(client_UPD_address):
     def inform_client_from_server(client_UPD_address, TCP_portno):
         """
@@ -15,23 +27,23 @@ def create_and_listen_on_TCP(client_UPD_address):
         message = str(json.dumps({"Accept": "OK", "portno": TCP_portno}))
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.sendto(message.encode(), client_UPD_address)
-        print("Accept sent!")
 
     TCP_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # Allocates random free port and accepts request only from specified IP
     TCP_sock.bind(('', 0))
     TCP_sock.listen(1)
 
-    while True:
-        print 
-        inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
-        connection_sock, addr = TCP_sock.accept()
-        print("Connection established with {}".format(addr))
+    inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
+    connection_sock, addr = TCP_sock.accept()
+    
+    start_chat_as_server(connection_sock)
+
 
 
 def connect_to_TCP(server_ip , server_port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((server_ip, server_port))
+    start_chat_as_client(sock)
     print("Connection with server established!")
 
 
