@@ -3,10 +3,12 @@ import threading
 import time
 import sys
 import json
+import random
 
 import chat
 import funnyName
 
+in_TCP_chat = False
 sem = threading.Semaphore(1)
 users_sockets = {}
 
@@ -15,6 +17,13 @@ def create_TCP_socket():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     random_name = funnyName.get_name()
     return sock, random_name
+
+
+def start_TCP_chat(connection_sock, random_user_name):
+    global in_TCP_chat
+    in_TCP_chat = True
+    chat.start_chat(connection_sock, random_user_name)
+    in_TCP_chat = False
 
 
 def create_and_listen_on_TCP(client_UPD_address):
@@ -31,16 +40,18 @@ def create_and_listen_on_TCP(client_UPD_address):
     # Allocates random free port and accepts request only from specified IP
     TCP_sock.bind(('', 0))
     TCP_sock.listen(1)
-        
+
     inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
+    # print("1")
     connection_sock, addr = TCP_sock.accept()
-    chat.start_chat(connection_sock, random_user_name)
+    # print("2")
+    start_TCP_chat(connection_sock, random_user_name)
 
 
 def connect_to_TCP(server_ip, server_port):
     sock, random_user_name = create_TCP_socket()
     sock.connect((server_ip, server_port))
-    chat.start_chat(sock, random_user_name)
+    start_TCP_chat(sock, random_user_name)
 
 
 def listen_to_UDP(sock):
@@ -51,17 +62,29 @@ def listen_to_UDP(sock):
         else:
             return True, None
 
+    global in_TCP_chat
+
     while True:
-        print("REady to receave from.")
+        # print("Ready to recv UDP in function listen_to_UDP")
         message, clientAddress = sock.recvfrom(2048)
         message = message.decode()
+        # print("Recieved UDP message, message is: ", message)
 
-        sem.acquire()
+        if in_TCP_chat:
+            continue
+
         if message == "hello":
-            create_and_listen_on_TCP(clientAddress)
+            establish_TCP_connection_thread = threading.Thread(target=create_and_listen_on_TCP,
+                                                               name="create_and_listen_on_TCP", args=(clientAddress, ))
+            establish_TCP_connection_thread.start()
+
         elif check_accept_protocol(message)[0]:
-            connect_to_TCP(clientAddress[0], check_accept_protocol(message)[1])
-        sem.release()
+            establish_TCP_connection_thread = threading.Thread(target=connect_to_TCP,
+                                                               name="connect_to_TCP", args=(clientAddress[0], check_accept_protocol(message)[1], ))
+            establish_TCP_connection_thread.start()
+            # print("Server exit!")
+
+        time.sleep(1)
 
 
 def send_UDP_broadcast(sock):
@@ -74,16 +97,17 @@ def send_UDP_broadcast(sock):
         serverPort = 12000
 
     while True:
-        sem.acquire()
-        sem.release()
-        
+
+        while in_TCP_chat:
+            time.sleep(0.3)
+
         message = "hello".encode()
         try:
             sock.sendto(message, (serverName, serverPort))
-            print("Sent hello message!")
+            # print("Sent hello message!")
         except socket.timeout:
             print("UDP hello message send timeout.\n\n")
-
+            
         time.sleep(SEND_HELLO_INTERVAL)
 
     sock.close()

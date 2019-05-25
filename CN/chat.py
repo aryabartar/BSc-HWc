@@ -13,9 +13,11 @@ write = stdout.write
 def talk(sock):
     def get_input(sock):
         while True:
-            message = input("-> ")
+            write("-> ")
+            stdout.flush()  
 
-            if message == "LEAVE":
+            message = input()
+            if message == "l":
                 print("\nYou left the chat.\n")
                 sock.shutdown(SHUT_RDWR)
                 sock.close()
@@ -31,7 +33,6 @@ def talk(sock):
     while connection_open:
         time.sleep(0.2)
 
-    print("Ending talk!")
 
 
 def listen(sock):
@@ -75,6 +76,7 @@ def start_chat(sock, socket_user_name):
 
     listen_thread.join()
 
-    print("I am here!")
     connection_open = True
     user_name = None
+
+    # print("Got out of TCP chat. ")

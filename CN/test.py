@@ -1,4 +1,3 @@
-
 f = open("funnyName.py", "r")
 text = f.read()
 

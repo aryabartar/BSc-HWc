@@ -5,7 +5,7 @@ used_names = []
 
 
 def get_name():
-    random_number = random.randint(0, len(unused_names))
+    random_number = random.randint(0, len(unused_names)-1)
     name = unused_names.pop(random_number)
     used_names.append(name)
     return name
