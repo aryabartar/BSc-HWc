@@ -65,10 +65,8 @@ def listen_to_UDP(sock):
     global in_TCP_chat
 
     while True:
-        # print("Ready to recv UDP in function listen_to_UDP")
         message, clientAddress = sock.recvfrom(2048)
         message = message.decode()
-        # print("Recieved UDP message, message is: ", message)
 
         if in_TCP_chat:
             continue

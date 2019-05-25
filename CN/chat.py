@@ -10,11 +10,16 @@ user_name = None
 write = stdout.write
 
 
+def remove_last_printed_line():
+    write("\033[F")
+    stdout.flush()
+
+
 def talk(sock):
     def get_input(sock):
         while True:
             write("-> ")
-            stdout.flush()  
+            stdout.flush()
 
             message = input()
             if message == "l":
@@ -34,23 +39,23 @@ def talk(sock):
         time.sleep(0.2)
 
 
-
 def listen(sock):
 
     while True:
         message = sock.recv(2048).decode()
         if not message:
+            write("\b")
+            stdout.flush()
             break
 
-        write("\033[F")
-        stdout.flush()
+        remove_last_printed_line()
 
         print(message)
 
         write("-> ")
         stdout.flush()
 
-    print("Partner left the chat!")
+    print("\nPartner left the chat!\n")
     sock.close()
     connection_open = False
 
