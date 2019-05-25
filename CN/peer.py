@@ -52,6 +52,7 @@ def listen_to_UDP(sock):
             return True, None
 
     while True:
+        print("REady to receave from.")
         message, clientAddress = sock.recvfrom(2048)
         message = message.decode()
 
@@ -75,11 +76,11 @@ def send_UDP_broadcast(sock):
     while True:
         sem.acquire()
         sem.release()
-
+        
         message = "hello".encode()
         try:
             sock.sendto(message, (serverName, serverPort))
-
+            print("Sent hello message!")
         except socket.timeout:
             print("UDP hello message send timeout.\n\n")
 
