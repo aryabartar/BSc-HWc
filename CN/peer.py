@@ -9,9 +9,49 @@ import chat
 import funnyName
 import thread
 
+from sys import stdout
+
+write = stdout.write
 in_TCP_chat = False
-sem = threading.Semaphore(1)
 users_sockets = {}
+
+
+def print_waiting(message="Waiting", in_TCP_chat=False):
+    print_counter = 0
+    right_print_direction = True
+
+    write(message + " ")
+    stdout.flush()
+    privious_in_TCP_chat = in_TCP_chat
+
+    while True:
+        time.sleep(0.5)
+
+        if not privious_in_TCP_chat == in_TCP_chat:
+            write(message + " ")
+            privious_in_TCP_chat = in_TCP_chat
+            continue
+
+        if in_TCP_chat == True:
+            continue
+
+        if right_print_direction:
+            print_counter += 1
+            if print_counter == 3:
+                right_print_direction = False
+            write(".")
+            stdout.flush()
+
+        else:
+            print_counter -= 1
+            if print_counter == 0:
+                right_print_direction = True
+            write("\b")
+            write(" ")
+            write("\b")
+            stdout.flush()
+
+            privious_in_TCP_chat = in_TCP_chat
 
 
 def create_TCP_socket():
@@ -24,6 +64,7 @@ def start_TCP_chat(connection_sock, random_user_name):
     global in_TCP_chat
     in_TCP_chat = True
     chat.start_chat(connection_sock, random_user_name)
+    print("\n\n\n\na;lskd;lsao kdloks adlksdsd")
     in_TCP_chat = False
 
 
@@ -63,10 +104,10 @@ def listen_to_UDP(sock):
 
     global in_TCP_chat
 
+    wait_thread = thread.WaitThread("Waiting", in_TCP_chat)
+    wait_thread.start()
+
     while True:
-        if not in_TCP_chat:
-            wait_thread = thread.WaitThread()
-            wait_thread.start()
 
         message, clientAddress = sock.recvfrom(2048)
         message = message.decode()
@@ -74,8 +115,6 @@ def listen_to_UDP(sock):
         if in_TCP_chat:
             continue
 
-        wait_thread.stop()
-        
         if message == "hello":
             establish_TCP_connection_thread = threading.Thread(target=create_and_listen_on_TCP,
                                                                name="create_and_listen_on_TCP", args=(clientAddress, ))
@@ -108,7 +147,7 @@ def send_UDP_broadcast(sock):
             sock.sendto(message, (serverName, serverPort))
         except socket.timeout:
             print("UDP hello message send timeout.\n\n")
-            
+
         time.sleep(SEND_HELLO_INTERVAL)
 
     sock.close()
