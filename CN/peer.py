@@ -7,6 +7,7 @@ import random
 
 import chat
 import funnyName
+import thread
 
 in_TCP_chat = False
 sem = threading.Semaphore(1)
@@ -42,9 +43,7 @@ def create_and_listen_on_TCP(client_UPD_address):
     TCP_sock.listen(1)
 
     inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
-    # print("1")
     connection_sock, addr = TCP_sock.accept()
-    # print("2")
     start_TCP_chat(connection_sock, random_user_name)
 
 
@@ -65,11 +64,16 @@ def listen_to_UDP(sock):
     global in_TCP_chat
 
     while True:
+        if not in_TCP_chat:
+            wait_thread = thread.WaitThread()
+            wait_thread.start()
+
         message, clientAddress = sock.recvfrom(2048)
         message = message.decode()
 
         if in_TCP_chat:
             continue
+        wait_thread.stop()
 
         if message == "hello":
             establish_TCP_connection_thread = threading.Thread(target=create_and_listen_on_TCP,
@@ -80,7 +84,6 @@ def listen_to_UDP(sock):
             establish_TCP_connection_thread = threading.Thread(target=connect_to_TCP,
                                                                name="connect_to_TCP", args=(clientAddress[0], check_accept_protocol(message)[1], ))
             establish_TCP_connection_thread.start()
-            # print("Server exit!")
 
         time.sleep(1)
 
@@ -102,7 +105,6 @@ def send_UDP_broadcast(sock):
         message = "hello".encode()
         try:
             sock.sendto(message, (serverName, serverPort))
-            # print("Sent hello message!")
         except socket.timeout:
             print("UDP hello message send timeout.\n\n")
             
