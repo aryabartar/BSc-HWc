@@ -9,22 +9,22 @@ connection_open = True
 user_name = None
 left_the_chat = False
 write = stdout.write
-
+sock = None
 
 def remove_last_printed_line():
     write("\033[F")
     stdout.flush()
 
 
-def talk(sock):
-    def get_input(sock):
+def talk():
+    def get_input():
         global left_the_chat 
         
         while True:
             write("-> ")
             stdout.flush()
-
             message = input()
+            
             if message == "l":
                 left_the_chat = True
                 print("\nYou left the chat.\n")
@@ -34,16 +34,18 @@ def talk(sock):
 
             message = "\n{username} says: {message}".format(
                 username=user_name, message=message)
+
             sock.sendall(message.encode())
 
-    threading.Thread(
-        target=get_input, name="get_input", args=(sock, )).start()
+    get_input_thread = threading.Thread(
+        target=get_input, name="get_input", args=( ))
+    get_input_thread.start()
 
     while connection_open:
         time.sleep(0.2)
 
 
-def listen(sock):
+def listen():
     global left_the_chat 
 
     while True:
@@ -75,25 +77,34 @@ def set_globals_to_default():
     global connection_open
     global user_name
     global left_the_chat
+    global sock
 
     connection_open = True
     user_name = None
     left_the_chat = False
+    sock = None
 
-def start_chat(sock, socket_user_name):
+
+def start_chat(TCP_socket, socket_user_name):
     global user_name
-    
+    global sock
+
+    sock = TCP_socket
     user_name = socket_user_name
 
     listen_thread = threading.Thread(
-        target=listen, name="listen", args=(sock, ))
+        target=listen, name="listen", args=( ))
     talk_thread = threading.Thread(
-        target=talk, name="talk", args=(sock, ))
+        target=talk, name="talk", args=( ))
 
     print_welcome(user_name)
 
     listen_thread.start()
     talk_thread.start()
+
+    listen_thread.setDaemon = True
+    talk_thread.setDaemon = True
+
 
     listen_thread.join()
 
