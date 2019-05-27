@@ -73,8 +73,9 @@ def listen_to_UDP(sock):
 
         if in_TCP_chat:
             continue
-        wait_thread.stop()
 
+        wait_thread.stop()
+        
         if message == "hello":
             establish_TCP_connection_thread = threading.Thread(target=create_and_listen_on_TCP,
                                                                name="create_and_listen_on_TCP", args=(clientAddress, ))
