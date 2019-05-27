@@ -33,7 +33,7 @@ def talk():
 
             if message == "l":
                 left_the_chat = True
-                print("\nYou left the chat.")
+                print("\nYou left the chat.", "\U0001F606")
                 print_dash()
                 print("\n")
                 sock.shutdown(SHUT_RDWR)
@@ -71,7 +71,7 @@ def listen():
         stdout.flush()
 
     if not left_the_chat:
-        print("\nYour partner left the chat :( " )
+        print("\nYour partner left the chat.", "\U0001F606" )
         print_dash()
         print("\n")
 

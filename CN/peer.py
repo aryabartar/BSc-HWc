@@ -16,9 +16,11 @@ write = stdout.write
 in_TCP_chat = False
 all_sockets = []
 
+
 def add_socket_to_all_sockets(sock):
     global all_sockets
     all_sockets.append(sock)
+
 
 def print_waiting(message="Waiting"):
     def print_message():
@@ -117,6 +119,7 @@ def listen_to_UDP(sock):
     def make_and_start_print_waiting_thread():
         print_waiting_thread = threading.Thread(target=print_waiting,
                                                 name="print_waiting", args=("Waiting", ))
+        print_waiting_thread.setDaemon(True)
         print_waiting_thread.start()
 
     make_and_start_print_waiting_thread()
@@ -131,11 +134,13 @@ def listen_to_UDP(sock):
         if message == "hello":
             establish_TCP_connection_thread = threading.Thread(target=create_and_listen_on_TCP,
                                                                name="create_and_listen_on_TCP", args=(clientAddress, ))
+            establish_TCP_connection_thread.setDaemon(True)
             establish_TCP_connection_thread.start()
 
         elif check_accept_protocol(message)[0]:
             establish_TCP_connection_thread = threading.Thread(target=connect_to_TCP,
                                                                name="connect_to_TCP", args=(clientAddress[0], check_accept_protocol(message)[1], ))
+            establish_TCP_connection_thread.setDaemon(True)
             establish_TCP_connection_thread.start()
 
         time.sleep(1)
@@ -180,26 +185,29 @@ def create_and_run_threads():
 
     rcv_UDP_thread = threading.Thread(
         target=send_UDP_broadcast, name="send_UDP_broadcast", args=(sock, ))
-    rcv_UDP_thread.daemon = False
+    rcv_UDP_thread.setDaemon(True)
     rcv_UDP_thread.start()
 
     interval_send_thread = threading.Thread(
         target=listen_to_UDP, name="listen_to_UDP", args=(sock, ))
-    interval_send_thread.daemon = False
+    interval_send_thread.setDaemon(True)
     interval_send_thread.start()
+
+    interval_send_thread.join()
+    rcv_UDP_thread.join()
 
 def sigint_handler(signum, frame):
     global all_sockets
-    print(all_sockets)
+
+    print("\n\nIt seems that we are missing you.\nEnjoy your SUNNY day!" ,'\U0001F604' )
     for sock in all_sockets:
         try:
             sock.close()
-            print("done")
         except:
-            print("Error wile closing!\n\n\nWOWOWOWOW\n\n")
-    
-    
+            print("Error wile closing some socket connections!")
+
     sys.exit()
+
 
 signal.signal(signal.SIGINT, sigint_handler)
 create_and_run_threads()
