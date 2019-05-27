@@ -7,7 +7,6 @@ import random
 
 import chat
 import funnyName
-import thread
 
 from sys import stdout
 
@@ -16,7 +15,9 @@ in_TCP_chat = False
 users_sockets = {}
 
 
-def print_waiting(message="Waiting", in_TCP_chat=False):
+def print_waiting(message="Waiting"):
+    global in_TCP_chat
+
     print_counter = 0
     right_print_direction = True
 
@@ -64,7 +65,6 @@ def start_TCP_chat(connection_sock, random_user_name):
     global in_TCP_chat
     in_TCP_chat = True
     chat.start_chat(connection_sock, random_user_name)
-    print("\n\n\n\na;lskd;lsao kdloks adlksdsd")
     in_TCP_chat = False
 
 
@@ -102,13 +102,14 @@ def listen_to_UDP(sock):
         else:
             return True, None
 
-    global in_TCP_chat
+    def make_and_start_print_waiting_thread():
+        print_waiting_thread = threading.Thread(target=print_waiting,
+                                                           name="print_waiting", args=("Waiting", ))
+        print_waiting_thread.start()
 
-    wait_thread = thread.WaitThread("Waiting", in_TCP_chat)
-    wait_thread.start()
-
+    make_and_start_print_waiting_thread()
     while True:
-
+        
         message, clientAddress = sock.recvfrom(2048)
         message = message.decode()
 
