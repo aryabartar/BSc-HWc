@@ -14,8 +14,11 @@ from sys import stdout
 
 write = stdout.write
 in_TCP_chat = False
-users_sockets = {}
+all_sockets = []
 
+def add_socket_to_all_sockets(sock):
+    global all_sockets
+    all_sockets.append(sock)
 
 def print_waiting(message="Waiting"):
     def print_message():
@@ -65,6 +68,7 @@ def print_waiting(message="Waiting"):
 
 def create_TCP_socket():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    add_socket_to_all_sockets(sock)
     random_name = funnyName.get_name()
     return sock, random_name
 
@@ -164,6 +168,7 @@ def send_UDP_broadcast(sock):
 
 def create_and_run_threads():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    add_socket_to_all_sockets(sock)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
     if sys.argv[1] == '1':
@@ -183,9 +188,18 @@ def create_and_run_threads():
     interval_send_thread.daemon = False
     interval_send_thread.start()
 
-# def sigint_handler(signum, frame):
-#     print ('\n\nEnjoy your day!\n')
-#     sys.exit()
+def sigint_handler(signum, frame):
+    global all_sockets
+    print(all_sockets)
+    for sock in all_sockets:
+        try:
+            sock.close()
+            print("done")
+        except:
+            print("Error wile closing!\n\n\nWOWOWOWOW\n\n")
+    
+    
+    sys.exit()
 
-# signal.signal(signal.SIGINT, sigint_handler)
+signal.signal(signal.SIGINT, sigint_handler)
 create_and_run_threads()

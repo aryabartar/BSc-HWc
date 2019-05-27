@@ -27,7 +27,7 @@ def talk():
         global left_the_chat
 
         while True:
-            write("-> ")
+            write(bcolors.BOLD + "-> " + bcolors.ENDC)
             stdout.flush()
             message = input()
 
@@ -67,11 +67,11 @@ def listen():
 
         print(message)
 
-        write("-> ")
+        write(bcolors.BOLD + "-> " + bcolors.ENDC)
         stdout.flush()
 
     if not left_the_chat:
-        print("\nYour partner left the chat :( ")
+        print("\nYour partner left the chat :( " )
         print_dash()
         print("\n")
 
@@ -82,7 +82,7 @@ def listen():
 def print_welcome(username):
     remove_last_printed_line()
     print_dash()
-    print(bcolors.OKGREEN + "Chat started!\n"+ bcolors.ENDC , "\bYour random name is:" +  bcolors.BOLD + " {username} \n".format(
+    print("Chat started!\n", "\bYour random name is:" +  bcolors.BOLD + " {username} \n".format(
         username=username) + bcolors.ENDC)
 
 
