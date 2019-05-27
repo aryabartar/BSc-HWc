@@ -7,6 +7,7 @@ from socket import SHUT_RDWR
 
 connection_open = True
 user_name = None
+left_the_chat = False
 write = stdout.write
 
 
@@ -17,12 +18,15 @@ def remove_last_printed_line():
 
 def talk(sock):
     def get_input(sock):
+        global left_the_chat 
+        
         while True:
             write("-> ")
             stdout.flush()
 
             message = input()
             if message == "l":
+                left_the_chat = True
                 print("\nYou left the chat.\n")
                 sock.shutdown(SHUT_RDWR)
                 sock.close()
@@ -40,6 +44,7 @@ def talk(sock):
 
 
 def listen(sock):
+    global left_the_chat 
 
     while True:
         message = sock.recv(2048).decode()
@@ -55,7 +60,9 @@ def listen(sock):
         write("-> ")
         stdout.flush()
 
-    print("\nPartner left the chat!\n")
+    if not left_the_chat :
+        print("\nYour partner left the chat :( \n")
+
     sock.close()
     connection_open = False
 
@@ -64,9 +71,18 @@ def print_welcome(username):
     print("\nChat started!\nYour random name is: {username} \n".format(
         username=username))
 
+def set_globals_to_default():
+    global connection_open
+    global user_name
+    global left_the_chat
+
+    connection_open = True
+    user_name = None
+    left_the_chat = False
 
 def start_chat(sock, socket_user_name):
     global user_name
+    
     user_name = socket_user_name
 
     listen_thread = threading.Thread(
@@ -81,7 +97,5 @@ def start_chat(sock, socket_user_name):
 
     listen_thread.join()
 
-    connection_open = True
-    user_name = None
+    set_globals_to_default()
 
-    # print("Got out of TCP chat. ")

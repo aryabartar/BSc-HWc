@@ -23,7 +23,7 @@ class WaitThread(threading.Thread):
         write("\033[F")
         stdout.flush()
 
-        self._stop.set() 
+        self._stop.set()
   
     def stopped(self): 
         return self._stop.isSet() 
