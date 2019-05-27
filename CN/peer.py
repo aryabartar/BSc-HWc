@@ -4,6 +4,8 @@ import time
 import sys
 import json
 import random
+import signal
+
 
 import chat
 import funnyName
@@ -16,22 +18,30 @@ users_sockets = {}
 
 
 def print_waiting(message="Waiting"):
+    def print_message():
+        write(message + " ")
+        stdout.flush()
+
     global in_TCP_chat
 
     print_counter = 0
     right_print_direction = True
 
-    write(message + " ")
-    stdout.flush()
+    print_message()
+
     privious_in_TCP_chat = in_TCP_chat
 
     while True:
         time.sleep(0.5)
 
-        if not privious_in_TCP_chat == in_TCP_chat:
-            write(message + " ")
+        if (privious_in_TCP_chat != in_TCP_chat) and (not in_TCP_chat):
+            print_counter = 0
+            right_print_direction = True
+            print_message()
             privious_in_TCP_chat = in_TCP_chat
             continue
+
+        privious_in_TCP_chat = in_TCP_chat
 
         if in_TCP_chat == True:
             continue
@@ -51,8 +61,6 @@ def print_waiting(message="Waiting"):
             write(" ")
             write("\b")
             stdout.flush()
-
-            privious_in_TCP_chat = in_TCP_chat
 
 
 def create_TCP_socket():
@@ -104,12 +112,12 @@ def listen_to_UDP(sock):
 
     def make_and_start_print_waiting_thread():
         print_waiting_thread = threading.Thread(target=print_waiting,
-                                                           name="print_waiting", args=("Waiting", ))
+                                                name="print_waiting", args=("Waiting", ))
         print_waiting_thread.start()
 
     make_and_start_print_waiting_thread()
     while True:
-        
+
         message, clientAddress = sock.recvfrom(2048)
         message = message.decode()
 
@@ -175,5 +183,9 @@ def create_and_run_threads():
     interval_send_thread.daemon = False
     interval_send_thread.start()
 
+# def sigint_handler(signum, frame):
+#     print ('\n\nEnjoy your day!\n')
+#     sys.exit()
 
+# signal.signal(signal.SIGINT, sigint_handler)
 create_and_run_threads()

@@ -2,6 +2,7 @@ import time
 import socket
 import threading
 
+from colors import bcolors
 from sys import stdout
 from socket import SHUT_RDWR
 
@@ -11,23 +12,30 @@ left_the_chat = False
 write = stdout.write
 sock = None
 
+
 def remove_last_printed_line():
     write("\033[F")
     stdout.flush()
 
 
+def print_dash():
+    print(bcolors.OKGREEN + "-----------------------------" + bcolors.ENDC)
+
+
 def talk():
     def get_input():
-        global left_the_chat 
-        
+        global left_the_chat
+
         while True:
             write("-> ")
             stdout.flush()
             message = input()
-            
+
             if message == "l":
                 left_the_chat = True
-                print("\nYou left the chat.\n")
+                print("\nYou left the chat.")
+                print_dash()
+                print("\n")
                 sock.shutdown(SHUT_RDWR)
                 sock.close()
                 break
@@ -38,7 +46,7 @@ def talk():
             sock.sendall(message.encode())
 
     get_input_thread = threading.Thread(
-        target=get_input, name="get_input", args=( ))
+        target=get_input, name="get_input", args=())
     get_input_thread.start()
 
     while connection_open:
@@ -46,7 +54,7 @@ def talk():
 
 
 def listen():
-    global left_the_chat 
+    global left_the_chat
 
     while True:
         message = sock.recv(2048).decode()
@@ -62,16 +70,21 @@ def listen():
         write("-> ")
         stdout.flush()
 
-    if not left_the_chat :
-        print("\nYour partner left the chat :( \n")
+    if not left_the_chat:
+        print("\nYour partner left the chat :( ")
+        print_dash()
+        print("\n")
 
     sock.close()
     connection_open = False
 
 
 def print_welcome(username):
-    print("\nChat started!\nYour random name is: {username} \n".format(
-        username=username))
+    remove_last_printed_line()
+    print_dash()
+    print(bcolors.OKGREEN + "Chat started!\n"+ bcolors.ENDC , "\bYour random name is:" +  bcolors.BOLD + " {username} \n".format(
+        username=username) + bcolors.ENDC)
+
 
 def set_globals_to_default():
     global connection_open
@@ -93,9 +106,9 @@ def start_chat(TCP_socket, socket_user_name):
     user_name = socket_user_name
 
     listen_thread = threading.Thread(
-        target=listen, name="listen", args=( ))
+        target=listen, name="listen", args=())
     talk_thread = threading.Thread(
-        target=talk, name="talk", args=( ))
+        target=talk, name="talk", args=())
 
     print_welcome(user_name)
 
@@ -105,8 +118,6 @@ def start_chat(TCP_socket, socket_user_name):
     listen_thread.setDaemon = True
     talk_thread.setDaemon = True
 
-
     listen_thread.join()
 
     set_globals_to_default()
-
