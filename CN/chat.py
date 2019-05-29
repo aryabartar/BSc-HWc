@@ -71,6 +71,8 @@ def listen():
         stdout.flush()
 
     if not left_the_chat:
+        remove_last_printed_line()
+        print("\n                    ")
         print("\nYour partner left the chat.", "\U0001F606" )
         print_dash()
         print("\n")
