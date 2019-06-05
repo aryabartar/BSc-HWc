@@ -7,11 +7,11 @@
         <building> Watson </building>
         <budget> 90000 </budget>
     </department>
-    <course course id="CS-10" dept name="Comp. Sci" instructors="10101 83821">
+    <course course-id="CS-10" dept name="Comp. Sci" instructors="10101 83821">
         <title> Intro. to Computer Science </title>
         <credits> 4 </credits>
     </course>
-    <course course id="BIO-301" dept name="Biology" instructors="76766">
+    <course course-id="BIO-301" dept name="Biology" instructors="76766">
         <title> Genetics </title>
         <credits> 4 </credits>
     </course>
