@@ -1,0 +1,30 @@
+<university>
+    <department dept name="Comp. Sci.">
+        <building> Taylor </building>
+        <budget> 100000 </budget>
+    </department>
+    <department dept name="Biology">
+        <building> Watson </building>
+        <budget> 90000 </budget>
+    </department>
+    <course course id="CS-10" dept name="Comp. Sci" instructors="10101 83821">
+        <title> Intro. to Computer Science </title>
+        <credits> 4 </credits>
+    </course>
+    <course course id="BIO-301" dept name="Biology" instructors="76766">
+        <title> Genetics </title>
+        <credits> 4 </credits>
+    </course>
+    <instructor IID="10101" dept name="Comp. Sci.">
+        <name> Srinivasan </name>
+        <salary> 65000 </salary>
+    </instructor>
+    <instructor IID="83821" dept name="Comp. Sci.">
+        <name> Brandt </name>
+        <salary> 72000 </salary>
+    </instructor>
+    <instructor IID="76766" dept name="Biology">
+        <name> Crick </name>
+        <salary> 72000 </salary>
+    </instructor>
+</university>
