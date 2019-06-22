@@ -103,6 +103,12 @@
                     <dept-name> Comp. Sci. </dept-name>
                     <credits> 4 </credits>
                 </course>
+                <course>
+                    <course-id> CS-102z </course-id>
+                    <title> Intro. to Computer Science </title>
+                    <dept-name> Comp. Sci. </dept-name>
+                    <credits> 4 </credits>
+                </course>
             </teaches>
         </instructor>
         <instructor>
