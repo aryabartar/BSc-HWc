@@ -15,7 +15,7 @@ from sys import stdout
 write = stdout.write
 in_TCP_chat = False
 all_sockets = []
-
+RANDOM_ID = random.randint(0,100000)
 
 def add_socket_to_all_sockets(sock):
     global all_sockets
@@ -124,43 +124,47 @@ def listen_to_UDP(sock):
 
     make_and_start_print_waiting_thread()
     while True:
+        try:
+            message, clientAddress = sock.recvfrom(2048)
+            message = message.decode()
 
-        message, clientAddress = sock.recvfrom(2048)
-        message = message.decode()
+            print(message)
+            if message.split('-')[1] == str(RANDOM_ID):
+                continue
 
-        if in_TCP_chat:
-            continue
+            if in_TCP_chat:
+                continue
 
-        if message == "hello":
-            establish_TCP_connection_thread = threading.Thread(target=create_and_listen_on_TCP,
-                                                               name="create_and_listen_on_TCP", args=(clientAddress, ))
-            establish_TCP_connection_thread.setDaemon(True)
-            establish_TCP_connection_thread.start()
+            if message.split('-')[0] == "hello":
+                establish_TCP_connection_thread = threading.Thread(target=create_and_listen_on_TCP,
+                                                                name="create_and_listen_on_TCP", args=(clientAddress, ))
+                establish_TCP_connection_thread.setDaemon(True)
+                establish_TCP_connection_thread.start()
 
-        elif check_accept_protocol(message)[0]:
-            establish_TCP_connection_thread = threading.Thread(target=connect_to_TCP,
-                                                               name="connect_to_TCP", args=(clientAddress[0], check_accept_protocol(message)[1], ))
-            establish_TCP_connection_thread.setDaemon(True)
-            establish_TCP_connection_thread.start()
+            elif check_accept_protocol(message)[0]:
+                establish_TCP_connection_thread = threading.Thread(target=connect_to_TCP,
+                                                                name="connect_to_TCP", args=(clientAddress[0], check_accept_protocol(message)[1], ))
+                establish_TCP_connection_thread.setDaemon(True)
+                establish_TCP_connection_thread.start()
 
-        time.sleep(1)
+            time.sleep(1)
+        except:
+            pass
 
 
 def send_UDP_broadcast(sock):
+    global RANDOM_ID
+    
     serverName = '255.255.255.255'
     SEND_HELLO_INTERVAL = 1
-
-    if sys.argv[1] == '1':
-        serverPort = 12001
-    else:
-        serverPort = 12000
+    serverPort = 12000
 
     while True:
 
         while in_TCP_chat:
             time.sleep(0.3)
 
-        message = "hello".encode()
+        message = "hello-{id}".format(id=RANDOM_ID).encode()
         try:
             sock.sendto(message, (serverName, serverPort))
         except socket.timeout:
@@ -176,11 +180,10 @@ def create_and_run_threads():
     add_socket_to_all_sockets(sock)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
-    if sys.argv[1] == '1':
-        serverPort = 12000
-    else:
-        serverPort = 12001
+    global RANDOM_ID
+    print(RANDOM_ID)
 
+    serverPort = 12000
     sock.bind(('', serverPort))
 
     rcv_UDP_thread = threading.Thread(
