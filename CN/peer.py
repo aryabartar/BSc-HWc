@@ -121,6 +121,8 @@ def create_and_listen_on_TCP(client_UPD_address):
         
         try:
             connection_sock, addr = TCP_sock.accept()
+            sock.settimeout(None)
+
         except:
             #timeout
             return
@@ -140,6 +142,8 @@ def connect_to_TCP(server_ip, server_port):
     try:
         sock.settimeout(7)
         sock.connect((server_ip, server_port))
+        sock.settimeout(None)
+
         try:
             random_name = funnyName.get_name()
         except:
