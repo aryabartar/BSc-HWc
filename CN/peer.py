@@ -118,7 +118,7 @@ def create_and_listen_on_TCP(client_UPD_address):
 
     if not in_TCP_chat:
         print("opened socket ready to accept is:", TCP_sock)
-        TCP_sock.settimeout(2)
+        # TCP_sock.settimeout(2)
         connection_sock, addr = TCP_sock.accept()
 
 
@@ -129,6 +129,7 @@ def create_and_listen_on_TCP(client_UPD_address):
                 random_name = "Arya"
             start_TCP_chat(connection_sock, random_name)
 
+        print("here")
 
 def connect_to_TCP(server_ip, server_port):
     sock = create_TCP_socket()
