@@ -72,12 +72,8 @@ def print_waiting(message="Waiting"):
 def create_TCP_socket():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     add_socket_to_all_sockets(sock)
-    try:
-        random_name = funnyName.get_name()
-    except:
-        random_name = "Arya"
 
-    return sock, random_name
+    return sock 
 
 
 def start_TCP_chat(connection_sock, random_user_name):
@@ -100,7 +96,7 @@ def create_and_listen_on_TCP(client_UPD_address):
     
     global in_TCP_chat
 
-    TCP_sock, random_user_name = create_TCP_socket()
+    TCP_sock = create_TCP_socket()
     # Allocates random free port and accepts request only from specified IP
     TCP_sock.bind(('', 0))
     TCP_sock.listen(1)
@@ -110,14 +106,22 @@ def create_and_listen_on_TCP(client_UPD_address):
     if not in_TCP_chat:
         connection_sock, addr = TCP_sock.accept()
         if not in_TCP_chat:
-            start_TCP_chat(connection_sock, random_user_name)
+            try:
+                random_name = funnyName.get_name()
+            except:
+                random_name = "Arya"
+            start_TCP_chat(connection_sock, random_name)
 
 
 def connect_to_TCP(server_ip, server_port):
-    sock, random_user_name = create_TCP_socket()
+    sock = create_TCP_socket()
     try:
         sock.connect((server_ip, server_port))
-        start_TCP_chat(sock, random_user_name)
+        try:
+            random_name = funnyName.get_name()
+        except:
+            random_name = "Arya"
+        start_TCP_chat(sock, random_name)
     except:
         # connection timeout happens!
         pass
