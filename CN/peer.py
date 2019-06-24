@@ -115,6 +115,7 @@ def create_and_listen_on_TCP(client_UPD_address):
 
 def connect_to_TCP(server_ip, server_port):
     sock = create_TCP_socket()
+    time.sleep(0.5)
     
     try:
         sock.connect((server_ip, server_port))
