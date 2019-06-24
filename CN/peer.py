@@ -72,7 +72,7 @@ def print_waiting(message="Waiting"):
 def create_TCP_socket():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     add_socket_to_all_sockets(sock)
-    random_name = funnyName.get_name()
+    random_name = "arya"
     return sock, random_name
 
 
@@ -100,14 +100,18 @@ def create_and_listen_on_TCP(client_UPD_address):
     TCP_sock.listen(1)
 
     inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
-    connection_sock, addr = TCP_sock.accept()
     print("d")
+    connection_sock, addr = TCP_sock.accept()
     start_TCP_chat(connection_sock, random_user_name)
 
 
 def connect_to_TCP(server_ip, server_port):
+    print("HERE")
     sock, random_user_name = create_TCP_socket()
+    print("Trying to connect")
+    print("((((", (server_ip, server_port))
     sock.connect((server_ip, server_port))
+    print("Connected")
     start_TCP_chat(sock, random_user_name)
 
 
@@ -130,33 +134,33 @@ def listen_to_UDP(sock):
 
     make_and_start_print_waiting_thread()
     while True:
-        try:
-            message, clientAddress = sock.recvfrom(2048)
-            message = message.decode()
-            print("Recieved message: ", message)
+        # try:
+        message, clientAddress = sock.recvfrom(2048)
+        message = message.decode()
+        print("Recieved message: ", message)
 
+        if in_TCP_chat:
+            continue
+
+        if message.split('-')[0] == "hello":
             if message.split('-')[1] == str(RANDOM_ID):
                 continue
+            establish_TCP_connection_thread = threading.Thread(target=create_and_listen_on_TCP,
+                                                               name="create_and_listen_on_TCP", args=(clientAddress, ))
+            establish_TCP_connection_thread.setDaemon(True)
+            establish_TCP_connection_thread.start()
 
-            if in_TCP_chat:
-                continue
+        elif check_accept_protocol(message)[0]:
+            print("accepted message: ", message)
+            establish_TCP_connection_thread = threading.Thread(target=connect_to_TCP,
+                                                               name="connect_to_TCP", args=(clientAddress[0], check_accept_protocol(message)[1], ))
+            establish_TCP_connection_thread.setDaemon(True)
+            establish_TCP_connection_thread.start()
 
-            if message.split('-')[0] == "hello":
-                establish_TCP_connection_thread = threading.Thread(target=create_and_listen_on_TCP,
-                                                                   name="create_and_listen_on_TCP", args=(clientAddress, ))
-                establish_TCP_connection_thread.setDaemon(True)
-                establish_TCP_connection_thread.start()
-
-            elif check_accept_protocol(message)[0]:
-                print("accepted message: ", message)
-                establish_TCP_connection_thread = threading.Thread(target=connect_to_TCP,
-                                                                   name="connect_to_TCP", args=(clientAddress[0], check_accept_protocol(message)[1], ))
-                establish_TCP_connection_thread.setDaemon(True)
-                establish_TCP_connection_thread.start()
-
-            time.sleep(1)
-        except:
-            pass
+        time.sleep(1)
+        # except:
+        #     print("Exception")
+        #     pass
 
 
 def send_UDP_broadcast(sock):
