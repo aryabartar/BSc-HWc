@@ -15,8 +15,15 @@ from sys import stdout
 write = stdout.write
 in_TCP_chat = False
 all_sockets = []
+main_socket = None
 RANDOM_ID = random.randint(0, 100000)
 
+
+def close_all_sockets_except_main():
+    global all_sockets
+    for sock in all_sockets:
+        sock.close()
+    all_sockets=[]
 
 def add_socket_to_all_sockets(sock):
     global all_sockets
@@ -73,7 +80,7 @@ def create_TCP_socket():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     add_socket_to_all_sockets(sock)
 
-    return sock 
+    return sock
 
 
 def start_TCP_chat(connection_sock, random_user_name):
@@ -93,20 +100,23 @@ def create_and_listen_on_TCP(client_UPD_address):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.sendto(message.encode(), client_UPD_address)
         sock.close()
-    
+
     global in_TCP_chat
 
     TCP_sock = create_TCP_socket()
+    add_socket_to_all_sockets(TCP_sock)
     # Allocates random free port and accepts request only from specified IP
     TCP_sock.bind(('', 0))
     TCP_sock.listen()
 
     inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
-    
+
     if not in_TCP_chat:
         print("WAITING FOR ACCEPT")
         print(TCP_sock)
         connection_sock, addr = TCP_sock.accept()
+        close_all_sockets_except_main()
+
         print("ACCCCCCCEEEPTTEEEED")
         if not in_TCP_chat:
             try:
@@ -118,26 +128,28 @@ def create_and_listen_on_TCP(client_UPD_address):
 
 def connect_to_TCP(server_ip, server_port):
     sock = create_TCP_socket()
-    time.sleep(random.randint(1,5)/5)
-    
+    time.sleep(random.randint(1, 5)/5)
+
     try:
-        print("Try to connect to (server_ip, server_port): ", (server_ip, server_port))
+        print("Try to connect to (server_ip, server_port): ",
+              (server_ip, server_port))
         sock.connect((server_ip, server_port))
         try:
             random_name = funnyName.get_name()
         except:
             random_name = "Arya"
         start_TCP_chat(sock, random_name)
-    
+
     except:
         # connection timeout happens!
         print("Timeout exception")
         pass
 
+
 def listen_to_UDP(sock):
     def check_accept_protocol(message):
         message_dict = json.loads(message)
-        
+
         if message_dict['id'] == RANDOM_ID:
             return False, None
         elif message_dict['Accept']:
@@ -152,34 +164,33 @@ def listen_to_UDP(sock):
         print_waiting_thread.start()
 
     make_and_start_print_waiting_thread()
-    
+
     global in_TCP_chat
-    
+
     while True:
         try:
             if in_TCP_chat:
                 time.sleep(0.3)
                 continue
-            
+
             message, clientAddress = sock.recvfrom(2048)
             message = message.decode()
-            
+            print("dd")
             print(message)
             print(in_TCP_chat)
             print("My ID: ", RANDOM_ID)
-
 
             if message.split('-')[0] == "hello":
                 if message.split('-')[1] == str(RANDOM_ID):
                     continue
                 establish_TCP_connection_thread = threading.Thread(target=create_and_listen_on_TCP,
-                                                                name="create_and_listen_on_TCP", args=(clientAddress, ))
+                                                                   name="create_and_listen_on_TCP", args=(clientAddress, ))
                 establish_TCP_connection_thread.setDaemon(True)
                 establish_TCP_connection_thread.start()
 
             elif check_accept_protocol(message)[0]:
                 establish_TCP_connection_thread = threading.Thread(target=connect_to_TCP,
-                                                                name="connect_to_TCP", args=(clientAddress[0], check_accept_protocol(message)[1], ))
+                                                                   name="connect_to_TCP", args=(clientAddress[0], check_accept_protocol(message)[1], ))
                 establish_TCP_connection_thread.setDaemon(True)
                 establish_TCP_connection_thread.start()
 
@@ -213,8 +224,10 @@ def send_UDP_broadcast(sock):
 
 
 def create_and_run_threads():
+    global main_socket
+
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    add_socket_to_all_sockets(sock)
+    main_socket = sock
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
     global RANDOM_ID
@@ -238,6 +251,7 @@ def create_and_run_threads():
 
 def sigint_handler(signum, frame):
     global all_sockets
+    global main_socket
 
     print("\n\nIt seems that we are missing you.\nEnjoy your SUNNY day!", '\U0001F604')
     for sock in all_sockets:
@@ -245,6 +259,7 @@ def sigint_handler(signum, frame):
             sock.close()
         except:
             print("Error wile closing some socket connections!")
+    main_socket.close()
 
     sys.exit()
 
