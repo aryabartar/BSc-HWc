@@ -55,40 +55,39 @@ def talk():
 
 def listen():
     global left_the_chat
-    try:
-        while True:
-            try:
-                message = sock.recv(2048).decode()
-                if not message:
-                    write("\b")
-                    stdout.flush()
-                    break
-            except:
-                #Other side cleses chat suddenly
-                pass
+    while True:
+        try:
+            message = sock.recv(2048).decode()
+            if not message:
+                write("\b")
+                stdout.flush()
+                break
+        except:
+            # Other side cleses chat suddenly
+            break
 
-            remove_last_printed_line()
+        remove_last_printed_line()
 
-            print(message)
+        print(message)
 
-            write(bcolors.BOLD + "-> " + bcolors.ENDC)
-            stdout.flush()
+        write(bcolors.BOLD + "-> " + bcolors.ENDC)
+        stdout.flush()
 
-        if not left_the_chat:
-            remove_last_printed_line()
-            print("\n                    ")
-            print("\nYour partner left the chat.", "\U0001F606" )
-            print_dash()
-            print("\n")
+    if not left_the_chat:
+        remove_last_printed_line()
+        print("\n                    ")
+        print("\nYour partner left the chat.", "\U0001F606")
+        print_dash()
+        print("\n")
 
-        sock.close()
-        connection_open = False
+    sock.close()
+    connection_open = False
 
 
 def print_welcome(username):
     remove_last_printed_line()
     print_dash()
-    print("Chat started!\n", "\bYour random name is:" +  bcolors.BOLD + " {username} \n".format(
+    print("Chat started!\n", "\bYour random name is:" + bcolors.BOLD + " {username} \n".format(
         username=username) + bcolors.ENDC)
 
 
