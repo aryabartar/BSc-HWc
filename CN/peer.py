@@ -105,6 +105,7 @@ def create_and_listen_on_TCP(client_UPD_address):
     
     if not in_TCP_chat:
         print("WAITING FOR ACCEPT")
+        print(TCP_sock)
         connection_sock, addr = TCP_sock.accept()
         print("ACCCCCCCEEEPTTEEEED")
         if not in_TCP_chat:
@@ -117,9 +118,10 @@ def create_and_listen_on_TCP(client_UPD_address):
 
 def connect_to_TCP(server_ip, server_port):
     sock = create_TCP_socket()
-    time.sleep(0.5)
+    time.sleep(random.randint(1,5)/5)
     
     try:
+        print("Try to connect to (server_ip, server_port): ", (server_ip, server_port))
         sock.connect((server_ip, server_port))
         try:
             random_name = funnyName.get_name()
@@ -181,7 +183,7 @@ def listen_to_UDP(sock):
                 establish_TCP_connection_thread.setDaemon(True)
                 establish_TCP_connection_thread.start()
 
-            time.sleep(1)
+            time.sleep(4)
         except:
             print("Exception")
             pass
