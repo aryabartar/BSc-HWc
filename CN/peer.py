@@ -144,13 +144,15 @@ def listen_to_UDP(sock):
     global in_TCP_chat
     while True:
         try:
+            if in_TCP_chat:
+                time.sleep(0.3)
+                continue
             message, clientAddress = sock.recvfrom(2048)
             message = message.decode()
             print(message)
             print(in_TCP_chat)
         
-            if in_TCP_chat:
-                continue
+
 
             if message.split('-')[0] == "hello":
                 if message.split('-')[1] == str(RANDOM_ID):
