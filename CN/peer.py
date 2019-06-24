@@ -109,7 +109,6 @@ def create_and_listen_on_TCP(client_UPD_address):
     global in_connection
 
     TCP_sock = create_TCP_socket()
-    add_socket_to_all_sockets(TCP_sock)
 
     # Allocates random free port and accepts request only from specified IP
     TCP_sock.bind(('', 0))
@@ -118,9 +117,9 @@ def create_and_listen_on_TCP(client_UPD_address):
     inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
 
     if not in_TCP_chat:
-        print("opend socket ready to accept is:", TCP_sock)
+        print("opened socket ready to accept is:", TCP_sock)
+        TCP_sock.settimeout(2)
         connection_sock, addr = TCP_sock.accept()
-        close_all_sockets_except_main_and_this(TCP_sock)
 
 
         if not in_TCP_chat:
