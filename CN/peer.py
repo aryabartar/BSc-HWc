@@ -134,7 +134,6 @@ def create_and_listen_on_TCP(client_UPD_address):
                 random_name = "Arya"
             start_TCP_chat(connection_sock, random_name)
 
-        print("here")
 
 def connect_to_TCP(server_ip, server_port):
     sock = create_TCP_socket()
@@ -142,7 +141,7 @@ def connect_to_TCP(server_ip, server_port):
     try:
         print("Try to connect to (server_ip, server_port): ",
               (server_ip, server_port))
-        # sock.settimeout(4)
+        sock.settimeout(7)
         sock.connect((server_ip, server_port))
         try:
             random_name = funnyName.get_name()
@@ -152,7 +151,6 @@ def connect_to_TCP(server_ip, server_port):
 
     except:
         # connection timeout happens!
-        print("Timeout exception")
         pass
 
 
@@ -185,9 +183,6 @@ def listen_to_UDP(sock):
 
         message, clientAddress = sock.recvfrom(2048)
         message = message.decode()
-        print(message)
-        print(in_TCP_chat)
-        print("My ID: ", RANDOM_ID)
 
         if message.split('-')[0] == "hello":
             if message.split('-')[1] == str(RANDOM_ID):
@@ -203,7 +198,6 @@ def listen_to_UDP(sock):
             connect_to_TCP(clientAddress[0], check_accept_protocol(message)[1])
             in_connection = False
 
-        print("\n\n\n")
 
 
 
