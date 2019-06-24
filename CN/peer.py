@@ -115,6 +115,7 @@ def create_and_listen_on_TCP(client_UPD_address):
 
 def connect_to_TCP(server_ip, server_port):
     sock = create_TCP_socket()
+    
     try:
         sock.connect((server_ip, server_port))
         try:
@@ -122,17 +123,19 @@ def connect_to_TCP(server_ip, server_port):
         except:
             random_name = "Arya"
         start_TCP_chat(sock, random_name)
+    
     except:
         # connection timeout happens!
+        print("Timeout exception")
         pass
 
 def listen_to_UDP(sock):
     def check_accept_protocol(message):
         message_dict = json.loads(message)
+        
         if message_dict['id'] == RANDOM_ID:
             return False, None
-
-        if message_dict['Accept']:
+        elif message_dict['Accept']:
             return True, message_dict['portno']
         else:
             return False, None
@@ -146,16 +149,19 @@ def listen_to_UDP(sock):
     make_and_start_print_waiting_thread()
     
     global in_TCP_chat
+    
     while True:
         try:
             if in_TCP_chat:
                 time.sleep(0.3)
                 continue
+            
             message, clientAddress = sock.recvfrom(2048)
             message = message.decode()
+            
             print(message)
             print(in_TCP_chat)
-        
+            print("My ID: ", RANDOM_ID)
 
 
             if message.split('-')[0] == "hello":
