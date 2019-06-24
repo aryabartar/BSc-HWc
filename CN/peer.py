@@ -75,7 +75,7 @@ def create_TCP_socket():
     try:
         random_name = funnyName.get_name()
     except:
-        random_name = funnyName.get_name()
+        random_name = "Arya"
 
     return sock, random_name
 
@@ -144,6 +144,8 @@ def listen_to_UDP(sock):
         try:
             message, clientAddress = sock.recvfrom(2048)
             message = message.decode()
+            print(message)
+           
             if in_TCP_chat:
                 continue
 
