@@ -118,8 +118,13 @@ def create_and_listen_on_TCP(client_UPD_address):
 
     if not in_TCP_chat:
         print("opened socket ready to accept is:", TCP_sock)
-        TCP_sock.settimeout(4)
-        connection_sock, addr = TCP_sock.accept()
+        TCP_sock.settimeout(7)
+        
+        try:
+            connection_sock, addr = TCP_sock.accept()
+        except:
+            #timeout
+            return
 
 
         if not in_TCP_chat:
