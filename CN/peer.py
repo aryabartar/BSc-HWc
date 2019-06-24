@@ -109,7 +109,8 @@ def create_and_listen_on_TCP(client_UPD_address):
     
     if not in_TCP_chat:
         connection_sock, addr = TCP_sock.accept()
-        start_TCP_chat(connection_sock, random_user_name)
+        if not in_TCP_chat:
+            start_TCP_chat(connection_sock, random_user_name)
 
 
 def connect_to_TCP(server_ip, server_port):
