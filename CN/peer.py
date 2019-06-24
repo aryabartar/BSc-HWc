@@ -97,6 +97,8 @@ def create_and_listen_on_TCP(client_UPD_address):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.sendto(message.encode(), client_UPD_address)
         sock.close()
+    
+    global in_TCP_chat
 
     TCP_sock, random_user_name = create_TCP_socket()
     # Allocates random free port and accepts request only from specified IP
@@ -104,8 +106,10 @@ def create_and_listen_on_TCP(client_UPD_address):
     TCP_sock.listen(1)
 
     inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
-    connection_sock, addr = TCP_sock.accept()
-    start_TCP_chat(connection_sock, random_user_name)
+    
+    if not in_TCP_chat:
+        connection_sock, addr = TCP_sock.accept()
+        start_TCP_chat(connection_sock, random_user_name)
 
 
 def connect_to_TCP(server_ip, server_port):
