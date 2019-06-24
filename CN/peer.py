@@ -104,6 +104,7 @@ def create_and_listen_on_TCP(client_UPD_address):
     inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
     
     if not in_TCP_chat:
+        print("WAITING FOR ACCEPT")
         connection_sock, addr = TCP_sock.accept()
         print("ACCCCCCCEEEPTTEEEED")
         if not in_TCP_chat:
