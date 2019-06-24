@@ -57,11 +57,15 @@ def listen():
     global left_the_chat
     try:
         while True:
-            message = sock.recv(2048).decode()
-            if not message:
-                write("\b")
-                stdout.flush()
-                break
+            try:
+                message = sock.recv(2048).decode()
+                if not message:
+                    write("\b")
+                    stdout.flush()
+                    break
+            except:
+                #Other side cleses chat suddenly
+                pass
 
             remove_last_printed_line()
 
@@ -79,10 +83,7 @@ def listen():
 
         sock.close()
         connection_open = False
-    
-    except:
-        sock.close()
-        connection_open = False
+
 
 def print_welcome(username):
     remove_last_printed_line()
