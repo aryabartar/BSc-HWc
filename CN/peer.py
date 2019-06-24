@@ -117,7 +117,7 @@ def create_and_listen_on_TCP(client_UPD_address):
     inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
 
     if not in_TCP_chat:
-        TCP_sock.settimeout(7)
+        TCP_sock.settimeout(3)
         
         try:
             connection_sock, addr = TCP_sock.accept()
@@ -140,7 +140,7 @@ def connect_to_TCP(server_ip, server_port):
     sock = create_TCP_socket()
 
     try:
-        sock.settimeout(7)
+        sock.settimeout(3)
         sock.connect((server_ip, server_port))
         sock.settimeout(None)
 
