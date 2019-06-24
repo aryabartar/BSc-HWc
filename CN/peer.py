@@ -174,35 +174,32 @@ def listen_to_UDP(sock):
     global in_connection
 
     while True:
-        try:
-            if in_TCP_chat:
-                time.sleep(0.3)
+        if in_TCP_chat:
+            time.sleep(0.3)
+            continue
+
+        message, clientAddress = sock.recvfrom(2048)
+        message = message.decode()
+        print(message)
+        print(in_TCP_chat)
+        print("My ID: ", RANDOM_ID)
+
+        if message.split('-')[0] == "hello":
+            if message.split('-')[1] == str(RANDOM_ID):
                 continue
-
-            message, clientAddress = sock.recvfrom(2048)
-            message = message.decode()
-            print(message)
-            print(in_TCP_chat)
-            print("My ID: ", RANDOM_ID)
-
-            if message.split('-')[0] == "hello":
-                if message.split('-')[1] == str(RANDOM_ID):
-                    continue
-                
-                in_connection = True
-                create_and_listen_on_TCP(clientAddress)
-                in_connection = False
+            
+            in_connection = True
+            create_and_listen_on_TCP(clientAddress)
+            in_connection = False
 
 
-            elif check_accept_protocol(message)[0]:
-                in_connection = True
-                connect_to_TCP(clientAddress[0], check_accept_protocol(message)[1])
-                in_connection = False
+        elif check_accept_protocol(message)[0]:
+            in_connection = True
+            connect_to_TCP(clientAddress[0], check_accept_protocol(message)[1])
+            in_connection = False
 
-            print("\n\n\n")
-        except:
-            print("Exception!!!!!()()()IJDIOWDIUNDINEIKNDIK")
-            pass
+        print("\n\n\n")
+
 
 
 def send_UDP_broadcast(sock):
