@@ -178,6 +178,7 @@ def listen_to_UDP(sock):
     global in_connection
 
     while True:
+        in_connection = False
         if in_TCP_chat:
             time.sleep(0.3)
             continue
@@ -191,13 +192,14 @@ def listen_to_UDP(sock):
             
             in_connection = True
             create_and_listen_on_TCP(clientAddress)
-            in_connection = False
+            time.sleep(random.randint(3,10)/5)
 
 
         elif check_accept_protocol(message)[0]:
             in_connection = True
             connect_to_TCP(clientAddress[0], check_accept_protocol(message)[1])
-            in_connection = False
+            time.sleep(random.randint(3,10)/5)
+
 
 
 

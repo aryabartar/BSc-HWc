@@ -13,6 +13,21 @@ write = stdout.write
 sock = None
 
 
+def close_sock():
+    try:
+        sock.sendall("CLOSE-ooi")
+    except:
+        pass
+    try:
+        sock.shutdown(SHUT_RDWR)
+    except:
+        pass
+    try:
+        sock.close()
+    except:
+        pass
+
+
 def remove_last_printed_line():
     write("\033[F")
     stdout.flush()
@@ -36,14 +51,19 @@ def talk():
                 print("\nYou left the chat.", "\U0001F606")
                 print_dash()
                 print("\n")
-                sock.shutdown(SHUT_RDWR)
-                sock.close()
+                close_sock()
                 break
 
             message = "\n{username} says: {message}".format(
                 username=user_name, message=message)
+            if sock == None:
+                break
 
-            sock.sendall(message.encode())
+            try:          
+                sock.sendall(message.encode())
+            except:
+                close_sock()
+
 
     get_input_thread = threading.Thread(
         target=get_input, name="get_input", args=())
@@ -58,12 +78,14 @@ def listen():
     while True:
         try:
             message = sock.recv(2048).decode()
-            if not message:
+            if not message or message == "CLOSE-ooi":
                 write("\b")
                 stdout.flush()
                 break
         except:
-            # Other side cleses chat suddenly
+            # Other side closes chat suddenly
+            write("\b")
+            stdout.flush()
             break
 
         remove_last_printed_line()
@@ -80,7 +102,19 @@ def listen():
         print_dash()
         print("\n")
 
-    sock.close()
+    try:
+        sock.sendall("CLOSE-ooi")
+    except:
+        pass
+    try:
+        sock.shutdown(SHUT_RDWR)
+    except:
+        pass
+    try:
+        sock.close()
+    except:
+        pass
+
     connection_open = False
 
 
