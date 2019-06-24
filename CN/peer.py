@@ -72,7 +72,11 @@ def print_waiting(message="Waiting"):
 def create_TCP_socket():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     add_socket_to_all_sockets(sock)
-    random_name = "arya"
+    try:
+        random_name = funnyName.get_name()
+    except:
+        random_name = funnyName.get_name()
+
     return sock, random_name
 
 
@@ -184,7 +188,6 @@ def create_and_run_threads():
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
     global RANDOM_ID
-    print(RANDOM_ID)
 
     serverPort = 12000
     sock.bind(('', serverPort))
