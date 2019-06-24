@@ -140,12 +140,15 @@ def listen_to_UDP(sock):
         print_waiting_thread.start()
 
     make_and_start_print_waiting_thread()
+    
+    global in_TCP_chat
     while True:
         try:
             message, clientAddress = sock.recvfrom(2048)
             message = message.decode()
             print(message)
-           
+            print(in_TCP_chat)
+        
             if in_TCP_chat:
                 continue
 
