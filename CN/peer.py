@@ -183,7 +183,6 @@ def listen_to_UDP(sock):
                 establish_TCP_connection_thread.setDaemon(True)
                 establish_TCP_connection_thread.start()
 
-            time.sleep(7)
             print("\n\n\n")
         except:
             print("Exception")
