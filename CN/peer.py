@@ -99,11 +99,13 @@ def create_and_listen_on_TCP(client_UPD_address):
     TCP_sock = create_TCP_socket()
     # Allocates random free port and accepts request only from specified IP
     TCP_sock.bind(('', 0))
+    TCP_sock.listen()
 
     inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
     
     if not in_TCP_chat:
         connection_sock, addr = TCP_sock.accept()
+        print("ACCCCCCCEEEPTTEEEED")
         if not in_TCP_chat:
             try:
                 random_name = funnyName.get_name()
