@@ -121,7 +121,7 @@ def create_and_listen_on_TCP(client_UPD_address):
         
         try:
             connection_sock, addr = TCP_sock.accept()
-            sock.settimeout(None)
+            TCP_sock.settimeout(None)
 
         except:
             #timeout
