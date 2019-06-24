@@ -188,10 +188,17 @@ def listen_to_UDP(sock):
             if message.split('-')[0] == "hello":
                 if message.split('-')[1] == str(RANDOM_ID):
                     continue
+                
+                in_connection = True
                 create_and_listen_on_TCP(clientAddress)
+                in_connection = False
+
 
             elif check_accept_protocol(message)[0]:
+                in_connection = True
                 connect_to_TCP(clientAddress[0], check_accept_protocol(message)[1])
+                in_connection = False
+
             print("\n\n\n")
         except:
             print("Exception!!!!!()()()IJDIOWDIUNDINEIKNDIK")
@@ -207,7 +214,7 @@ def send_UDP_broadcast(sock):
 
     while True:
 
-        while in_TCP_chat:
+        while in_TCP_chat or in_connection:
             time.sleep(0.3)
 
         message = "hello-{id}".format(id=RANDOM_ID).encode()
