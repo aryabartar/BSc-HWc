@@ -138,8 +138,6 @@ def connect_to_TCP(server_ip, server_port):
     sock = create_TCP_socket()
 
     try:
-        print("Try to connect to (server_ip, server_port): ",
-              (server_ip, server_port))
         sock.settimeout(7)
         sock.connect((server_ip, server_port))
         try:
