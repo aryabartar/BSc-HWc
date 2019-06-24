@@ -110,9 +110,12 @@ def create_and_listen_on_TCP(client_UPD_address):
 
 def connect_to_TCP(server_ip, server_port):
     sock, random_user_name = create_TCP_socket()
-    sock.connect((server_ip, server_port))
-    start_TCP_chat(sock, random_user_name)
-
+    try:
+        sock.connect((server_ip, server_port))
+        start_TCP_chat(sock, random_user_name)
+    except:
+        # connection timeout happens!
+        pass
 
 def listen_to_UDP(sock):
     def check_accept_protocol(message):
