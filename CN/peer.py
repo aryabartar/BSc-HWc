@@ -14,16 +14,20 @@ from sys import stdout
 
 write = stdout.write
 in_TCP_chat = False
+in_connection = False
 all_sockets = []
 main_socket = None
 RANDOM_ID = random.randint(0, 100000)
 
 
-def close_all_sockets_except_main():
+def close_all_sockets_except_main_and_this(this_socket):
     global all_sockets
     for sock in all_sockets:
+        if sock == this_socket:
+            continue
         sock.close()
-    all_sockets=[]
+    all_sockets = [this_socket]
+
 
 def add_socket_to_all_sockets(sock):
     global all_sockets
@@ -102,9 +106,11 @@ def create_and_listen_on_TCP(client_UPD_address):
         sock.close()
 
     global in_TCP_chat
+    global in_connection
 
     TCP_sock = create_TCP_socket()
     add_socket_to_all_sockets(TCP_sock)
+
     # Allocates random free port and accepts request only from specified IP
     TCP_sock.bind(('', 0))
     TCP_sock.listen()
@@ -112,12 +118,11 @@ def create_and_listen_on_TCP(client_UPD_address):
     inform_client_from_server(client_UPD_address, TCP_sock.getsockname()[1])
 
     if not in_TCP_chat:
-        print("WAITING FOR ACCEPT")
-        print(TCP_sock)
+        print("opend socket ready to accept is:", TCP_sock)
         connection_sock, addr = TCP_sock.accept()
-        close_all_sockets_except_main()
+        close_all_sockets_except_main_and_this(TCP_sock)
 
-        print("ACCCCCCCEEEPTTEEEED")
+
         if not in_TCP_chat:
             try:
                 random_name = funnyName.get_name()
@@ -128,12 +133,11 @@ def create_and_listen_on_TCP(client_UPD_address):
 
 def connect_to_TCP(server_ip, server_port):
     sock = create_TCP_socket()
-    time.sleep(random.randint(1, 5)/5)
 
     try:
         print("Try to connect to (server_ip, server_port): ",
               (server_ip, server_port))
-        sock.settimeout(1)
+        sock.settimeout(2)
         sock.connect((server_ip, server_port))
         try:
             random_name = funnyName.get_name()
@@ -167,6 +171,7 @@ def listen_to_UDP(sock):
     make_and_start_print_waiting_thread()
 
     global in_TCP_chat
+    global in_connection
 
     while True:
         try:
@@ -176,7 +181,6 @@ def listen_to_UDP(sock):
 
             message, clientAddress = sock.recvfrom(2048)
             message = message.decode()
-            print("dd")
             print(message)
             print(in_TCP_chat)
             print("My ID: ", RANDOM_ID)
@@ -184,21 +188,13 @@ def listen_to_UDP(sock):
             if message.split('-')[0] == "hello":
                 if message.split('-')[1] == str(RANDOM_ID):
                     continue
-                establish_TCP_connection_thread = threading.Thread(target=create_and_listen_on_TCP,
-                                                                   name="create_and_listen_on_TCP", args=(clientAddress, ))
-                establish_TCP_connection_thread.setDaemon(True)
-                establish_TCP_connection_thread.start()
+                create_and_listen_on_TCP(clientAddress)
 
             elif check_accept_protocol(message)[0]:
-                establish_TCP_connection_thread = threading.Thread(target=connect_to_TCP,
-                                                                   name="connect_to_TCP", args=(clientAddress[0], check_accept_protocol(message)[1], ))
-                establish_TCP_connection_thread.setDaemon(True)
-                establish_TCP_connection_thread.start()
-
-            time.sleep(1)
+                connect_to_TCP(clientAddress[0], check_accept_protocol(message)[1])
             print("\n\n\n")
         except:
-            print("Exception")
+            print("Exception!!!!!()()()IJDIOWDIUNDINEIKNDIK")
             pass
 
 
@@ -206,7 +202,7 @@ def send_UDP_broadcast(sock):
     global RANDOM_ID
 
     serverName = '255.255.255.255'
-    SEND_HELLO_INTERVAL = 1
+    SEND_HELLO_INTERVAL = random.randint(10, 20)/5
     serverPort = 12000
 
     while True:
