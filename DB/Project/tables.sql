@@ -65,5 +65,51 @@ CREATE TABLE Bill (
 );
 
 CREATE TABLE AccountOwner (
+    customer VARCHAR(10), 
+    account VARCHAR(10), 
+    PRIMARY KEY (customer, account), 
+    FOREIGN KEY (customer) REFERENCES Customer(ID), 
+    FOREIGN KEY (account) REFERENCES Account(ID)
+);
 
+CREATE TABLE SignatureAccess (
+    customer VARCHAR(10), 
+    account VARCHAR(10), 
+    PRIMARY KEY (customer, account), 
+    FOREIGN KEY (customer) REFERENCES Customer(ID), 
+    FOREIGN KEY (account) REFERENCES Account(ID)
+);
+
+CREATE TABLE AcceptAccess (
+    customer VARCHAR(10), 
+    account VARCHAR(10), 
+    PRIMARY KEY (customer, account), 
+    FOREIGN KEY (customer) REFERENCES Customer(ID), 
+    FOREIGN KEY (account) REFERENCES Account(ID)
+);
+
+CREATE TABLE ViewAccountAccess (
+    customer VARCHAR(10), 
+    account VARCHAR(10), 
+    PRIMARY KEY (customer, account), 
+    FOREIGN KEY (customer) REFERENCES Customer(ID), 
+    FOREIGN KEY (account) REFERENCES Account(ID)
+);
+
+CREATE TABLE Settings (
+    customer VARCHAR(10), 
+    account VARCHAR(10), 
+    account_name VARCHAR(256), 
+    color VARCHAR(256), 
+    PRIMARY KEY (customer, account), 
+    FOREIGN KEY (customer) REFERENCES Customer(ID), 
+    FOREIGN KEY (account) REFERENCES Account(ID)
+);
+
+CREATE TABLE Signature (
+    customer VARCHAR(10), 
+    payment_order VARCHAR(10), 
+    PRIMARY KEY (customer, payment_order), 
+    FOREIGN KEY (customer) REFERENCES Customer(ID), 
+    FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID)
 );
