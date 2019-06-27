@@ -46,5 +46,9 @@ INSERT INTO Account(amount, account_type, signature_number) VALUES (400, 'a1', 4
     WHERE ID = 5;
 
 -- 6) 
-    -- for insertion
+    -- for insertion. insert_signature trigger will execute on this.
     INSERT INTO Signature(customer, payment_order) VALUES ('1234453201', 1);
+
+    -- for deletion. 
+    DELETE FROM Signature 
+    WHERE customer = '1234453201' AND payment_order = 1;

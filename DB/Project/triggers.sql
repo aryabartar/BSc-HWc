@@ -4,6 +4,7 @@ DROP TRIGGER update_transaction;
 DROP TRIGGER insert_transaction;
 DROP TRIGGER delete_transaction;
 DROP TRIGGER insert_signature;
+DROP TRIGGER delete_signature;
 
 
 DELIMITER $$
@@ -83,6 +84,19 @@ CREATE TRIGGER insert_signature AFTER INSERT
                 WHERE SignatureAccess.customer = NEW.customer AND PaymentOrder.ID = NEW.payment_order
         )) THEN 
             SIGNAL sqlstate '45001' set message_text = "No sign permission.";
+        END IF;
+    END;$$
+
+CREATE TRIGGER delete_signature AFTER DELETE
+    ON Signature
+    FOR EACH ROW
+    BEGIN
+        IF (EXISTS(
+                SELECT * 
+                FROM PaymentOrder JOIN AcceptPayment ON PaymentOrder.ID = AcceptPayment.payment_order
+                WHERE PaymentOrder.ID = OLD.payment_order
+        )) THEN 
+            SIGNAL sqlstate '45001' set message_text = "Can not delete signature from accepted OrderPayment";
         END IF;
     END;$$
 
