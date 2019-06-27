@@ -153,13 +153,13 @@ INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (4, 1000,
     INSERT INTO Transaction(payment_order, destination, amount) VALUES (1, 3, 20);
     INSERT INTO Transaction(payment_order, destination, amount) VALUES (1, 4, 50);
     -- for PaymentOrder.ID = 2
-    INSERT INTO Transaction(payment_order, destination, amount) VALUES (2, 2, 100);
+    INSERT INTO Transaction(payment_order, destination, amount) VALUES (2, 1, 100);
     INSERT INTO Transaction(payment_order, destination, amount) VALUES (2, 4, 150);
     -- for PaymentOrder.ID = 3
     INSERT INTO Transaction(payment_order, destination, amount) VALUES (3, 1, 200);
     -- for PaymentOrder.ID = 4
     INSERT INTO Transaction(payment_order, destination, amount) VALUES (4, 2, 50);
-    INSERT INTO Transaction(payment_order, destination, amount) VALUES (4, 4, 50);
+    INSERT INTO Transaction(payment_order, destination, amount) VALUES (4, 3, 50);
     -- for PaymentOrder.ID = 5
     INSERT INTO Transaction(payment_order, destination, amount) VALUES (5, 1, 1200);
 
@@ -171,4 +171,4 @@ INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (4, 1000,
     -- Account.ID = 2
     INSERT INTO Signature(customer, payment_order) VALUES ('1234453207', 2);
 
--- Acce
+-- AcceptPayment
