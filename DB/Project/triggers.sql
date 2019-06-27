@@ -2,6 +2,7 @@ DROP TRIGGER insert_to_payment_order;
 DROP TRIGGER update_payment_order;
 DROP TRIGGER update_transaction;
 DROP TRIGGER insert_transaction;
+DROP TRIGGER delete_transaction;
 
 
 DELIMITER $$
@@ -55,6 +56,19 @@ CREATE TRIGGER update_transaction AFTER UPDATE
                 WHERE Signature.payment_order = NEW.payment_order
         )) THEN 
             SIGNAL sqlstate '45001' set message_text = "One user had signed this PaymentOrder so you can not update its transaction.";
+        END IF;
+    END;$$
+
+CREATE TRIGGER delete_transaction AFTER DELETE
+    ON Transaction
+    FOR EACH ROW
+    BEGIN
+        IF (EXISTS(
+                SELECT * 
+                FROM Signature
+                WHERE Signature.payment_order = OLD.payment_order
+        )) THEN 
+            SIGNAL sqlstate '45001' set message_text = "One user had signed this PaymentOrder so you can not delete this transaction.";
         END IF;
     END;$$
 

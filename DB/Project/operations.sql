@@ -27,15 +27,20 @@ INSERT INTO Account(amount, account_type, signature_number) VALUES (400, 'a1', 4
     INSERT INTO PaymentOrder(ID, account, creator, acceptor, note) VALUES (1, 1, '1234453201', null, 'Emergency');
 
 -- 5)
-    -- update_payment_order trigger will execute on this.
-    UPDATE PaymentOrder
-    SET note = "Important"
-    WHERE ID = 1;
+    -- for modification 
+        -- update_payment_order trigger will execute on this.
+        UPDATE PaymentOrder
+        SET note = "Important"
+        WHERE ID = 1;
 
-    -- insert_transaction trigger will execute on this.
-    INSERT INTO Transaction(payment_order, destination, amount) VALUES (3, 4, 10);
+        -- insert_transaction trigger will execute on this.
+        INSERT INTO Transaction(payment_order, destination, amount) VALUES (3, 4, 10);
 
-    -- update_transaction trigger will execute on this.
-    UPDATE Transaction 
-    SET amount = 999
-    WHERE payment_order = 2 AND destination = 4;
+        -- update_transaction trigger will execute on this.
+        UPDATE Transaction 
+        SET amount = 999
+        WHERE payment_order = 2 AND destination = 4;
+    
+    -- for deletion
+    DELETE FROM PaymentOrder 
+    WHERE 
