@@ -46,7 +46,7 @@ INSERT INTO Address(ssn, address) VALUES ('1234453211', 'Rasht st, Tehran');
 
 
 -- Account 
-INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (1, 400, 'a1', 4);
+INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (1, 400, 'a1', 2);
 INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (2, 500, 'a2', 2);
 INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (3, 10, 'a3', 1);
 INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (4, 1000, 'a2',3);
@@ -65,11 +65,11 @@ INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (4, 1000,
         -- AcceptAccess
         INSERT INTO AcceptAccess(customer, account) VALUES ('1234453203', 1);
         -- ViewAccess 
-        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453201', 1);
-        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453202', 1);
-        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453203', 1);
-        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453204', 1);
-        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453205', 1);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453201', 1);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453202', 1);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453203', 1);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453204', 1);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453205', 1);
     
     -- Account.ID = 2
         -- AccountOwner
@@ -81,13 +81,53 @@ INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (4, 1000,
         INSERT INTO SignatureAccess(customer, account) VALUES ('1234453209', 2);
         INSERT INTO SignatureAccess(customer, account) VALUES ('1234453210', 2);
         -- AcceptAccess
-        INSERT INTO AcceptAccess(customer, account) VALUES ('1234453203', 2);
+        INSERT INTO AcceptAccess(customer, account) VALUES ('1234453207', 2);
+        INSERT INTO AcceptAccess(customer, account) VALUES ('1234453208', 2);
+        INSERT INTO AcceptAccess(customer, account) VALUES ('1234453210', 2);
         -- ViewAccess 
-        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453201', 2);
-        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453202', 2);
-        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453203', 2);
-        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453204', 2);
-        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453205', 2);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453207', 2);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453208', 2);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453209', 2);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453210', 2);
+    
+    -- Account.ID = 3
+        -- AccountOwner
+        INSERT INTO AccountOwner(customer, account) VALUES ('12344532011', 3);
+        -- SignatureAccess
+        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453210', 3);
+        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453211', 3);
+        -- AcceptAccess
+        INSERT INTO AcceptAccess(customer, account) VALUES ('1234453210', 3);
+        INSERT INTO AcceptAccess(customer, account) VALUES ('1234453211', 3);
+        -- ViewAccess 
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453208', 3);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453210', 3);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453211', 3);
+
+    -- Account.ID = 4
+        -- AccountOwner
+        INSERT INTO AccountOwner(customer, account) VALUES ('1234453201', 4);
+        INSERT INTO AccountOwner(customer, account) VALUES ('1234453202', 4);
+        -- SignatureAccess
+        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453201', 4);
+        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453202', 4);
+        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453203', 4);
+        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453204', 4);
+        -- AcceptAccess
+        INSERT INTO AcceptAccess(customer, account) VALUES ('1234453201', 4);
+        INSERT INTO AcceptAccess(customer, account) VALUES ('1234453203', 4);
+        -- ViewAccess 
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453201', 4);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453202', 4);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453203', 4);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453204', 4);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453208', 4);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453210', 4);
+        INSERT INTO ViewAccess(customer, account) VALUES ('1234453211', 4);
+    
+    -- Settings
+        INSERT INTO Settings(customer, account, account_name, color) VALUES ('1234453201', 1, "Work1", "Red");
+        INSERT INTO Settings(customer, account, account_name, color) VALUES ('1234453208', 4, "Work2", "Green");
 
 -- End access
 
@@ -119,3 +159,9 @@ INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (4, 1000,
     -- for PaymentOrder.ID = 5
     INSERT INTO Transaction(payment_order, destination, amount) VALUES (5, 1, 1200);
 
+-- Signature
+    -- Account.ID = 1
+    INSERT INTO Signature(customer, payment_order) VALUES ('1234453201', 1);
+    INSERT INTO Signature(customer, payment_order) VALUES ('1234453203', 1);
+    -- Account.ID = 2
+    INSERT INTO Signature(customer, payment_order) VALUES ('1234453207', 2);
