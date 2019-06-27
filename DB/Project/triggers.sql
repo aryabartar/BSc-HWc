@@ -3,6 +3,7 @@ DROP TRIGGER update_payment_order;
 DROP TRIGGER update_transaction;
 DROP TRIGGER insert_transaction;
 DROP TRIGGER delete_transaction;
+DROP TRIGGER insert_signature;
 
 
 DELIMITER $$
@@ -69,6 +70,19 @@ CREATE TRIGGER delete_transaction AFTER DELETE
                 WHERE Signature.payment_order = OLD.payment_order
         )) THEN 
             SIGNAL sqlstate '45001' set message_text = "One user had signed this PaymentOrder so you can not delete this transaction.";
+        END IF;
+    END;$$
+
+CREATE TRIGGER insert_signature AFTER INSERT
+    ON Signature
+    FOR EACH ROW
+    BEGIN
+        IF (NOT EXISTS(
+                SELECT * 
+                FROM SignatureAccess JOIN PaymentOrder ON SignatureAccess.account = PaymentOrder.account
+                WHERE SignatureAccess.customer = NEW.customer AND PaymentOrder.ID = NEW.payment_order
+        )) THEN 
+            SIGNAL sqlstate '45001' set message_text = "No sign permission.";
         END IF;
     END;$$
 

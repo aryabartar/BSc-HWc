@@ -43,4 +43,8 @@ INSERT INTO Account(amount, account_type, signature_number) VALUES (400, 'a1', 4
     
     -- for deletion
     DELETE FROM PaymentOrder 
-    WHERE 
+    WHERE ID = 5;
+
+-- 6) 
+    -- for insertion
+    INSERT INTO Signature(customer, payment_order) VALUES ('1234453201', 1);

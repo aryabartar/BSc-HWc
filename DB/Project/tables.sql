@@ -11,14 +11,14 @@ CREATE TABLE PhoneNumber (
     ssn VARCHAR(10), 
     number VARCHAR(11),
     PRIMARY KEY (ssn, number),
-    FOREIGN KEY (ssn) REFERENCES Customer(ssn)
+    FOREIGN KEY (ssn) REFERENCES Customer(ssn) ON DELETE CASCADE
 );
 
 CREATE TABLE Address (
     ssn VARCHAR(10), 
     address VARCHAR(11),
     PRIMARY KEY (ssn, address),
-    FOREIGN KEY (ssn) REFERENCES Customer(ssn)
+    FOREIGN KEY (ssn) REFERENCES Customer(ssn) ON DELETE CASCADE
 );
 
 CREATE TABLE Account (
@@ -36,7 +36,7 @@ CREATE TABLE PaymentOrder (
     creator VARCHAR(10), 
     note VARCHAR(1024),
     PRIMARY KEY (ID), 
-    FOREIGN KEY (account) REFERENCES Account(ID), 
+    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE, 
     FOREIGN KEY (creator) REFERENCES Customer(ssn)
 );
 
@@ -45,8 +45,8 @@ CREATE TABLE Transaction (
     destination INT, 
     amount NUMERIC(10,0),
     PRIMARY KEY (payment_order, destination), 
-    FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID), 
-    FOREIGN KEY (destination) REFERENCES Account(ID)
+    FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID) ON DELETE CASCADE, 
+    FOREIGN KEY (destination) REFERENCES Account(ID) ON DELETE CASCADE
 );
  
 CREATE TABLE Bill (
@@ -57,7 +57,7 @@ CREATE TABLE Bill (
     time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
     note VARCHAR(1024),     
     PRIMARY KEY (ID), 
-    FOREIGN KEY (account) REFERENCES Account(ID), 
+    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE, 
     CHECK (bill_type IN ("b1", "b2"))
 );
 
@@ -65,32 +65,32 @@ CREATE TABLE AccountOwner (
     customer VARCHAR(10), 
     account INT, 
     PRIMARY KEY (customer, account), 
-    FOREIGN KEY (customer) REFERENCES Customer(ssn), 
-    FOREIGN KEY (account) REFERENCES Account(ID)
+    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
+    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
 );
 
 CREATE TABLE SignatureAccess (
     customer VARCHAR(10), 
     account INT, 
     PRIMARY KEY (customer, account), 
-    FOREIGN KEY (customer) REFERENCES Customer(ssn), 
-    FOREIGN KEY (account) REFERENCES Account(ID)
+    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
+    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
 );
 
 CREATE TABLE AcceptAccess (
     customer VARCHAR(10), 
     account INT, 
     PRIMARY KEY (customer, account), 
-    FOREIGN KEY (customer) REFERENCES Customer(ssn), 
-    FOREIGN KEY (account) REFERENCES Account(ID)
+    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
+    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
 );
 
 CREATE TABLE ViewAccountAccess (
     customer VARCHAR(10), 
     account INT, 
     PRIMARY KEY (customer, account), 
-    FOREIGN KEY (customer) REFERENCES Customer(ssn), 
-    FOREIGN KEY (account) REFERENCES Account(ID)
+    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
+    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
 );
 
 CREATE TABLE Settings (
@@ -99,22 +99,22 @@ CREATE TABLE Settings (
     account_name VARCHAR(256), 
     color VARCHAR(256), 
     PRIMARY KEY (customer, account), 
-    FOREIGN KEY (customer) REFERENCES Customer(ssn), 
-    FOREIGN KEY (account) REFERENCES Account(ID)
+    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
+    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
 );
 
 CREATE TABLE Signature (
     customer VARCHAR(10), 
     payment_order INT, 
     PRIMARY KEY (customer, payment_order), 
-    FOREIGN KEY (customer) REFERENCES Customer(ssn), 
-    FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID)
+    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
+    FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID) ON DELETE CASCADE
 );
 
 CREATE TABLE AcceptPayment(
     customer VARCHAR(10), 
     payment_order INT, 
     PRIMARY KEY (payment_order), 
-    FOREIGN KEY (customer) REFERENCES Customer(ssn), 
-    FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID)
+    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
+    FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID) ON DELETE CASCADE
 );
