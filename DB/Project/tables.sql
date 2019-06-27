@@ -34,12 +34,10 @@ CREATE TABLE PaymentOrder (
     ID INT AUTO_INCREMENT, 
     account INT, 
     creator VARCHAR(10), 
-    acceptor VARCHAR(10), 
     note VARCHAR(1024),
     PRIMARY KEY (ID), 
     FOREIGN KEY (account) REFERENCES Account(ID), 
-    FOREIGN KEY (creator) REFERENCES Customer(ssn), 
-    FOREIGN KEY (acceptor) REFERENCES Customer(ssn)
+    FOREIGN KEY (creator) REFERENCES Customer(ssn)
 );
 
 CREATE TABLE Transaction (
@@ -109,6 +107,14 @@ CREATE TABLE Signature (
     customer VARCHAR(10), 
     payment_order INT, 
     PRIMARY KEY (customer, payment_order), 
+    FOREIGN KEY (customer) REFERENCES Customer(ssn), 
+    FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID)
+);
+
+CREATE TABLE AcceptPayment(
+    customer VARCHAR(10), 
+    payment_order INT, 
+    PRIMARY KEY (payment_order), 
     FOREIGN KEY (customer) REFERENCES Customer(ssn), 
     FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID)
 );

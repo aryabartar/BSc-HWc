@@ -137,14 +137,14 @@ INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (4, 1000,
 
 -- PaymentOrder
     -- Account.ID = 1
-    INSERT INTO PaymentOrder(ID, account, creator, acceptor, note) VALUES (1, 1, '1234453201', null, 'Emergency');
-    INSERT INTO PaymentOrder(ID, account, creator, acceptor, note) VALUES (2, 1, '1234453202', null, 'Nonsignificant');
-    -- Account.ID = 2
-    INSERT INTO PaymentOrder(ID, account, creator, acceptor, note) VALUES (3, 2, '1234453209', null, 'Emergency');
+    INSERT INTO PaymentOrder(ID, account, creator, note) VALUES (1, 1, '1234453201', 'Emergency');
+    INSERT INTO PaymentOrder(ID, account, creator, note) VALUES (2, 1, '1234453202', 'Nonsignificant');
+    -- Account.ID = 2 
+    INSERT INTO PaymentOrder(ID, account, creator, note) VALUES (3, 2, '1234453209', 'Emergency');
     -- Account.ID = 3
-    INSERT INTO PaymentOrder(ID, account, creator, acceptor, note) VALUES (4, 3, '1234453211', null, 'Emergency');
+    INSERT INTO PaymentOrder(ID, account, creator, note) VALUES (4, 3, '1234453211', 'Emergency');
     -- Account.ID = 4
-    INSERT INTO PaymentOrder(ID, account, creator, acceptor, note) VALUES (5, 4, '1234453201', null, 'Nonsignificant');
+    INSERT INTO PaymentOrder(ID, account, creator, note) VALUES (5, 4, '1234453201', 'Nonsignificant');
 
 
 -- Transaction 
@@ -170,3 +170,5 @@ INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (4, 1000,
     INSERT INTO Signature(customer, payment_order) VALUES ('1234453203', 1);
     -- Account.ID = 2
     INSERT INTO Signature(customer, payment_order) VALUES ('1234453207', 2);
+
+-- Acce
