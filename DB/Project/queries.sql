@@ -66,3 +66,8 @@
 --     FROM SignatureAccess 
 --     WHERE SignatureAccess.customer = PaymentOrder.creator
 -- );
+
+-- -- 9 
+-- SELECT *
+-- FROM Bill
+-- WHERE Bill.amount > 100 AND Bill.account = 1 AND Bill.bill_type = "b1"; 
