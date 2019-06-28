@@ -134,8 +134,17 @@ CREATE TRIGGER insert_accept_payment AFTER INSERT
         )) THEN
             SIGNAL sqlstate '45001' set message_text = "Not enough money for paying all Transactions of this PaymentOrder.";
 
-        -- ELSE 
-            
+        ELSE 
+            -- CHECKOUT
+            INSERT INTO Bill(account, amount, note, bill_type) 
+                SELECT Transaction.destination, Transaction.amount, PaymentOrder.note, "b1"
+                FROM Transaction JOIN PaymentOrder ON Transaction.payment_order = PaymentOrder.ID
+                WHERE PaymentOrder.ID = NEW.payment_order;
+            -- DEPOSIT
+            INSERT INTO Bill(account, amount, note, bill_type) 
+                SELECT PaymentOrder.account, Transaction.amount, PaymentOrder.note, "b2"
+                FROM Transaction JOIN PaymentOrder ON Transaction.payment_order = PaymentOrder.ID
+                WHERE PaymentOrder.ID = NEW.payment_order;
         END IF;
     END;$$
 
