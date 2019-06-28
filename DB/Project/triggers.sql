@@ -1,4 +1,8 @@
-DROP TRIGGER insert_to_payment_order;
+
+
+
+
+DROP TRIGGER insert_payment_order;
 DROP TRIGGER update_payment_order;
 DROP TRIGGER update_transaction;
 DROP TRIGGER insert_transaction;
@@ -15,7 +19,18 @@ DROP TRIGGER delete_view_account_access;
 
 DELIMITER $$
 
-CREATE TRIGGER insert_to_payment_order AFTER INSERT 
+-- customer 
+CREATE TRIGGER update_customer AFTER UPDATE 
+    ON Customer
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO customer 
+    END;$$
+
+
+
+
+CREATE TRIGGER insert_payment_order AFTER INSERT 
     ON PaymentOrder
     FOR EACH ROW
     BEGIN
