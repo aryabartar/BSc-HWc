@@ -65,4 +65,5 @@ INSERT INTO Account(amount, account_type, signature_number) VALUES (400, 'a1', 4
     WHERE payment_order = 1 AND destination = 3;
 
 8)
-    -- for 
+    -- for INSERTION. 
+    INSERT INTO AcceptPayment(customer, payment_order) VALUES ('1234453201', 5);

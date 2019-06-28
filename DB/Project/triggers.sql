@@ -5,7 +5,7 @@ DROP TRIGGER insert_transaction;
 DROP TRIGGER delete_transaction;
 DROP TRIGGER insert_signature;
 DROP TRIGGER delete_signature;
-DROP TRIGGER accept_payment_order;
+DROP TRIGGER insert_accept_payment;
 
 
 DELIMITER $$
@@ -101,7 +101,7 @@ CREATE TRIGGER delete_signature AFTER DELETE
         END IF;
     END;$$
 
-CREATE TRIGGER accept_payment_order AFTER INSERT
+CREATE TRIGGER insert_accept_payment AFTER INSERT
     ON AcceptPayment
     FOR EACH ROW
     BEGIN
@@ -115,6 +115,12 @@ CREATE TRIGGER accept_payment_order AFTER INSERT
             WHERE PaymentOrder.ID = NEW.payment_order
             )) THEN 
                 SIGNAL sqlstate '45001' set message_text = "Can not accept this PaymentOrder because signatures are not enough. ";
+        ELSEIF (NOT EXISTS (
+            SELECT *
+            FROM AcceptAccess JOIN PaymentOrder ON AcceptAccess.account = PaymentOrder.account
+            WHERE AcceptAccess.customer = NEW.customer AND PaymentOrder.ID = NEW.payment_order
+        )) THEN 
+            SIGNAL sqlstate '45001' set message_text = "This user has no AcceptAccess permission on payment of this account.";
         END IF;
     END;$$
 
