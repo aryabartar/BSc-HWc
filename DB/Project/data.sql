@@ -65,6 +65,7 @@ INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (4, 1000,
         INSERT INTO SignatureAccess(customer, account) VALUES ('1234453203', 1);
         INSERT INTO SignatureAccess(customer, account) VALUES ('1234453204', 1);
         INSERT INTO SignatureAccess(customer, account) VALUES ('1234453205', 1);
+        INSERT INTO SignatureAccess(customer, account) VALUES ('1234453207', 1);
         -- AcceptAccess
         INSERT INTO AcceptAccess(customer, account) VALUES ('1234453201', 1);
         INSERT INTO AcceptAccess(customer, account) VALUES ('1234453203', 1);
@@ -96,7 +97,7 @@ INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (4, 1000,
     
     -- Account.ID = 3
         -- AccountOwner
-        INSERT INTO AccountOwner(customer, account) VALUES ('12344532011', 3);
+        INSERT INTO AccountOwner(customer, account) VALUES ('1234453211', 3);
         -- SignatureAccess
         INSERT INTO SignatureAccess(customer, account) VALUES ('1234453210', 3);
         INSERT INTO SignatureAccess(customer, account) VALUES ('1234453211', 3);
@@ -162,7 +163,7 @@ INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (4, 1000,
     INSERT INTO Transaction(payment_order, destination, amount) VALUES (4, 2, 50);
     INSERT INTO Transaction(payment_order, destination, amount) VALUES (4, 3, 50);
     -- for PaymentOrder.ID = 5
-    INSERT INTO Transaction(payment_order, destination, amount) VALUES (5, 1, 1200);
+    INSERT INTO Transaction(payment_order, destination, amount) VALUES (5, 1, 120);
 
 
 -- Signature

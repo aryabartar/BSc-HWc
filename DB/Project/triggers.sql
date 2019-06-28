@@ -1,12 +1,12 @@
-DROP TRIGGER insert_to_payment_order;
-DROP TRIGGER update_payment_order;
-DROP TRIGGER update_transaction;
-DROP TRIGGER insert_transaction;
-DROP TRIGGER delete_transaction;
-DROP TRIGGER insert_signature;
-DROP TRIGGER delete_signature;
-DROP TRIGGER insert_accept_payment;
-DROP TRIGGER insert_bill;
+-- DROP TRIGGER insert_to_payment_order;
+-- DROP TRIGGER update_payment_order;
+-- DROP TRIGGER update_transaction;
+-- DROP TRIGGER insert_transaction;
+-- DROP TRIGGER delete_transaction;
+-- DROP TRIGGER insert_signature;
+-- DROP TRIGGER delete_signature;
+-- DROP TRIGGER insert_accept_payment;
+-- DROP TRIGGER insert_bill;
 
 
 DELIMITER $$
