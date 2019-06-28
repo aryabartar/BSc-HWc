@@ -65,5 +65,5 @@ INSERT INTO Account(amount, account_type, signature_number) VALUES (400, 'a1', 4
     WHERE payment_order = 1 AND destination = 3;
 
 8)
-    -- for INSERTION. 
+    -- for INSERTION. insert_accept_payment and insert_bill will execute and update Account cash amount.
     INSERT INTO AcceptPayment(customer, payment_order) VALUES ('1234453201', 5);

@@ -66,6 +66,7 @@ INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (4, 1000,
         INSERT INTO SignatureAccess(customer, account) VALUES ('1234453204', 1);
         INSERT INTO SignatureAccess(customer, account) VALUES ('1234453205', 1);
         -- AcceptAccess
+        INSERT INTO AcceptAccess(customer, account) VALUES ('1234453201', 1);
         INSERT INTO AcceptAccess(customer, account) VALUES ('1234453203', 1);
         -- ViewAccountAccess 
         INSERT INTO ViewAccountAccess(customer, account) VALUES ('1234453201', 1);

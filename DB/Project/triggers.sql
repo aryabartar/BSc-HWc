@@ -6,6 +6,7 @@ DROP TRIGGER delete_transaction;
 DROP TRIGGER insert_signature;
 DROP TRIGGER delete_signature;
 DROP TRIGGER insert_accept_payment;
+DROP TRIGGER insert_bill;
 
 
 DELIMITER $$
@@ -145,6 +146,21 @@ CREATE TRIGGER insert_accept_payment AFTER INSERT
                 SELECT PaymentOrder.account, Transaction.amount, PaymentOrder.note, "b2"
                 FROM Transaction JOIN PaymentOrder ON Transaction.payment_order = PaymentOrder.ID
                 WHERE PaymentOrder.ID = NEW.payment_order;
+        END IF;
+    END;$$
+
+    CREATE TRIGGER insert_bill AFTER INSERT
+    ON Bill
+    FOR EACH ROW
+    BEGIN
+        IF (NEW.bill_type = "b1") THEN 
+            UPDATE Account
+            SET amount = amount + NEW.amount 
+            WHERE NEW.account = ID;
+        ELSEIF (NEW.bill_type = "b2") THEN 
+            UPDATE Account
+            SET amount = amount - NEW.amount 
+            WHERE NEW.account = ID;
         END IF;
     END;$$
 
