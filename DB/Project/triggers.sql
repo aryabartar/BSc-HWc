@@ -7,6 +7,10 @@ DROP TRIGGER insert_signature;
 DROP TRIGGER delete_signature;
 DROP TRIGGER insert_accept_payment;
 DROP TRIGGER insert_bill;
+DROP TRIGGER delete_account_owner;
+DROP TRIGGER delete_signature_access;
+DROP TRIGGER delete_accept_access;
+DROP TRIGGER delete_view_account_access;
 
 
 DELIMITER $$
@@ -170,28 +174,28 @@ CREATE TRIGGER delete_account_owner AFTER DELETE
 ON AccountOwner
 FOR EACH ROW
 BEGIN
-    INSERT INTO AccountOwnerHostory(customer, account, create_time) VALUES (NEW.customer, NEW.account, NEW.create_time); 
+    INSERT INTO AccountOwnerHostory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
 END;$$
 
 CREATE TRIGGER delete_signature_access AFTER DELETE
 ON SignatureAccess
 FOR EACH ROW
 BEGIN
-    INSERT INTO SignatureAccess(customer, account, create_time) VALUES (NEW.customer, NEW.account, NEW.create_time); 
+    INSERT INTO SignatureAccessHistory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
 END;$$
 
 CREATE TRIGGER delete_accept_access AFTER DELETE
 ON AcceptAccess
 FOR EACH ROW
 BEGIN
-    INSERT INTO AcceptAccess(customer, account, create_time) VALUES (NEW.customer, NEW.account, NEW.create_time); 
+    INSERT INTO AcceptAccessHistory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
 END;$$
 
-CREATE TRIGGER delete_view_access AFTER DELETE
-ON ViewAccess
+CREATE TRIGGER delete_view_account_access AFTER DELETE
+ON ViewAccountAccess
 FOR EACH ROW
 BEGIN
-    INSERT INTO ViewAccess(customer, account, create_time) VALUES (NEW.customer, NEW.account, NEW.create_time); 
+    INSERT INTO ViewAccountAccessHistory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
 END;$$
 
 
