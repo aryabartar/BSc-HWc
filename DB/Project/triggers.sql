@@ -1,16 +1,35 @@
+DROP TRIGGER update_customer;
+DROP TRIGGER delete_customer;
+DROP TRIGGER update_phone_number;
+DROP TRIGGER delete_phone_number;
+DROP TRIGGER update_address;
+DROP TRIGGER delete_address;
+DROP TRIGGER update_account;
+DROP TRIGGER delete_account;
 DROP TRIGGER insert_payment_order;
 DROP TRIGGER update_payment_order;
-DROP TRIGGER update_transaction;
+DROP TRIGGER delete_payment_order;
 DROP TRIGGER insert_transaction;
+DROP TRIGGER update_transaction;
 DROP TRIGGER delete_transaction;
-DROP TRIGGER insert_signature;
+DROP TRIGGER insert_bill;
+DROP TRIGGER update_bill;
+DROP TRIGGER delete_bill;
+DROP TRIGGER update_account_owner;
+DROP TRIGGER delete_account_owner;
+DROP TRIGGER update_signature_access;
+DROP TRIGGER delete_signature_access;
+DROP TRIGGER update_accept_access;
+DROP TRIGGER delete_accept_access;
+DROP TRIGGER update_view_account_access;
+DROP TRIGGER delete_view_account_access;
+DROP TRIGGER update_settings;
+DROP TRIGGER delete_settings;
+DROP TRIGGER update_signature;
 DROP TRIGGER delete_signature;
 DROP TRIGGER insert_accept_payment;
-DROP TRIGGER insert_bill;
-DROP TRIGGER delete_account_owner;
-DROP TRIGGER delete_signature_access;
-DROP TRIGGER delete_accept_access;
-DROP TRIGGER delete_view_account_access;
+DROP TRIGGER update_accept_payment;
+DROP TRIGGER delete_accept_payment;
 
 
 DELIMITER $$
@@ -313,6 +332,27 @@ CREATE TRIGGER insert_signature AFTER INSERT
         END IF;
     END;$$
 
+CREATE TRIGGER update_signature AFTER UPDATE
+ON Signature
+FOR EACH ROW
+BEGIN
+    INSERT INTO SettingsHistory(customer, payment_order, create_time) VALUES (OLD.customer, OLD.payment_order, OLD.create_time); 
+END;$$
+
+CREATE TRIGGER delete_signature AFTER DELETE
+    ON Signature
+    FOR EACH ROW
+    BEGIN
+        IF (EXISTS(
+                SELECT * 
+                FROM PaymentOrder JOIN AcceptPayment ON PaymentOrder.ID = AcceptPayment.payment_order
+                WHERE PaymentOrder.ID = OLD.payment_order
+        )) THEN 
+            SIGNAL sqlstate '45001' set message_text = "Can not delete signature from accepted OrderPayment";
+        ELSE  
+            INSERT INTO SignatureHistory(customer, payment_order, create_time) VALUES (OLD.customer, OLD.payment_order, OLD.create_time);
+        END IF;
+    END;$$
 CREATE TRIGGER update_signature AFTER UPDATE
 ON Signature
 FOR EACH ROW
