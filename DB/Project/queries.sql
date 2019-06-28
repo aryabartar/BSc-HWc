@@ -16,6 +16,15 @@
 -- )
 -- ;
 
--- 3 
-SELECT * 
-FROM PaymentOrder
+-- -- 3 
+-- SELECT PaymentOrder.*
+-- FROM PaymentOrder JOIN Account ON PaymentOrder.account = Account.ID
+-- WHERE Account.signature_number <= (
+--     SELECT count(*)
+--     FROM Signature 
+--     WHERE Signature.payment_order = PaymentOrder.ID
+-- );
+
+-- 4 
+SELECT *
+FROM Transaction JOIN PaymentOrder ON Transaction.payment_order = PaymentOrder.ID 
