@@ -1,7 +1,3 @@
-
-
-
-
 DROP TRIGGER insert_payment_order;
 DROP TRIGGER update_payment_order;
 DROP TRIGGER update_transaction;
@@ -19,17 +15,84 @@ DROP TRIGGER delete_view_account_access;
 
 DELIMITER $$
 
--- customer 
+
+-- Customer 
 CREATE TRIGGER update_customer AFTER UPDATE 
     ON Customer
     FOR EACH ROW
     BEGIN
-        INSERT INTO customer 
+        INSERT INTO CustomerHistory(ssn, firstname, lastname, customer_id, create_time) 
+            VALUES (OLD.ssn, OLD.firstname, OLD.lastname, OLD.customer_id, OLD.create_time);
+    END;$$
+
+CREATE TRIGGER delete_customer AFTER DELETE 
+    ON Customer
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO CustomerHistory(ssn, firstname, lastname, customer_id, create_time) 
+            VALUES (OLD.ssn, OLD.firstname, OLD.lastname, OLD.customer_id, OLD.create_time);
     END;$$
 
 
 
+-- PhoneNumber
+CREATE TRIGGER update_phone_number AFTER UPDATE 
+    ON PhoneNumber
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO PhoneNumberHistory(ssn, number, create_time) 
+            VALUES (OLD.ssn, OLD.number, OLD.create_time);
+    END;$$
 
+CREATE TRIGGER delete_phone_number AFTER DELETE 
+    ON PhoneNumber
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO PhoneNumberHistory(ssn, number, create_time) 
+            VALUES (OLD.ssn, OLD.number, OLD.create_time);
+    END;$$
+
+
+
+-- Address 
+CREATE TRIGGER update_address AFTER UPDATE 
+    ON Address
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO AddressHistory(ssn, number, create_time) 
+            VALUES (OLD.ssn, OLD.number, OLD.create_time);
+    END;$$
+
+CREATE TRIGGER delete_address AFTER DELETE 
+    ON Address
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO AddressHistory(ssn, number, create_time) 
+            VALUES (OLD.ssn, OLD.number, OLD.create_time);
+    END;$$
+
+
+
+-- Account 
+CREATE TRIGGER update_account AFTER UPDATE 
+    ON Account
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO AccountHistory(ID, amount, account_type, signature_number, create_time) 
+            VALUES (OLD.ID, OLD.amount, OLD.account_type, OLD.signature_number, OLD.create_time);
+    END;$$
+
+CREATE TRIGGER delete_account AFTER DELETE 
+    ON Account
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO AccountHistory(ID, amount, account_type, signature_number, create_time) 
+            VALUES (OLD.ID, OLD.amount, OLD.account_type, OLD.signature_number, OLD.create_time);
+    END;$$
+
+
+
+-- PaymentOrder 
 CREATE TRIGGER insert_payment_order AFTER INSERT 
     ON PaymentOrder
     FOR EACH ROW
@@ -53,9 +116,23 @@ CREATE TRIGGER update_payment_order AFTER UPDATE
                 WHERE Signature.payment_order = NEW.ID
         )) THEN 
             SIGNAL sqlstate '45001' set message_text = "One user had signed this PaymentOrder so you can not update it.";
+        ELSE 
+            INSERT INTO PaymentOrderHistory(ID, account, creator, note, create_time) 
+                VALUES (OLD.ID, OLD.account, OLD.creator, OLD.note, OLD.create_time);
         END IF;
     END;$$
 
+CREATE TRIGGER delete_payment_order AFTER DELETE 
+    ON PaymentOrder
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO PaymentOrderHistory(ID, account, creator, note, create_time) 
+            VALUES (OLD.ID, OLD.account, OLD.creator, OLD.note, OLD.create_time);
+    END;$$
+
+
+
+-- Transaction 
 CREATE TRIGGER insert_transaction AFTER INSERT
     ON Transaction
     FOR EACH ROW
@@ -79,6 +156,9 @@ CREATE TRIGGER update_transaction AFTER UPDATE
                 WHERE Signature.payment_order = NEW.payment_order
         )) THEN 
             SIGNAL sqlstate '45001' set message_text = "One user had signed this PaymentOrder so you can not update its transaction.";
+        ELSE
+            INSERT INTO TransactionHistory(payment_order, destination, amount, create_time) 
+                VALUES (OLD.payment_order, OLD.destination, OLD.amount, OLD.create_time);
         END IF;
     END;$$
 
@@ -92,9 +172,134 @@ CREATE TRIGGER delete_transaction AFTER DELETE
                 WHERE Signature.payment_order = OLD.payment_order
         )) THEN 
             SIGNAL sqlstate '45001' set message_text = "One user had signed this PaymentOrder so you can not delete this transaction.";
+        ELSE 
+            INSERT INTO TransactionHistory(payment_order, destination, amount, create_time) 
+                VALUES (OLD.payment_order, OLD.destination, OLD.amount, OLD.create_time);
         END IF;
     END;$$
 
+
+
+-- Bill 
+CREATE TRIGGER insert_bill AFTER INSERT
+ON Bill
+FOR EACH ROW
+BEGIN
+    IF (NEW.bill_type = "b1") THEN 
+        UPDATE Account
+        SET amount = amount + NEW.amount 
+        WHERE NEW.account = ID;
+    ELSEIF (NEW.bill_type = "b2") THEN 
+        UPDATE Account
+        SET amount = amount - NEW.amount 
+        WHERE NEW.account = ID;
+    END IF;
+END;$$
+
+CREATE TRIGGER update_bill AFTER UPDATE 
+    ON Bill
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO BillHistory(ID, account, amount, bill_type, note, create_time) 
+            VALUES (OLD.ID, OLD.account, OLD.amount, OLD.bill_type, OLD.note, OLD.create_time);
+    END;$$
+    
+CREATE TRIGGER delete_bill AFTER DELETE 
+    ON Bill
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO BillHistory(ID, account, amount, bill_type, note, create_time) 
+            VALUES (OLD.ID, OLD.account, OLD.amount, OLD.bill_type, OLD.note, OLD.create_time);
+    END;$$
+
+
+
+-- AccountOwner
+CREATE TRIGGER update_account_owner AFTER UPDATE
+ON AccountOwner
+FOR EACH ROW
+BEGIN
+    INSERT INTO AccountOwnerHistory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
+END;$$
+
+CREATE TRIGGER delete_account_owner AFTER DELETE
+ON AccountOwner
+FOR EACH ROW
+BEGIN
+    INSERT INTO AccountOwnerHistory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
+END;$$
+
+
+
+-- SignatureAccess 
+CREATE TRIGGER update_signature_access AFTER UPDATE
+ON SignatureAccess
+FOR EACH ROW
+BEGIN
+    INSERT INTO SignatureAccessHistory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
+END;$$
+
+CREATE TRIGGER delete_signature_access AFTER DELETE
+ON SignatureAccess
+FOR EACH ROW
+BEGIN
+    INSERT INTO SignatureAccessHistory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
+END;$$
+
+
+
+-- AcceptAccess
+CREATE TRIGGER update_accept_access AFTER UPDATE
+ON AcceptAccess
+FOR EACH ROW
+BEGIN
+    INSERT INTO AcceptAccessHistory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
+END;$$
+
+CREATE TRIGGER delete_accept_access AFTER DELETE
+ON AcceptAccess
+FOR EACH ROW
+BEGIN
+    INSERT INTO AcceptAccessHistory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
+END;$$
+
+
+
+-- ViewAccountAccess
+CREATE TRIGGER update_view_account_access AFTER UPDATE
+ON ViewAccountAccess
+FOR EACH ROW
+BEGIN
+    INSERT INTO ViewAccountAccessHistory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
+END;$$
+
+CREATE TRIGGER delete_view_account_access AFTER DELETE
+ON ViewAccountAccess
+FOR EACH ROW
+BEGIN
+    INSERT INTO ViewAccountAccessHistory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
+END;$$
+
+
+
+-- Settings
+CREATE TRIGGER update_settings AFTER UPDATE
+ON Settings
+FOR EACH ROW
+BEGIN
+    INSERT INTO SettingsHistory(customer, account, account_name, color, create_time) VALUES (OLD.customer, OLD.account, OLD.account_name, OLD.color, OLD.create_time); 
+END;$$
+
+CREATE TRIGGER delete_settings AFTER DELETE
+ON Settings
+FOR EACH ROW
+BEGIN
+    INSERT INTO SettingsHistory(customer, account, account_name, color, create_time) VALUES (OLD.customer, OLD.account, OLD.account_name, OLD.color, OLD.create_time); 
+END;$$
+
+
+
+-- Signature
 CREATE TRIGGER insert_signature AFTER INSERT
     ON Signature
     FOR EACH ROW
@@ -107,6 +312,13 @@ CREATE TRIGGER insert_signature AFTER INSERT
             SIGNAL sqlstate '45001' set message_text = "No sign permission.";
         END IF;
     END;$$
+
+CREATE TRIGGER update_signature AFTER UPDATE
+ON Signature
+FOR EACH ROW
+BEGIN
+    INSERT INTO SettingsHistory(customer, payment_order, create_time) VALUES (OLD.customer, OLD.payment_order, OLD.create_time); 
+END;$$
 
 CREATE TRIGGER delete_signature AFTER DELETE
     ON Signature
@@ -123,6 +335,9 @@ CREATE TRIGGER delete_signature AFTER DELETE
         END IF;
     END;$$
 
+
+
+-- AcceptPayment
 CREATE TRIGGER insert_accept_payment AFTER INSERT
     ON AcceptPayment
     FOR EACH ROW
@@ -170,48 +385,19 @@ CREATE TRIGGER insert_accept_payment AFTER INSERT
         END IF;
 END;$$
 
-CREATE TRIGGER insert_bill AFTER INSERT
-ON Bill
+
+CREATE TRIGGER update_accept_payment AFTER UPDATE
+ON AcceptPayment
 FOR EACH ROW
 BEGIN
-    IF (NEW.bill_type = "b1") THEN 
-        UPDATE Account
-        SET amount = amount + NEW.amount 
-        WHERE NEW.account = ID;
-    ELSEIF (NEW.bill_type = "b2") THEN 
-        UPDATE Account
-        SET amount = amount - NEW.amount 
-        WHERE NEW.account = ID;
-    END IF;
+    INSERT INTO AcceptPaymentHistory(customer, payment_order, create_time) VALUES (OLD.customer, OLD.payment_order, OLD.create_time); 
 END;$$
 
-CREATE TRIGGER delete_account_owner AFTER DELETE
-ON AccountOwner
+CREATE TRIGGER delete_accept_payment AFTER DELETE
+ON AcceptPayment
 FOR EACH ROW
 BEGIN
-    INSERT INTO AccountOwnerHostory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
+    INSERT INTO AcceptPaymentHistory(customer, payment_order, create_time) VALUES (OLD.customer, OLD.payment_order, OLD.create_time); 
 END;$$
-
-CREATE TRIGGER delete_signature_access AFTER DELETE
-ON SignatureAccess
-FOR EACH ROW
-BEGIN
-    INSERT INTO SignatureAccessHistory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
-END;$$
-
-CREATE TRIGGER delete_accept_access AFTER DELETE
-ON AcceptAccess
-FOR EACH ROW
-BEGIN
-    INSERT INTO AcceptAccessHistory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
-END;$$
-
-CREATE TRIGGER delete_view_account_access AFTER DELETE
-ON ViewAccountAccess
-FOR EACH ROW
-BEGIN
-    INSERT INTO ViewAccountAccessHistory(customer, account, create_time) VALUES (OLD.customer, OLD.account, OLD.create_time); 
-END;$$
-
 
 DELIMITER ;
