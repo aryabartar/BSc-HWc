@@ -5,6 +5,7 @@ DROP TRIGGER insert_transaction;
 DROP TRIGGER delete_transaction;
 DROP TRIGGER insert_signature;
 DROP TRIGGER delete_signature;
+DROP TRIGGER accept_payment_order;
 
 
 DELIMITER $$
@@ -97,6 +98,23 @@ CREATE TRIGGER delete_signature AFTER DELETE
                 WHERE PaymentOrder.ID = OLD.payment_order
         )) THEN 
             SIGNAL sqlstate '45001' set message_text = "Can not delete signature from accepted OrderPayment";
+        END IF;
+    END;$$
+
+CREATE TRIGGER accept_payment_order AFTER INSERT
+    ON AcceptPayment
+    FOR EACH ROW
+    BEGIN
+        IF ((
+            SELECT COUNT(*)
+            FROM Signature
+            WHERE payment_order = NEW.payment_order
+            ) < (
+            SELECT signature_number
+            FROM PaymentOrder JOIN Account ON Account.ID = PaymentOrder.account
+            WHERE PaymentOrder.ID = NEW.payment_order
+            )) THEN 
+                SIGNAL sqlstate '45001' set message_text = "Can not accept this PaymentOrder because signatures are not enough. ";
         END IF;
     END;$$
 

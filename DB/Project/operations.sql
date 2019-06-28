@@ -63,3 +63,6 @@ INSERT INTO Account(amount, account_type, signature_number) VALUES (400, 'a1', 4
     -- for deletion. delete_transaction trigger will execute on this.
     DELETE FROM Transaction 
     WHERE payment_order = 1 AND destination = 3;
+
+8)
+    -- for 
