@@ -27,7 +27,7 @@ CREATE TABLE Account (
     account_type VARCHAR(256), 
     signature_number NUMERIC(4,0), 
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CHECK (ID in ("a1", "a2", "a3")),
+    CHECK (account_type in ("a1", "a2", "a3")),
     PRIMARY KEY (ID)
 );
 
@@ -65,6 +65,17 @@ CREATE TABLE Bill (
 CREATE TABLE AccountOwner (
     customer VARCHAR(10), 
     account INT, 
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (customer, account), 
+    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
+    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
+);
+
+CREATE TABLE AccountOwnerHistory (
+    customer VARCHAR(10), 
+    account INT,
+    create_time TIMESTAMP ,
+    delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (customer, account), 
     FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
     FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
@@ -73,14 +84,37 @@ CREATE TABLE AccountOwner (
 CREATE TABLE SignatureAccess (
     customer VARCHAR(10), 
     account INT, 
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (customer, account), 
     FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
     FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
 );
 
+CREATE TABLE SignatureAccessHistory (
+    customer VARCHAR(10), 
+    account INT, 
+    create_time TIMESTAMP ,
+    delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (customer, account), 
+    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
+    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
+);
+
+
 CREATE TABLE AcceptAccess (
     customer VARCHAR(10), 
     account INT, 
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (customer, account), 
+    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
+    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
+);
+
+CREATE TABLE AcceptAccessHistory (
+    customer VARCHAR(10), 
+    account INT, 
+    create_time TIMESTAMP,
+    delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (customer, account), 
     FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
     FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
@@ -88,7 +122,18 @@ CREATE TABLE AcceptAccess (
 
 CREATE TABLE ViewAccountAccess (
     customer VARCHAR(10), 
-    account INT, 
+    account INT,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (customer, account), 
+    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
+    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
+);
+
+CREATE TABLE ViewAccountAccessHistory (
+    customer VARCHAR(10), 
+    account INT,
+    create_time TIMESTAMP,
+    delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
     PRIMARY KEY (customer, account), 
     FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
     FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
@@ -118,7 +163,7 @@ CREATE TABLE SignatureHistory (
     payment_order INT, 
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (customer, payment_order), 
+    PRIMARY KEY (customer, payment_order, create_time), 
     FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
     FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID) ON DELETE CASCADE
 );

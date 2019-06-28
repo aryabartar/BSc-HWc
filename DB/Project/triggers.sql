@@ -1,12 +1,12 @@
--- DROP TRIGGER insert_to_payment_order;
--- DROP TRIGGER update_payment_order;
--- DROP TRIGGER update_transaction;
--- DROP TRIGGER insert_transaction;
--- DROP TRIGGER delete_transaction;
--- DROP TRIGGER insert_signature;
--- DROP TRIGGER delete_signature;
--- DROP TRIGGER insert_accept_payment;
--- DROP TRIGGER insert_bill;
+DROP TRIGGER insert_to_payment_order;
+DROP TRIGGER update_payment_order;
+DROP TRIGGER update_transaction;
+DROP TRIGGER insert_transaction;
+DROP TRIGGER delete_transaction;
+DROP TRIGGER insert_signature;
+DROP TRIGGER delete_signature;
+DROP TRIGGER insert_accept_payment;
+DROP TRIGGER insert_bill;
 
 
 DELIMITER $$
@@ -99,6 +99,8 @@ CREATE TRIGGER delete_signature AFTER DELETE
                 WHERE PaymentOrder.ID = OLD.payment_order
         )) THEN 
             SIGNAL sqlstate '45001' set message_text = "Can not delete signature from accepted OrderPayment";
+        ELSE  
+            INSERT INTO SignatureHistory(customer, payment_order, create_time) VALUES (OLD.customer, OLD.payment_order, OLD.create_time);
         END IF;
     END;$$
 
