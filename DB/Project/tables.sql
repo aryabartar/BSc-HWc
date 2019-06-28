@@ -35,8 +35,7 @@ CREATE TABLE PhoneNumberHistory (
     number VARCHAR(11),
     create_time TIMESTAMP ,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (ssn, number, delete_time),
-    FOREIGN KEY (ssn) REFERENCES Customer(ssn) ON DELETE CASCADE
+    PRIMARY KEY (ssn, number, delete_time)
 );
 
 CREATE TABLE Address (
@@ -53,8 +52,7 @@ CREATE TABLE AddressHistory (
     address VARCHAR(11),
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (ssn, address, delete_time),
-    FOREIGN KEY (ssn) REFERENCES Customer(ssn) ON DELETE CASCADE
+    PRIMARY KEY (ssn, address, delete_time)
 );
 
 CREATE TABLE Account (
@@ -98,9 +96,7 @@ CREATE TABLE PaymentOrderHistory (
     note VARCHAR(1024),
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (ID, delete_time), 
-    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE, 
-    FOREIGN KEY (creator) REFERENCES Customer(ssn)
+    PRIMARY KEY (ID, delete_time)
 );
 
 CREATE TABLE Transaction (
@@ -120,9 +116,7 @@ CREATE TABLE TransactionHistory (
     amount NUMERIC(10,0),
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (payment_order, destination, delete_time), 
-    FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID) ON DELETE CASCADE, 
-    FOREIGN KEY (destination) REFERENCES Account(ID) ON DELETE CASCADE
+    PRIMARY KEY (payment_order, destination, delete_time)
 );
  
 CREATE TABLE Bill (
@@ -148,7 +142,6 @@ CREATE TABLE BillHistory (
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
     PRIMARY KEY (ID, delete_time), 
-    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE, 
     CHECK (bill_type IN ("b1", "b2"))
 );
 
@@ -167,9 +160,7 @@ CREATE TABLE AccountOwnerHistory (
     account INT,
     create_time TIMESTAMP ,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (customer, account, delete_time), 
-    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
-    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
+    PRIMARY KEY (customer, account, delete_time)
 );
 
 CREATE TABLE SignatureAccess (
@@ -187,9 +178,7 @@ CREATE TABLE SignatureAccessHistory (
     account INT, 
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (customer, account, delete_time), 
-    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
-    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
+    PRIMARY KEY (customer, account, delete_time) 
 );
 
 
@@ -208,9 +197,7 @@ CREATE TABLE AcceptAccessHistory (
     account INT, 
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (customer, account, delete_time), 
-    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
-    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
+    PRIMARY KEY (customer, account, delete_time)
 );
 
 CREATE TABLE ViewAccountAccess (
@@ -228,9 +215,7 @@ CREATE TABLE ViewAccountAccessHistory (
     account INT,
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-    PRIMARY KEY (customer, account, delete_time), 
-    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
-    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
+    PRIMARY KEY (customer, account, delete_time)
 );
 
 CREATE TABLE Settings (
@@ -252,9 +237,7 @@ CREATE TABLE SettingsHistory (
     color VARCHAR(256),
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-    PRIMARY KEY (customer, account, delete_time), 
-    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
-    FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
+    PRIMARY KEY (customer, account, delete_time) 
 );
 
 CREATE TABLE Signature (
@@ -272,9 +255,7 @@ CREATE TABLE SignatureHistory (
     payment_order INT, 
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (customer, payment_order, delete_time), 
-    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
-    FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID) ON DELETE CASCADE
+    PRIMARY KEY (customer, payment_order, delete_time) 
 );
 
 CREATE TABLE AcceptPayment(
@@ -292,7 +273,5 @@ CREATE TABLE AcceptPaymentHistory(
     payment_order INT, 
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (payment_order, delete_time), 
-    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
-    FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID) ON DELETE CASCADE
+    PRIMARY KEY (payment_order, delete_time)
 );
