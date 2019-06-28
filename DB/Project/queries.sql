@@ -25,6 +25,10 @@
 --     WHERE Signature.payment_order = PaymentOrder.ID
 -- );
 
--- 4 
-SELECT *
-FROM Transaction JOIN PaymentOrder ON Transaction.payment_order = PaymentOrder.ID 
+-- -- 4 
+-- SELECT Transaction.*
+-- FROM Transaction JOIN PaymentOrder ON Transaction.payment_order = PaymentOrder.ID 
+-- WHERE PaymentOrder.ID NOT IN (
+--     SELECT payment_order
+--     FROM AcceptPayment
+-- );
