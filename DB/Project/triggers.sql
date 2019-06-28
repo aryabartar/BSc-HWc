@@ -149,21 +149,50 @@ CREATE TRIGGER insert_accept_payment AFTER INSERT
                 FROM Transaction JOIN PaymentOrder ON Transaction.payment_order = PaymentOrder.ID
                 WHERE PaymentOrder.ID = NEW.payment_order;
         END IF;
-    END;$$
+END;$$
 
-    CREATE TRIGGER insert_bill AFTER INSERT
-    ON Bill
-    FOR EACH ROW
-    BEGIN
-        IF (NEW.bill_type = "b1") THEN 
-            UPDATE Account
-            SET amount = amount + NEW.amount 
-            WHERE NEW.account = ID;
-        ELSEIF (NEW.bill_type = "b2") THEN 
-            UPDATE Account
-            SET amount = amount - NEW.amount 
-            WHERE NEW.account = ID;
-        END IF;
-    END;$$
+CREATE TRIGGER insert_bill AFTER INSERT
+ON Bill
+FOR EACH ROW
+BEGIN
+    IF (NEW.bill_type = "b1") THEN 
+        UPDATE Account
+        SET amount = amount + NEW.amount 
+        WHERE NEW.account = ID;
+    ELSEIF (NEW.bill_type = "b2") THEN 
+        UPDATE Account
+        SET amount = amount - NEW.amount 
+        WHERE NEW.account = ID;
+    END IF;
+END;$$
+
+CREATE TRIGGER delete_account_owner AFTER DELETE
+ON AccountOwner
+FOR EACH ROW
+BEGIN
+    INSERT INTO AccountOwnerHostory(customer, account, create_time) VALUES (NEW.customer, NEW.account, NEW.create_time); 
+END;$$
+
+CREATE TRIGGER delete_signature_access AFTER DELETE
+ON SignatureAccess
+FOR EACH ROW
+BEGIN
+    INSERT INTO SignatureAccess(customer, account, create_time) VALUES (NEW.customer, NEW.account, NEW.create_time); 
+END;$$
+
+CREATE TRIGGER delete_accept_access AFTER DELETE
+ON AcceptAccess
+FOR EACH ROW
+BEGIN
+    INSERT INTO AcceptAccess(customer, account, create_time) VALUES (NEW.customer, NEW.account, NEW.create_time); 
+END;$$
+
+CREATE TRIGGER delete_view_access AFTER DELETE
+ON ViewAccess
+FOR EACH ROW
+BEGIN
+    INSERT INTO ViewAccess(customer, account, create_time) VALUES (NEW.customer, NEW.account, NEW.create_time); 
+END;$$
+
 
 DELIMITER ;

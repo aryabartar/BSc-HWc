@@ -76,7 +76,7 @@ CREATE TABLE AccountOwnerHistory (
     account INT,
     create_time TIMESTAMP ,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (customer, account), 
+    PRIMARY KEY (customer, account, create_time), 
     FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
     FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
 );
@@ -95,7 +95,7 @@ CREATE TABLE SignatureAccessHistory (
     account INT, 
     create_time TIMESTAMP ,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (customer, account), 
+    PRIMARY KEY (customer, account, create_time), 
     FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
     FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
 );
@@ -115,7 +115,7 @@ CREATE TABLE AcceptAccessHistory (
     account INT, 
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (customer, account), 
+    PRIMARY KEY (customer, account, create_time), 
     FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
     FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
 );
@@ -134,7 +134,7 @@ CREATE TABLE ViewAccountAccessHistory (
     account INT,
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-    PRIMARY KEY (customer, account), 
+    PRIMARY KEY (customer, account, create_time), 
     FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
     FOREIGN KEY (account) REFERENCES Account(ID) ON DELETE CASCADE
 );
