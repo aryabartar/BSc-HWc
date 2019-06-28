@@ -49,6 +49,17 @@ INSERT INTO Account(amount, account_type, signature_number) VALUES (400, 'a1', 4
     -- for insertion. insert_signature trigger will execute on this.
     INSERT INTO Signature(customer, payment_order) VALUES ('1234453201', 1);
 
-    -- for deletion. 
+    -- for deletion. delete_signature trigger will execute on this.
     DELETE FROM Signature 
     WHERE customer = '1234453201' AND payment_order = 1;
+
+7)
+    -- for insertion. insert_transaction trigger will execute on this.
+    INSERT INTO Transaction(payment_order, destination, amount) VALUES (3, 4, 10);
+    -- for update. update_transaction trigger will execute on this.
+    UPDATE Transaction 
+    SET amount = 999
+    WHERE payment_order = 1 AND destination = 4;
+    -- for deletion. delete_transaction trigger will execute on this.
+    DELETE FROM Transaction 
+    WHERE payment_order = 1 AND destination = 3;

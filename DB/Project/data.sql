@@ -173,3 +173,4 @@ INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (4, 1000,
 
 -- AcceptPayment
     INSERT INTO AcceptPayment(customer, payment_order) VALUES ('1234453201', 1);
+    INSERT INTO AcceptPayment(customer, payment_order) VALUES ('1234453210', 3);
