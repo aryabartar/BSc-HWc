@@ -26,6 +26,7 @@ CREATE TABLE Account (
     amount NUMERIC(10,0), 
     account_type VARCHAR(256), 
     signature_number NUMERIC(4,0), 
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (ID in ("a1", "a2", "a3")),
     PRIMARY KEY (ID)
 );
@@ -106,6 +107,17 @@ CREATE TABLE Settings (
 CREATE TABLE Signature (
     customer VARCHAR(10), 
     payment_order INT, 
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (customer, payment_order), 
+    FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
+    FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID) ON DELETE CASCADE
+);
+
+CREATE TABLE SignatureHistory (
+    customer VARCHAR(10), 
+    payment_order INT, 
+    create_time TIMESTAMP,
+    delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (customer, payment_order), 
     FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
     FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID) ON DELETE CASCADE
@@ -114,6 +126,7 @@ CREATE TABLE Signature (
 CREATE TABLE AcceptPayment(
     customer VARCHAR(10), 
     payment_order INT, 
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (payment_order), 
     FOREIGN KEY (customer) REFERENCES Customer(ssn) ON DELETE CASCADE, 
     FOREIGN KEY (payment_order) REFERENCES PaymentOrder(ID) ON DELETE CASCADE
