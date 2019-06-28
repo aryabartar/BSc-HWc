@@ -35,16 +35,24 @@
 
 -- 5 RRR
 
--- 6
--- NOTE: I considered that the shared account between two customers means both of them are owner of the same accounts.
-SELECT * 
-FROM Account    
-WHERE Account.ID IN (
-    SELECT account
-    FROM AccountOwner AS A1
-    WHERE A1.customer = '1234453201' AND A1.account IN (
-        SELECT A2.account 
-        FROM AccountOwner AS A2
-        WHERE A2.customer = '1234453202'
-    )
+-- -- 6
+-- -- NOTE: I considered that the shared account between two customers means both of them are owner of the same accounts.
+-- SELECT * 
+-- FROM Account    
+-- WHERE Account.ID IN (
+--     SELECT account
+--     FROM AccountOwner AS A1
+--     WHERE A1.customer = '1234453201' AND A1.account IN (
+--         SELECT A2.account 
+--         FROM AccountOwner AS A2
+--         WHERE A2.customer = '1234453202'
+--     )
+-- );
+
+-- 7
+SELECT 
+FROM (SignatureAccess JOIN PaymentOrder ON SignatureAccess.account = PaymentOrder.account) 
+WHERE SignatureAccess.customer = '1234453201' AND (SignatureAccess.customer, PaymentOrder.ID) NOT IN (
+    SELECT * 
+    FROM Signature
 );
