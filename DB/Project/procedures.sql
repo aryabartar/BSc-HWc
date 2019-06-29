@@ -115,38 +115,36 @@ CREATE PROCEDURE delete_account(p_ID INT)
             ROLLBACK;
         END;
 
-        ELSE
-            START TRANSACTION;
-                
-                DELETE FROM AccountOwner 
-                    WHERE AccountOwner.account = p_ID;
-                
-                DELETE FROM SignatureAccess 
-                    WHERE SignatureAccess.account = p_ID;
-                
-                DELETE FROM AcceptAccess 
-                    WHERE AcceptAccess.account = p_ID;
-               
-                DELETE FROM ViewAccess
-                    WHERE ViewAccess.account = p_ID;
-               
-                DELETE FROM Settings 
-                    WHERE Settings.account = p_ID;
-               
-                DELETE FROM Bill 
-                    WHERE Bill.account = p_ID;
-               
-                DELETE FROM Transaction 
-                    WHERE Transaction.destination = p_ID;
-              
-                DELETE FROM PaymentOrder
-                    WHERE PaymentOrder.account = p_ID;
+        START TRANSACTION;
+            
+            DELETE FROM AccountOwner 
+                WHERE AccountOwner.account = p_ID;
+            
+            DELETE FROM SignatureAccess 
+                WHERE SignatureAccess.account = p_ID;
+            
+            DELETE FROM AcceptAccess 
+                WHERE AcceptAccess.account = p_ID;
+            
+            DELETE FROM ViewAccess
+                WHERE ViewAccess.account = p_ID;
+            
+            DELETE FROM Settings 
+                WHERE Settings.account = p_ID;
+            
+            DELETE FROM Bill 
+                WHERE Bill.account = p_ID;
+            
+            DELETE FROM Transaction 
+                WHERE Transaction.destination = p_ID;
+            
+            DELETE FROM PaymentOrder
+                WHERE PaymentOrder.account = p_ID;
 
-                DELETE FROM Account
-                    WHERE Account.ID = p_ID;
+            DELETE FROM Account
+                WHERE Account.ID = p_ID;
 
-            COMMIT;
-        END IF;  
+        COMMIT;
     END;$$
 
 
