@@ -1,8 +1,8 @@
 -- 1)
-INSERT INTO Customer(ssn, firstname, lastname, customer_id, password) VALUES ('1234453201', 'Arya1', 'Khaligh1', 1, '1111');
+INSERT INTO Address(ssn, address) VALUES ('1234453201', 'Diagon Alley, London');
 
 -- 2)
-INSERT INTO Account(amount, account_type, signature_number) VALUES (400, 'a1', 4);
+INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (1, 400, 'a1', 2);
 
 -- 3)
     -- insert
@@ -24,14 +24,18 @@ INSERT INTO Account(amount, account_type, signature_number) VALUES (400, 'a1', 4
 
 -- 4)
     -- insert_to_payment_order trigger will execute on this.
-    INSERT INTO PaymentOrder(ID, account, creator, acceptor, note) VALUES (1, 1, '1234453201', null, 'Emergency');
+    INSERT INTO PaymentOrder(ID, account, creator, note) VALUES (1, 1, '1234453201', 'Emergency');
 
 -- 5)
     -- for modification 
         -- update_payment_order trigger will execute on this.
-        UPDATE PaymentOrder
-        SET note = "Important"
-        WHERE ID = 1;
+            -- Authority checking way.
+            CALL update_payment_order('1234453201', 1, "Test this.");
+            
+            -- Traditional way with more abilities.
+            UPDATE PaymentOrder
+            SET note = "Important"
+            WHERE ID = 1;
 
         -- insert_transaction trigger will execute on this.
         INSERT INTO Transaction(payment_order, destination, amount) VALUES (3, 4, 10);
@@ -42,8 +46,7 @@ INSERT INTO Account(amount, account_type, signature_number) VALUES (400, 'a1', 4
         WHERE payment_order = 2 AND destination = 4;
     
     -- for deletion
-    DELETE FROM PaymentOrder 
-    WHERE ID = 5;
+    CALL delete_payment_order('1234453201', 1);
 
 -- 6) 
     -- for insertion. insert_signature trigger will execute on this.
@@ -55,10 +58,12 @@ INSERT INTO Account(amount, account_type, signature_number) VALUES (400, 'a1', 4
 -- 7)
     -- for insertion. insert_transaction trigger will execute on this.
     INSERT INTO Transaction(payment_order, destination, amount) VALUES (3, 4, 10);
+    
     -- for update. update_transaction trigger will execute on this.
     UPDATE Transaction 
     SET amount = 999
     WHERE payment_order = 1 AND destination = 4;
+    
     -- for deletion. delete_transaction trigger will execute on this.
     DELETE FROM Transaction 
     WHERE payment_order = 1 AND destination = 3;
