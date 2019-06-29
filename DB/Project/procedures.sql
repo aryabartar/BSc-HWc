@@ -22,7 +22,7 @@ CREATE PROCEDURE insert_user(p_ssn VARCHAR(10), p_firstname VARCHAR(10), p_lastn
 
         START TRANSACTION;
             INSERT INTO Customer(ssn, firstname, lastname, customer_id, password) VALUES (p_ssn, p_firstname, p_lastname, p_customer_id, p_password);
-            INSERT INTO PhoneNumber(p_ssn, number) VALUES (p_ssn, p_number);
+            INSERT INTO PhoneNumber(ssn, number) VALUES (p_ssn, p_number);
             INSERT INTO Address(ssn, address) VALUES (p_ssn, p_address);
         COMMIT; 
     END;$$

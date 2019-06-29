@@ -1,5 +1,6 @@
 -- 1)
-INSERT INTO Address(ssn, address) VALUES ('1234453201', 'Diagon Alley, London');
+CALL insert_user('1111153201', 'Arya1', 'Khaligh1', 123, '1111', '09011353909', 'Diagon Alley, London');
+INSERT INTO Customer(ssn, firstname, lastname, customer_id, password) VALUES ('1234453201', 'Arya1', 'Khaligh1', 1, '1111');
 
 -- 2)
 INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (1, 400, 'a1', 2);
