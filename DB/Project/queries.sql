@@ -6,23 +6,19 @@
 -- ) AS C ON Customer.ssn = C.cust_id
 -- ;
 
--- 2
-SELECT *
-FROM Account 
-WHERE signature_number < (
-    SELECT count(*)
-    FROM SignatureAccess
-    WHERE SignatureAccess.account = Account.ID
-)
-;
+-- -- 2
+-- SELECT *
+-- FROM Account 
+-- WHERE signature_number < (
+--     get_signature_access_number(Account.ID)
+-- )
+-- ;
 
 -- -- 3 
 -- SELECT PaymentOrder.*
 -- FROM PaymentOrder JOIN Account ON PaymentOrder.account = Account.ID
--- WHERE Account.signature_number <= (
---     SELECT count(*)
---     FROM Signature 
---     WHERE Signature.payment_order = PaymentOrder.ID
+-- WHERE Account.signature_number <= ( 
+--     get_signature_number(PaymentOrder.ID)
 -- );
 
 -- -- 4 

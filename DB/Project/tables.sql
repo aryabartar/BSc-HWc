@@ -76,7 +76,7 @@ CREATE TABLE AccountHistory (
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (account_type in ("a1", "a2", "a3")),
-    PRIMARY KEY (ID, delete_time)
+    PRIMARY KEY (ID, delete_time, amount)
 );
 
 CREATE TABLE PaymentOrder (

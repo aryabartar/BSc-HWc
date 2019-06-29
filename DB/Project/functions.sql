@@ -1,5 +1,6 @@
 DROP FUNCTION get_hashed_password;
 DROP FUNCTION get_signature_access_number;
+DROP FUNCTION get_signature_number;
 
 
 DELIMITER $$
@@ -39,6 +40,18 @@ BEGIN
     WHERE SignatureAccess.account = account_id;
     
     RETURN rsignature_access_number;
+END;$$
+
+CREATE FUNCTION get_signature_number(
+    payment_order_id INT) RETURNS INT
+BEGIN
+    DECLARE rsignature_number INT;
+    
+    SELECT count(*) INTO rsignature_number
+    FROM Signature 
+    WHERE Signature.payment_order = payment_order_id;
+    
+    RETURN rsignature_number;
 END;$$
 
 
