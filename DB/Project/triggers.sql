@@ -383,7 +383,15 @@ CREATE TRIGGER insert_accept_payment AFTER INSERT
     ON AcceptPayment
     FOR EACH ROW
     BEGIN
-        IF ((
+                
+        IF (NOT EXISTS (
+            SELECT *
+            FROM AcceptAccess JOIN PaymentOrder ON AcceptAccess.account = PaymentOrder.account
+            WHERE AcceptAccess.customer = NEW.customer AND PaymentOrder.ID = NEW.payment_order
+        )) THEN 
+            SIGNAL sqlstate '45001' set message_text = "This user has no AcceptAccess permission on payment of this account.";
+
+        ELSEIF ((
             SELECT COUNT(*)
             FROM Signature
             WHERE payment_order = NEW.payment_order
@@ -393,13 +401,6 @@ CREATE TRIGGER insert_accept_payment AFTER INSERT
             WHERE PaymentOrder.ID = NEW.payment_order
             )) THEN 
                 SIGNAL sqlstate '45001' set message_text = "Can not accept this PaymentOrder because signatures are not enough. ";
-        
-        ELSEIF (NOT EXISTS (
-            SELECT *
-            FROM AcceptAccess JOIN PaymentOrder ON AcceptAccess.account = PaymentOrder.account
-            WHERE AcceptAccess.customer = NEW.customer AND PaymentOrder.ID = NEW.payment_order
-        )) THEN 
-            SIGNAL sqlstate '45001' set message_text = "This user has no AcceptAccess permission on payment of this account.";
         
         ELSEIF((
             SELECT DISTINCT(Account.amount) 
