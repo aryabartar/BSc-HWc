@@ -107,11 +107,12 @@ CREATE PROCEDURE delete_transaction(p_customer VARCHAR(10), p_payment_order INT,
         END IF;
     END;$$
 
+
 CREATE PROCEDURE delete_account(p_ID INT)
     BEGIN
         DECLARE EXIT HANDLER FOR SQLEXCEPTION 
         BEGIN
-            SIGNAL sqlstate '45001' set message_text = "Error while deleting Account.";
+            SIGNAL sqlstate '45001' set message_text = "Error while deleting Account. Maybe some PaymentOrders are signed.";
             ROLLBACK;
         END;
 
@@ -126,18 +127,15 @@ CREATE PROCEDURE delete_account(p_ID INT)
             DELETE FROM AcceptAccess 
                 WHERE AcceptAccess.account = p_ID;
             
-            DELETE FROM ViewAccess
-                WHERE ViewAccess.account = p_ID;
+            DELETE FROM ViewAccountAccess
+                WHERE ViewAccountAccess.account = p_ID;
             
             DELETE FROM Settings 
                 WHERE Settings.account = p_ID;
             
             DELETE FROM Bill 
                 WHERE Bill.account = p_ID;
-            
-            DELETE FROM Transaction 
-                WHERE Transaction.destination = p_ID;
-            
+                        
             DELETE FROM PaymentOrder
                 WHERE PaymentOrder.account = p_ID;
 

@@ -8,3 +8,5 @@ source views.sql;
 source indices.sql;
 source procedures.sql;
 source data.sql;
+
+ CALL delete_account(1);
