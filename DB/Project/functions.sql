@@ -1,6 +1,7 @@
 DROP FUNCTION get_hashed_password;
 DROP FUNCTION get_signature_access_number;
 DROP FUNCTION get_signature_number;
+DROP FUNCTION get_total_payment_order_amount;
 
 
 DELIMITER $$
@@ -53,6 +54,19 @@ BEGIN
     
     RETURN rsignature_number;
 END;$$
+
+CREATE FUNCTION get_total_payment_order_amount(
+    payment_order_id INT) RETURNS INT
+BEGIN
+    DECLARE total_amount INT;
+    
+    SELECT SUM(Transaction.amount) INTO total_amount
+    FROM PaymentOrder JOIN Transaction ON PaymentOrder.ID = Transaction.payment_order
+    WHERE PaymentOrder.ID = payment_order_id;
+    
+    RETURN total_amount;
+END;$$
+
 
 
 
