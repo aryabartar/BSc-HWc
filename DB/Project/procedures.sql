@@ -4,6 +4,7 @@ DROP PROCEDURE delete_payment_order;
 DROP PROCEDURE insert_transaction;
 DROP PROCEDURE update_transaction;
 DROP PROCEDURE delete_transaction;
+DROP PROCEDURE delete_account;
 
 
 DELIMITER $$
@@ -36,6 +37,7 @@ CREATE PROCEDURE delete_payment_order(p_customer VARCHAR(10), p_ID INT)
 
         DECLARE EXIT HANDLER FOR SQLEXCEPTION 
         BEGIN
+            SIGNAL sqlstate '45001' set message_text = "Error while deleting PaymentOrder. Check authority and other things.";
             ROLLBACK;
         END;
 
@@ -45,8 +47,8 @@ CREATE PROCEDURE delete_payment_order(p_customer VARCHAR(10), p_ID INT)
             WHERE PaymentOrder.ID = p_ID
         )) THEN 
             SIGNAL sqlstate '45001' set message_text = "You don't have authority to delete this PaymentOrder.";
+        
         ELSE
-
             START TRANSACTION;
                 
                 DELETE FROM AcceptPayment
@@ -103,6 +105,48 @@ CREATE PROCEDURE delete_transaction(p_customer VARCHAR(10), p_payment_order INT,
             DELETE FROM Transaction
             WHERE payment_order = p_payment_order AND destination = p_destination;
         END IF;
+    END;$$
+
+CREATE PROCEDURE delete_account(p_ID INT)
+    BEGIN
+        DECLARE EXIT HANDLER FOR SQLEXCEPTION 
+        BEGIN
+            SIGNAL sqlstate '45001' set message_text = "Error while deleting Account.";
+            ROLLBACK;
+        END;
+
+        ELSE
+            START TRANSACTION;
+                
+                DELETE FROM AccountOwner 
+                    WHERE AccountOwner.account = p_ID;
+                
+                DELETE FROM SignatureAccess 
+                    WHERE SignatureAccess.account = p_ID;
+                
+                DELETE FROM AcceptAccess 
+                    WHERE AcceptAccess.account = p_ID;
+               
+                DELETE FROM ViewAccess
+                    WHERE ViewAccess.account = p_ID;
+               
+                DELETE FROM Settings 
+                    WHERE Settings.account = p_ID;
+               
+                DELETE FROM Bill 
+                    WHERE Bill.account = p_ID;
+               
+                DELETE FROM Transaction 
+                    WHERE Transaction.destination = p_ID;
+              
+                DELETE FROM PaymentOrder
+                    WHERE PaymentOrder.account = p_ID;
+
+                DELETE FROM Account
+                    WHERE Account.ID = p_ID;
+
+            COMMIT;
+        END IF;  
     END;$$
 
 
