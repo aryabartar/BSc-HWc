@@ -3,6 +3,7 @@ DROP PROCEDURE update_payment_order;
 DROP PROCEDURE delete_payment_order;
 DROP PROCEDURE insert_transaction;
 DROP PROCEDURE update_transaction;
+DROP PROCEDURE delete_transaction;
 
 
 DELIMITER $$
@@ -87,6 +88,20 @@ CREATE PROCEDURE update_transaction(p_customer VARCHAR(10), p_payment_order INT,
             UPDATE Transaction 
             SET amount = p_amount
             WHERE payment_order = p_payment_order AND destination = p_destination;        
+        END IF;
+    END;$$
+
+CREATE PROCEDURE delete_transaction(p_customer VARCHAR(10), p_payment_order INT, p_destination INT)
+    BEGIN
+        IF (p_customer <> (
+            SELECT creator
+            FROM PaymentOrder
+            WHERE PaymentOrder.ID = p_payment_order
+        )) THEN 
+            SIGNAL sqlstate '45001' set message_text = "Only creator of this PaymentOrder can delete Transaction.";
+        ELSE
+            DELETE FROM Transaction
+            WHERE payment_order = p_payment_order AND destination = p_destination;
         END IF;
     END;$$
 

@@ -50,10 +50,10 @@ INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (1, 400, 
 
 -- 6) 
     -- for insertion. insert_signature trigger will execute on this.
-    INSERT INTO Signature(customer, payment_order) VALUES ('1234453201', 1);
+    INSERT INTO Signature(customer, payment_order) VALUES ('1234453201', 4);
 
     -- for deletion. delete_signature trigger will execute on this.
-    CALL delete_signature('1234453201', 1);
+    CALL delete_signature('1234453201', 4);
 
 -- 7)
     -- for insertion. insert_transaction trigger will execute on this.
@@ -65,13 +65,10 @@ INSERT INTO Account(ID, amount, account_type, signature_number) VALUES (1, 400, 
     -- for deletion. delete_transaction trigger will execute on this.
     CALL delete_transaction('1234453201', 3, 4);
 
-    DELETE FROM Transaction 
-    WHERE payment_order = 1 AND destination = 3;
-
 -- 8)
     -- insert_accept_payment and insert_bill will execute and update Account amount.
     INSERT INTO AcceptPayment(customer, payment_order) VALUES ('1234453201', 5);
 
 -- 9)
-    -- insert_bill trigger will execute on this.
+    -- insert_bill trigger will execute on this. DO NOT insert fake bills!!! Bills are always created automatically.
     INSERT INTO Bill(account, amount, note, bill_type) VALUES (1, 11, "Test transaction", "b1");
