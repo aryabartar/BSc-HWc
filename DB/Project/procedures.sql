@@ -1,6 +1,8 @@
 DROP PROCEDURE delete_signature;
 DROP PROCEDURE update_payment_order;
 DROP PROCEDURE delete_payment_order;
+DROP PROCEDURE insert_transaction;
+DROP PROCEDURE update_transaction;
 
 
 DELIMITER $$
@@ -70,6 +72,21 @@ CREATE PROCEDURE insert_transaction(p_customer VARCHAR(10), p_payment_order INT,
             SIGNAL sqlstate '45001' set message_text = "Only creator of this PaymentOrder can add Transaction.";
         ELSE
             INSERT INTO Transaction(payment_order, destination, amount) VALUES (p_payment_order, p_destination, p_amount);
+        END IF;
+    END;$$
+
+CREATE PROCEDURE update_transaction(p_customer VARCHAR(10), p_payment_order INT, p_destination INT, p_amount NUMERIC(10,0))
+    BEGIN
+        IF (p_customer <> (
+            SELECT creator
+            FROM PaymentOrder
+            WHERE PaymentOrder.ID = p_payment_order
+        )) THEN 
+            SIGNAL sqlstate '45001' set message_text = "Only creator of this PaymentOrder can update Transaction.";
+        ELSE
+            UPDATE Transaction 
+            SET amount = p_amount
+            WHERE payment_order = p_payment_order AND destination = p_destination;        
         END IF;
     END;$$
 
