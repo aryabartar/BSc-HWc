@@ -45,10 +45,10 @@ WHERE Account.ID IN (
 
 -- 7
 -- I assumed that a user can not sign a signed PaymentOrder.
-SELECT 
-FROM (SignatureAccess JOIN PaymentOrder ON SignatureAccess.account = PaymentOrder.account) 
-WHERE SignatureAccess.customer = '1234453201' AND (SignatureAccess.customer, PaymentOrder.ID) NOT IN (
-    SELECT * 
+SELECT *
+FROM SignatureAccess JOIN PaymentOrder ON SignatureAccess.account = PaymentOrder.account
+WHERE SignatureAccess.customer = '1234453211' AND (SignatureAccess.customer, PaymentOrder.ID) NOT IN (
+    SELECT customer, payment_order 
     FROM Signature
 );
 
@@ -58,7 +58,7 @@ FROM PaymentOrder
 WHERE PaymentOrder.creator = '1234453202' AND PaymentOrder.creator NOT IN (
     SELECT customer
     FROM SignatureAccess 
-    WHERE SignatureAccess.customer = PaymentOrder.creator
+    WHERE SignatureAccess.customer = PaymentOrder.creator AND SignatureAccess.account = PaymentOrder.account
 );
 
 -- 9 
