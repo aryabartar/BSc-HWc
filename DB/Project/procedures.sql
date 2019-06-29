@@ -30,6 +30,12 @@ CREATE PROCEDURE update_payment_order(p_customer VARCHAR(10), p_ID INT, p_note V
 
 CREATE PROCEDURE delete_payment_order(p_customer VARCHAR(10), p_ID INT)
     BEGIN
+
+        DECLARE EXIT HANDLER FOR SQLEXCEPTION 
+        BEGIN
+            ROLLBACK;
+        END;
+
         IF (p_customer <> (
             SELECT creator
             FROM PaymentOrder 
@@ -37,14 +43,19 @@ CREATE PROCEDURE delete_payment_order(p_customer VARCHAR(10), p_ID INT)
         )) THEN 
             SIGNAL sqlstate '45001' set message_text = "You don't have authority to delete this PaymentOrder.";
         ELSE
-            DELETE FROM AcceptPayment
-                WHERE AcceptPayment.payment_order = p_ID;
-            DELETE FROM Signature 
-                WHERE Signature.payment_order = p_ID;
-            DELETE FROM Transaction
-                WHERE Transaction.payment_order = p_ID;
-            DELETE FROM PaymentOrder 
-                WHERE PaymentOrder.ID = p_ID;
+
+            START TRANSACTION;
+                
+                DELETE FROM AcceptPayment
+                    WHERE AcceptPayment.payment_order = p_ID;
+                DELETE FROM Signature 
+                    WHERE Signature.payment_order = p_ID;
+                DELETE FROM Transaction
+                    WHERE Transaction.payment_order = p_ID;
+                DELETE FROM PaymentOrder 
+                    WHERE PaymentOrder.ID = p_ID;
+
+            COMMIT;
         END IF;  
 
     END;$$
