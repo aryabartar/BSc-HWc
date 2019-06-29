@@ -1,8 +1,10 @@
+SELECT 1;
 -- 1 
 SELECT DISTINCT Customer.*
 FROM Customer JOIN Signature ON Customer.ssn = Signature.customer
 ;
 
+SELECT 2;
 -- 2
 SELECT *
 FROM Account 
@@ -11,6 +13,7 @@ WHERE signature_number < (
 )
 ;
 
+SELECT 3;
 -- 3 
 SELECT PaymentOrder.*
 FROM PaymentOrder JOIN Account ON PaymentOrder.account = Account.ID
@@ -18,6 +21,7 @@ WHERE Account.signature_number <= (
     get_signature_number(PaymentOrder.ID)
 );
 
+SELECT 4;
 -- 4 
 SELECT Transaction.*
 FROM Transaction JOIN PaymentOrder ON Transaction.payment_order = PaymentOrder.ID 
@@ -26,6 +30,7 @@ WHERE PaymentOrder.ID NOT IN (
     FROM AcceptPayment
 );
 
+SELECT 5;
 -- 5 
 -- Contains Signatures that are removed because of delete in PaymentOrder.
 (SELECT SignatureHistory.* 
@@ -37,6 +42,7 @@ WHERE SignatureHistory.customer = '1234453201') UNION (
 ); 
 
 
+SELECT 6;
 -- 6
 -- NOTE: I considered that the shared account between two customers means both of them are owner of the same accounts.
 SELECT * 
@@ -51,6 +57,7 @@ WHERE Account.ID IN (
     )
 );
 
+SELECT 7;
 -- 7
 -- I assumed that a user can not sign a signed PaymentOrder.
 SELECT *
@@ -60,6 +67,7 @@ WHERE SignatureAccess.customer = '1234453211' AND (SignatureAccess.customer, Pay
     FROM Signature
 );
 
+SELECT 8;
 -- 8
 SELECT *
 FROM PaymentOrder 
@@ -69,7 +77,8 @@ WHERE PaymentOrder.creator = '1234453202' AND PaymentOrder.creator NOT IN (
     WHERE SignatureAccess.customer = PaymentOrder.creator AND SignatureAccess.account = PaymentOrder.account
 );
 
+SELECT 9;
 -- 9 
 SELECT *
 FROM Bill
-WHERE Bill.amount > 100 AND Bill.account = 1 AND Bill.bill_type = "b1"; 
+WHERE Bill.amount > 10 AND Bill.account = 1 AND Bill.bill_type = "b1"; 
