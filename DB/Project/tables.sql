@@ -6,8 +6,9 @@ CREATE TABLE Customer (
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     password_update_time TIMESTAMP,
-    password VARCHAR(256), 
-    PRIMARY KEY (ssn)
+    password VARCHAR(256),
+    PRIMARY KEY (ssn),
+    UNIQUE (customer_id)
 );
 
 CREATE TABLE CustomerHistory (
