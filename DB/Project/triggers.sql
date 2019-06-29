@@ -160,8 +160,16 @@ CREATE TRIGGER delete_payment_order AFTER DELETE
     ON PaymentOrder
     FOR EACH ROW
     BEGIN
-        INSERT INTO PaymentOrderHistory(ID, account, creator, note, create_time) 
-            VALUES (OLD.ID, OLD.account, OLD.creator, OLD.note, OLD.create_time);
+        IF (EXISTS(
+            SELECT *
+            FROM AcceptPayment 
+            WHERE payment_order = OLD.ID
+        )) THEN
+            SIGNAL sqlstate '45001' set message_text = "You can not delete accepted payment.";
+        ELSE 
+            INSERT INTO PaymentOrderHistory(ID, account, creator, note, create_time) 
+                VALUES (OLD.ID, OLD.account, OLD.creator, OLD.note, OLD.create_time);
+        END IF;
     END;$$
 
 
