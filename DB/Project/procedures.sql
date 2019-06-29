@@ -1,3 +1,4 @@
+DROP PROCEDURE insert_user;
 DROP PROCEDURE delete_signature;
 DROP PROCEDURE update_payment_order;
 DROP PROCEDURE delete_payment_order;
@@ -8,6 +9,24 @@ DROP PROCEDURE delete_account;
 
 
 DELIMITER $$
+CREATE PROCEDURE insert_user(p_ssn VARCHAR(10), p_firstname VARCHAR(10), p_lastname VARCHAR(10), p_customer_id INT, p_password VARCHAR(256), p_number VARCHAR(11), p_address VARCHAR(256))
+    BEGIN
+        DECLARE EXIT HANDLER FOR SQLEXCEPTION 
+        BEGIN
+            SIGNAL sqlstate '45001' set message_text = "Error while inserting Account. Check all fields are valid and phone or number is not null.";
+            ROLLBACK;
+        END;
+        IF ((p_number = null) OR (p_address = null)) THEN 
+            SIGNAL sqlstate '45001' set message_text = "Null values!";
+        END IF;
+
+        START TRANSACTION;
+            INSERT INTO Customer(ssn, firstname, lastname, customer_id, password) VALUES (p_ssn, p_firstname, p_lastname, p_customer_id, p_password);
+            INSERT INTO PhoneNumber(p_ssn, number) VALUES (p_ssn, p_number);
+            INSERT INTO Address(ssn, address) VALUES (p_ssn, p_address);
+        COMMIT; 
+    END;$$
+
 
 CREATE PROCEDURE delete_signature(p_customer VARCHAR(10), p_payment_order INT)
     BEGIN

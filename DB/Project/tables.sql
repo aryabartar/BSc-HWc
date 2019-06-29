@@ -44,7 +44,7 @@ CREATE TABLE PhoneNumberHistory (
 
 CREATE TABLE Address (
     ssn VARCHAR(10), 
-    address VARCHAR(11),
+    address VARCHAR(124),
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (ssn, address),
@@ -54,7 +54,7 @@ CREATE TABLE Address (
 CREATE TABLE AddressHistory (
     history_id INT AUTO_INCREMENT,
     ssn VARCHAR(10), 
-    address VARCHAR(11),
+    address VARCHAR(124),
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (history_id)

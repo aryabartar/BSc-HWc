@@ -1,3 +1,5 @@
+Please Execute this commands in *mysql shell
+
 DROP DATABASE project;
 CREATE DATABASE project;
 USE project;
