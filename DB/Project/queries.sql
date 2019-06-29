@@ -26,7 +26,15 @@ WHERE PaymentOrder.ID NOT IN (
     FROM AcceptPayment
 );
 
--- 5 RRRR
+-- 5 
+-- Contains Signatures that are removed because of delete in PaymentOrder.
+(SELECT SignatureHistory.* 
+FROM SignatureHistory 
+WHERE SignatureHistory.customer = '1234453201') UNION (
+    SELECT SignatureHistory.*
+    FROM PaymentOrderHistory JOIN SignatureHistory ON PaymentOrderHistory.ID = SignatureHistory.payment_order
+    WHERE PaymentOrderHistory.creator = '1234453201'
+); 
 
 
 -- 6
