@@ -50,10 +50,9 @@ INSERT INTO Account(amount, account_type, signature_number) VALUES (400, 'a1', 4
     INSERT INTO Signature(customer, payment_order) VALUES ('1234453201', 1);
 
     -- for deletion. delete_signature trigger will execute on this.
-    DELETE FROM Signature 
-    WHERE customer = '1234453201' AND payment_order = 1;
+    CALL delete_signature('1234453201', 1);
 
-7)
+-- 7)
     -- for insertion. insert_transaction trigger will execute on this.
     INSERT INTO Transaction(payment_order, destination, amount) VALUES (3, 4, 10);
     -- for update. update_transaction trigger will execute on this.
@@ -64,10 +63,10 @@ INSERT INTO Account(amount, account_type, signature_number) VALUES (400, 'a1', 4
     DELETE FROM Transaction 
     WHERE payment_order = 1 AND destination = 3;
 
-8)
+-- 8)
     -- insert_accept_payment and insert_bill will execute and update Account amount.
     INSERT INTO AcceptPayment(customer, payment_order) VALUES ('1234453201', 5);
 
-9)
+-- 9)
     -- insert_bill trigger will execute on this.
     INSERT INTO Bill(account, amount, note, bill_type) VALUES (1, 11, "Test transaction", "b1");
