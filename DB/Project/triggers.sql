@@ -42,15 +42,19 @@ CREATE TRIGGER insert_customer BEFORE INSERT
     ON Customer
     FOR EACH ROW
     BEGIN
-        SET NEW.update_time = CURRENT_TIME;
-        SET NEW.password = SHA2(CONCAT(NEW.ssn, NEW.update_time, NEW.password), 256);
+        SET NEW.password_update_time = CURRENT_TIME;
+        SET NEW.password = SHA2(CONCAT(NEW.ssn, NEW.password_update_time, NEW.password), 256);
     END;$$
 
 CREATE TRIGGER update_customer BEFORE UPDATE 
     ON Customer
     FOR EACH ROW
     BEGIN
-        SET NEW.update_time = CURRENT_TIME;
+        IF (NEW.password <> OLD.password) THEN
+            SET NEW.password_update_time = CURRENT_TIME;
+            SET NEW.password = SHA2(CONCAT(NEW.ssn, NEW.password_update_time, NEW.password), 256);
+        END IF;
+
         INSERT INTO CustomerHistory(ssn, firstname, lastname, customer_id, create_time) 
             VALUES (OLD.ssn, OLD.firstname, OLD.lastname, OLD.customer_id, OLD.create_time);
     END;$$

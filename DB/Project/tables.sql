@@ -4,7 +4,8 @@ CREATE TABLE Customer (
     lastname VARCHAR(10), 
     customer_id INT,
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    update_time TIMESTAMP,
+    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    password_update_time TIMESTAMP,
     password VARCHAR(256), 
     PRIMARY KEY (ssn)
 );
