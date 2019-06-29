@@ -12,6 +12,7 @@ CREATE TABLE Customer (
 );
 
 CREATE TABLE CustomerHistory (
+    history_id INT AUTO_INCREMENT,
     ssn VARCHAR(10), 
     firstname VARCHAR(10),
     lastname VARCHAR(10), 
@@ -19,7 +20,7 @@ CREATE TABLE CustomerHistory (
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     password VARCHAR(256), 
-    PRIMARY KEY (ssn, delete_time)
+    PRIMARY KEY (history_id)
 );
 
 
@@ -33,11 +34,12 @@ CREATE TABLE PhoneNumber (
 );
 
 CREATE TABLE PhoneNumberHistory (
+    history_id INT AUTO_INCREMENT,
     ssn VARCHAR(10), 
     number VARCHAR(11),
     create_time TIMESTAMP ,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (ssn, number, delete_time)
+    PRIMARY KEY (history_id)
 );
 
 CREATE TABLE Address (
@@ -50,11 +52,12 @@ CREATE TABLE Address (
 );
 
 CREATE TABLE AddressHistory (
+    history_id INT AUTO_INCREMENT,
     ssn VARCHAR(10), 
     address VARCHAR(11),
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (ssn, address, delete_time)
+    PRIMARY KEY (history_id)
 );
 
 CREATE TABLE Account (
@@ -69,14 +72,15 @@ CREATE TABLE Account (
 );
 
 CREATE TABLE AccountHistory (
-    ID INT AUTO_INCREMENT, 
+    history_id INT AUTO_INCREMENT,
+    ID INT, 
     amount NUMERIC(10,0), 
     account_type VARCHAR(256), 
     signature_number NUMERIC(4,0), 
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CHECK (account_type in ("a1", "a2", "a3")),
-    PRIMARY KEY (ID, delete_time, amount)
+    PRIMARY KEY (history_id)
 );
 
 CREATE TABLE PaymentOrder (
@@ -92,13 +96,14 @@ CREATE TABLE PaymentOrder (
 );
 
 CREATE TABLE PaymentOrderHistory (
-    ID INT AUTO_INCREMENT, 
+    history_id INT AUTO_INCREMENT,
+    ID INT, 
     account INT, 
     creator VARCHAR(10), 
     note VARCHAR(1024),
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (ID, delete_time)
+    PRIMARY KEY (history_id)
 );
 
 CREATE TABLE Transaction (
@@ -113,12 +118,13 @@ CREATE TABLE Transaction (
 );
 
 CREATE TABLE TransactionHistory (
+    history_id INT AUTO_INCREMENT,
     payment_order INT, 
     destination INT, 
     amount NUMERIC(10,0),
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (payment_order, destination, delete_time)
+    PRIMARY KEY (history_id)
 );
  
 CREATE TABLE Bill (
@@ -135,15 +141,15 @@ CREATE TABLE Bill (
 );
  
 CREATE TABLE BillHistory (
-    ID INT AUTO_INCREMENT, 
+    history_id INT AUTO_INCREMENT,
+    ID INT, 
     account INT, 
     amount NUMERIC(10,0),
     bill_type VARCHAR(256), 
     note VARCHAR(1024),
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-    PRIMARY KEY (ID, delete_time), 
-    CHECK (bill_type IN ("b1", "b2"))
+    PRIMARY KEY (history_id)
 );
 
 CREATE TABLE AccountOwner (
@@ -157,11 +163,12 @@ CREATE TABLE AccountOwner (
 );
 
 CREATE TABLE AccountOwnerHistory (
+    history_id INT AUTO_INCREMENT,
     customer VARCHAR(10), 
     account INT,
     create_time TIMESTAMP ,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (customer, account, delete_time)
+    PRIMARY KEY (history_id)
 );
 
 CREATE TABLE SignatureAccess (
@@ -175,11 +182,12 @@ CREATE TABLE SignatureAccess (
 );
 
 CREATE TABLE SignatureAccessHistory (
+    history_id INT AUTO_INCREMENT,
     customer VARCHAR(10), 
     account INT, 
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (customer, account, delete_time) 
+    PRIMARY KEY (history_id) 
 );
 
 
@@ -194,11 +202,12 @@ CREATE TABLE AcceptAccess (
 );
 
 CREATE TABLE AcceptAccessHistory (
+    history_id INT AUTO_INCREMENT,
     customer VARCHAR(10), 
     account INT, 
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (customer, account, delete_time)
+    PRIMARY KEY (history_id)
 );
 
 CREATE TABLE ViewAccountAccess (
@@ -212,11 +221,12 @@ CREATE TABLE ViewAccountAccess (
 );
 
 CREATE TABLE ViewAccountAccessHistory (
+    history_id INT AUTO_INCREMENT,
     customer VARCHAR(10), 
     account INT,
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-    PRIMARY KEY (customer, account, delete_time)
+    PRIMARY KEY (history_id)
 );
 
 CREATE TABLE Settings (
@@ -232,13 +242,14 @@ CREATE TABLE Settings (
 );
 
 CREATE TABLE SettingsHistory (
+    history_id INT AUTO_INCREMENT,
     customer VARCHAR(10), 
     account INT, 
     account_name VARCHAR(256), 
     color VARCHAR(256),
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-    PRIMARY KEY (customer, account, delete_time) 
+    PRIMARY KEY (history_id) 
 );
 
 CREATE TABLE Signature (
@@ -252,11 +263,12 @@ CREATE TABLE Signature (
 );
 
 CREATE TABLE SignatureHistory (
+    history_id INT AUTO_INCREMENT,
     customer VARCHAR(10), 
     payment_order INT, 
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (customer, payment_order, delete_time) 
+    PRIMARY KEY (history_id) 
 );
 
 CREATE TABLE AcceptPayment(
@@ -270,9 +282,10 @@ CREATE TABLE AcceptPayment(
 );
 
 CREATE TABLE AcceptPaymentHistory(
+    history_id INT AUTO_INCREMENT,
     customer VARCHAR(10), 
     payment_order INT, 
     create_time TIMESTAMP,
     delete_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (payment_order, delete_time)
+    PRIMARY KEY (history_id)
 );
