@@ -31,16 +31,26 @@ DROP TRIGGER insert_accept_payment;
 DROP TRIGGER update_accept_payment;
 DROP TRIGGER delete_accept_payment;
 DROP TRIGGER insert_signature;
+DROP TRIGGER insert_customer;
 
 
 DELIMITER $$
 
 
 -- Customer 
-CREATE TRIGGER update_customer AFTER UPDATE 
+CREATE TRIGGER insert_customer BEFORE INSERT 
     ON Customer
     FOR EACH ROW
     BEGIN
+        SET NEW.update_time = CURRENT_TIME;
+        SET NEW.password = SHA2(CONCAT(NEW.ssn, NEW.update_time, NEW.password), 256);
+    END;$$
+
+CREATE TRIGGER update_customer BEFORE UPDATE 
+    ON Customer
+    FOR EACH ROW
+    BEGIN
+        SET NEW.update_time = CURRENT_TIME;
         INSERT INTO CustomerHistory(ssn, firstname, lastname, customer_id, create_time) 
             VALUES (OLD.ssn, OLD.firstname, OLD.lastname, OLD.customer_id, OLD.create_time);
     END;$$
