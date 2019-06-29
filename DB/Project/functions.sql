@@ -11,8 +11,9 @@ CREATE FUNCTION get_hashed_password(
 BEGIN
     DECLARE customer_id INT; 
     DECLARE hashed_password VARCHAR(256); 
+    DECLARE ehashed_password VARCHAR(256); 
 
-    SELECT C.customer_id INTO password_update_time
+    SELECT C.customer_id INTO customer_id
     FROM Customer AS C
     WHERE ssn = essn; 
 
