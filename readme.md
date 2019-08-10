@@ -1,4 +1,4 @@
-# My homeworks in bachelor of science that include only codes. 
+# My homeworks in bachelor of science that contains only codes. 
 
 ### <a href="https://github.com/aryabartar/BSc-HWc/tree/master/Advanced%20Programming" target="_blank">Advanced Programming</a>  
 Used technologies: `java`  
@@ -29,6 +29,7 @@ Used technologies: `python`
 
 ### <a href="https://github.com/aryabartar/BSc-HWc/tree/master/Automata/Normal-Grammar-Generator" target="_blank">Automata</a>  
 Used technologies: `python`  
+Also <a href="https://github.com/aryabartar/mano-machine-emulator" target="_blank">`this`</a> and <a href="https://github.com/aryabartar/assembly-to-binary-converter" target="_blank">`this`</a> repositories.  
 
 --- 
 
