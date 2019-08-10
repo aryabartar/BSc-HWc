@@ -1,0 +1,557 @@
+Release 14.7 - xst P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.05 secs
+ 
+--> Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.05 secs
+ 
+--> Reading design: restoring_division.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "restoring_division.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "restoring_division"
+Output Format                      : NGC
+Target Device                      : xc3s400-5-pq208
+
+---- Source Options
+Top Module Name                    : restoring_division
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : Yes
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : Yes
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Multiplier Style                   : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 8
+Register Duplication               : YES
+Slice Packing                      : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Yes
+Use Synchronous Set                : Yes
+Use Synchronous Reset              : Yes
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+Verilog 2001                       : YES
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "D:/9531066 & 9531030/az8/arya_division/restoring_division.vhd" in Library work.
+Entity <restoring_division> compiled.
+Entity <restoring_division> (Architecture <behavioral>) compiled.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <restoring_division> in library <work> (architecture <behavioral>).
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <restoring_division> in library <work> (Architecture <behavioral>).
+WARNING:Xst:819 - "D:/9531066 & 9531030/az8/arya_division/restoring_division.vhd" line 43: One or more signals are missing in the process sensitivity list. To enable synthesis of FPGA/CPLD hardware, XST will assume that all necessary signals are present in the sensitivity list. Please note that the result of the synthesis may differ from the initial design specification. The missing signals are:
+   <M>
+Entity <restoring_division> analyzed. Unit <restoring_division> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <restoring_division>.
+    Related source file is "D:/9531066 & 9531030/az8/arya_division/restoring_division.vhd".
+WARNING:Xst:647 - Input <Q> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+WARNING:Xst:737 - Found 16-bit latch for signal <A>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+WARNING:Xst:737 - Found 32-bit latch for signal <Q_out>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+    Using one-hot encoding for signal <state>.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_10>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_9>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_11>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_12>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_13>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 48-bit latch for signal <AQ>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_14>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_20>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_15>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_21>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_16>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_22>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_17>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_23>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_18>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_24>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_19>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_30>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_25>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_31>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_26>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_27>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_28>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_29>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 6-bit latch for signal <N>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 10-bit latch for signal <next_state>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 16-bit latch for signal <A_temp>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_0>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_1>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_2>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_3>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_4>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_5>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_6>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_7>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 1-bit latch for signal <Q_temp_8>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+    Found 16-bit addsub for signal <A_temp$addsub0000>.
+    Found 6-bit subtractor for signal <N$addsub0000> created at line 90.
+    Found 10-bit register for signal <state>.
+    Summary:
+	inferred  10 D-type flip-flop(s).
+	inferred   2 Adder/Subtractor(s).
+Unit <restoring_division> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Adders/Subtractors                                   : 2
+ 16-bit addsub                                         : 1
+ 6-bit subtractor                                      : 1
+# Registers                                            : 1
+ 10-bit register                                       : 1
+# Latches                                              : 38
+ 1-bit latch                                           : 32
+ 10-bit latch                                          : 1
+ 16-bit latch                                          : 2
+ 32-bit latch                                          : 1
+ 48-bit latch                                          : 1
+ 6-bit latch                                           : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+WARNING:Xst:1426 - The value init of the FF/Latch state_4 hinder the constant cleaning in the block restoring_division.
+   You should achieve better results by setting this init to 0.
+WARNING:Xst:1293 - FF/Latch <0> has a constant value of 0 in block <4>. This FF/Latch will be trimmed during the optimization process.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Adders/Subtractors                                   : 2
+ 16-bit addsub                                         : 1
+ 6-bit subtractor                                      : 1
+# Registers                                            : 10
+ Flip-Flops                                            : 10
+# Latches                                              : 38
+ 1-bit latch                                           : 32
+ 10-bit latch                                          : 1
+ 16-bit latch                                          : 2
+ 32-bit latch                                          : 1
+ 48-bit latch                                          : 1
+ 6-bit latch                                           : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1293 - FF/Latch <4> has a constant value of 0 in block <LPM_LATCH_7>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1426 - The value init of the FF/Latch state_4 hinder the constant cleaning in the block restoring_division.
+   You should achieve better results by setting this init to 0.
+
+Optimizing unit <restoring_division> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block restoring_division, actual ratio is 2.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 10
+ Flip-Flops                                            : 10
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : restoring_division.ngr
+Top Level Output File Name         : restoring_division
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : No
+
+Design Statistics
+# IOs                              : 97
+
+Cell Usage :
+# BELS                             : 173
+#      GND                         : 1
+#      LUT2                        : 33
+#      LUT2_L                      : 1
+#      LUT3                        : 25
+#      LUT4                        : 76
+#      LUT4_D                      : 1
+#      MUXCY                       : 15
+#      MUXF5                       : 4
+#      VCC                         : 1
+#      XORCY                       : 16
+# FlipFlops/Latches                : 169
+#      FD                          : 10
+#      LD                          : 48
+#      LD_1                        : 111
+# Clock Buffers                    : 4
+#      BUFG                        : 3
+#      BUFGP                       : 1
+# IO Buffers                       : 64
+#      IBUF                        : 16
+#      OBUF                        : 48
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s400pq208-5 
+
+ Number of Slices:                       82  out of   3584     2%  
+ Number of Slice Flip Flops:            121  out of   7168     1%  
+ Number of 4 input LUTs:                136  out of   7168     1%  
+ Number of IOs:                          97
+ Number of bonded IOBs:                  65  out of    141    46%  
+    IOB Flip Flops:                      48
+ Number of GCLKs:                         4  out of      8    50%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+------------------------------------------+------------------------+-------+
+Clock Signal                              | Clock buffer(FF name)  | Load  |
+------------------------------------------+------------------------+-------+
+clk                                       | BUFGP                  | 10    |
+Q_temp_10_or00001(Q_temp_10_or000010_f5:O)| BUFG(*)(Q_temp_8)      | 31    |
+Q_temp_0_or0000(Q_temp_0_or0000:O)        | NONE(*)(Q_temp_0)      | 1     |
+N_or0000(N_or000010:O)                    | NONE(*)(N_0)           | 6     |
+A_temp_or0000(A_temp_or0000:O)            | NONE(*)(A_temp_0)      | 16    |
+state_91                                  | BUFG                   | 57    |
+AQ_or00001(AQ_or0000:O)                   | BUFG(*)(AQ_0)          | 48    |
+------------------------------------------+------------------------+-------+
+(*) These 5 clock signal(s) are generated by combinatorial logic,
+and XST is not able to identify which are the primary clock signals.
+Please use the CLOCK_SIGNAL constraint to specify the clock signal(s) generated by combinatorial logic.
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -5
+
+   Minimum period: 5.217ns (Maximum Frequency: 191.688MHz)
+   Minimum input arrival time before clock: 5.402ns
+   Maximum output required time after clock: 6.141ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'N_or0000'
+  Clock period: 4.243ns (frequency: 235.688MHz)
+  Total number of paths / destination ports: 21 / 6
+-------------------------------------------------------------------------
+Delay:               4.243ns (Levels of Logic = 3)
+  Source:            N_3 (LATCH)
+  Destination:       N_5 (LATCH)
+  Source Clock:      N_or0000 rising
+  Destination Clock: N_or0000 rising
+
+  Data Path: N_3 to N_5
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     LD_1:G->Q             2   0.551   1.040  N_3 (N_3)
+     LUT4_D:I0->LO         1   0.479   0.270  Msub_N_addsub0000_cy<3>11 (N17)
+     LUT2:I1->O            2   0.479   0.768  Msub_N_addsub0000_cy<4>11 (Msub_N_addsub0000_cy<4>)
+     LUT4:I3->O            1   0.479   0.000  N_mux0000<5>1 (N_mux0000<5>)
+     LD_1:D                    0.176          N_5
+    ----------------------------------------
+    Total                      4.243ns (2.164ns logic, 2.079ns route)
+                                       (51.0% logic, 49.0% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'A_temp_or0000'
+  Clock period: 5.217ns (frequency: 191.688MHz)
+  Total number of paths / destination ports: 256 / 16
+-------------------------------------------------------------------------
+Delay:               5.217ns (Levels of Logic = 18)
+  Source:            A_temp_0 (LATCH)
+  Destination:       A_temp_15 (LATCH)
+  Source Clock:      A_temp_or0000 rising
+  Destination Clock: A_temp_or0000 rising
+
+  Data Path: A_temp_0 to A_temp_15
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     LD_1:G->Q             3   0.551   0.830  A_temp_0 (A_temp_0)
+     LUT3:I2->O            1   0.479   0.000  Maddsub_A_temp_addsub0000_lut<0> (Maddsub_A_temp_addsub0000_lut<0>)
+     MUXCY:S->O            1   0.435   0.000  Maddsub_A_temp_addsub0000_cy<0> (Maddsub_A_temp_addsub0000_cy<0>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<1> (Maddsub_A_temp_addsub0000_cy<1>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<2> (Maddsub_A_temp_addsub0000_cy<2>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<3> (Maddsub_A_temp_addsub0000_cy<3>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<4> (Maddsub_A_temp_addsub0000_cy<4>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<5> (Maddsub_A_temp_addsub0000_cy<5>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<6> (Maddsub_A_temp_addsub0000_cy<6>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<7> (Maddsub_A_temp_addsub0000_cy<7>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<8> (Maddsub_A_temp_addsub0000_cy<8>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<9> (Maddsub_A_temp_addsub0000_cy<9>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<10> (Maddsub_A_temp_addsub0000_cy<10>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<11> (Maddsub_A_temp_addsub0000_cy<11>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<12> (Maddsub_A_temp_addsub0000_cy<12>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<13> (Maddsub_A_temp_addsub0000_cy<13>)
+     MUXCY:CI->O           0   0.056   0.000  Maddsub_A_temp_addsub0000_cy<14> (Maddsub_A_temp_addsub0000_cy<14>)
+     XORCY:CI->O           1   0.786   0.704  Maddsub_A_temp_addsub0000_xor<15> (A_temp_addsub0000<15>)
+     LUT4:I3->O            1   0.479   0.000  A_temp_mux0001<15>1 (A_temp_mux0001<15>)
+     LD_1:D                    0.176          A_temp_15
+    ----------------------------------------
+    Total                      5.217ns (3.683ns logic, 1.534ns route)
+                                       (70.6% logic, 29.4% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'AQ_or00001'
+  Clock period: 2.586ns (frequency: 386.705MHz)
+  Total number of paths / destination ports: 47 / 47
+-------------------------------------------------------------------------
+Delay:               2.586ns (Levels of Logic = 2)
+  Source:            AQ_0 (LATCH)
+  Destination:       AQ_1 (LATCH)
+  Source Clock:      AQ_or00001 rising
+  Destination Clock: AQ_or00001 rising
+
+  Data Path: AQ_0 to AQ_1
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     LD_1:G->Q             3   0.551   1.066  AQ_0 (AQ_0)
+     LUT4:I0->O            1   0.479   0.000  AQ_mux0000<1>1 (AQ_mux0000<1>1)
+     MUXF5:I0->O           1   0.314   0.000  AQ_mux0000<1>_f5 (AQ_mux0000<1>)
+     LD_1:D                    0.176          AQ_1
+    ----------------------------------------
+    Total                      2.586ns (1.520ns logic, 1.066ns route)
+                                       (58.8% logic, 41.2% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'A_temp_or0000'
+  Total number of paths / destination ports: 136 / 16
+-------------------------------------------------------------------------
+Offset:              5.402ns (Levels of Logic = 19)
+  Source:            M<0> (PAD)
+  Destination:       A_temp_15 (LATCH)
+  Destination Clock: A_temp_or0000 rising
+
+  Data Path: M<0> to A_temp_15
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             1   0.715   0.851  M_0_IBUF (M_0_IBUF)
+     LUT3:I1->O            1   0.479   0.000  Maddsub_A_temp_addsub0000_lut<0> (Maddsub_A_temp_addsub0000_lut<0>)
+     MUXCY:S->O            1   0.435   0.000  Maddsub_A_temp_addsub0000_cy<0> (Maddsub_A_temp_addsub0000_cy<0>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<1> (Maddsub_A_temp_addsub0000_cy<1>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<2> (Maddsub_A_temp_addsub0000_cy<2>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<3> (Maddsub_A_temp_addsub0000_cy<3>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<4> (Maddsub_A_temp_addsub0000_cy<4>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<5> (Maddsub_A_temp_addsub0000_cy<5>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<6> (Maddsub_A_temp_addsub0000_cy<6>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<7> (Maddsub_A_temp_addsub0000_cy<7>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<8> (Maddsub_A_temp_addsub0000_cy<8>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<9> (Maddsub_A_temp_addsub0000_cy<9>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<10> (Maddsub_A_temp_addsub0000_cy<10>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<11> (Maddsub_A_temp_addsub0000_cy<11>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<12> (Maddsub_A_temp_addsub0000_cy<12>)
+     MUXCY:CI->O           1   0.056   0.000  Maddsub_A_temp_addsub0000_cy<13> (Maddsub_A_temp_addsub0000_cy<13>)
+     MUXCY:CI->O           0   0.056   0.000  Maddsub_A_temp_addsub0000_cy<14> (Maddsub_A_temp_addsub0000_cy<14>)
+     XORCY:CI->O           1   0.786   0.704  Maddsub_A_temp_addsub0000_xor<15> (A_temp_addsub0000<15>)
+     LUT4:I3->O            1   0.479   0.000  A_temp_mux0001<15>1 (A_temp_mux0001<15>)
+     LD_1:D                    0.176          A_temp_15
+    ----------------------------------------
+    Total                      5.402ns (3.847ns logic, 1.555ns route)
+                                       (71.2% logic, 28.8% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'state_91'
+  Total number of paths / destination ports: 48 / 48
+-------------------------------------------------------------------------
+Offset:              6.141ns (Levels of Logic = 1)
+  Source:            A_15 (LATCH)
+  Destination:       A<15> (PAD)
+  Source Clock:      state_91 falling
+
+  Data Path: A_15 to A<15>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     LD:G->Q               1   0.551   0.681  A_15 (A_15)
+     OBUF:I->O                 4.909          A_15_OBUF (A<15>)
+    ----------------------------------------
+    Total                      6.141ns (5.460ns logic, 0.681ns route)
+                                       (88.9% logic, 11.1% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 4.00 secs
+Total CPU time to Xst completion: 3.64 secs
+ 
+--> 
+
+Total memory usage is 262584 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   44 (   0 filtered)
+Number of infos    :   38 (   0 filtered)
+

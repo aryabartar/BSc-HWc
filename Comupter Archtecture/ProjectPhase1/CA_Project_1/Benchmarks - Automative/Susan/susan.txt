@@ -1,0 +1,12 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ms/call  ms/call  name    
+100.01      0.17     0.17        1   170.02   170.02  susan_smoothing
+  0.00      0.17     0.00        3     0.00     0.00  getint
+  0.00      0.17     0.00        2     0.00     0.00  median
+  0.00      0.17     0.00        1     0.00     0.00  enlarge
+  0.00      0.17     0.00        1     0.00     0.00  get_image
+  0.00      0.17     0.00        1     0.00     0.00  put_image
+  0.00      0.17     0.00        1     0.00     0.00  setup_brightness_lut
