@@ -1,4 +1,4 @@
-# My homeworks in bachelor of science that contains only codes. 
+## My homeworks in bachelor of science that contains only codes
 
 ### <a href="https://github.com/aryabartar/BSc-HWc/tree/master/Advanced%20Programming" target="_blank">Advanced Programming</a>  
 Used technologies: `java`  
