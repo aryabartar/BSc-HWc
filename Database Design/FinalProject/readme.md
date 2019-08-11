@@ -1,4 +1,4 @@
-## Please Execute this commands in *mysql shell
+## Please Execute this commands in MySQL *shell
 
 DROP DATABASE project;  
 CREATE DATABASE project;  
