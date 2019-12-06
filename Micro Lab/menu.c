@@ -28,6 +28,8 @@ int temperatureInputPin = A0;
 // Humidity setup
 int humidityInputPin = 52;
 
+
+
 void setup()
 {
     inMenu = false;
@@ -67,6 +69,7 @@ void checkAndUpdateKeypad()
         }
     }
 }
+
 void checkAndUpdateMenu()
 {
     // 0 => temperature
