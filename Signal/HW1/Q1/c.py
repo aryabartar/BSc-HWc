@@ -1,5 +1,5 @@
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 
 t = np.arange(-5, 5, 0.001)
 x = [0] * 10000
@@ -15,4 +15,4 @@ while index < 10000:
 
 
 plt.plot(t, x)
-plt.savefig('Q1c.png')
+plt.savefig('c.png')

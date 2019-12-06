@@ -5,5 +5,5 @@ n = np.arange(-10, 11)
 x = 5 * np.cos(3 * n)
 
 plt.stem(n, x)
-plt.savefig('c.png')
+plt.savefig('d.png')
 plt.show()
