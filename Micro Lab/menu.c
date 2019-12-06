@@ -1,8 +1,9 @@
+#include <time.h>
 #include <Wire.h>
 #include <keypad.h>
 #include <LiquidCrystal.h>
 
-//global setup
+//Global setup
 bool inMenu;
 int menuLocation; //between 0 and 2
 
@@ -109,7 +110,10 @@ void checkAndUpdateMenu()
         }
         else
         {
-            // lcd.print("Time is: ");
+            lcd.print("Time is: ");
+            lcd.setCursor(0, 1);
+            time_t now = time(0);
+            lcd.print(now);
         }
     }
 }
