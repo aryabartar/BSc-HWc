@@ -100,17 +100,22 @@ void checkAndUpdateMenu()
         else if (menuLocation == 2)
         {
             lcd.print("Humidity is: ");
+            lcd.setCursor(0, 1);
+            lcd.print(updateHumidity());
         }
         else
         {
             lcd.print("Hello");
         }
-        lcd.setCursor(0, 1);
-        lcd.print("For test");
     }
 }
 
-// int updateHumidity(){
+// int updateTemperature(){
 //     int humidity = digitalRead(humidityInputPin);
 //     return humidity;
 // }
+
+int updateHumidity(){
+    int humidity = digitalRead(humidityInputPin);
+    return humidity;
+}
