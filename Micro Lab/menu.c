@@ -6,10 +6,10 @@
 bool inMenu;
 int menuLocation; //between 0 and 2
 
-//LCD setup
+// LCD setup
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
-// keypad setup
+// Keypad setup
 const LCDROWNUM = 4;
 const LCDCOLNUM = 3;
 char hexaKeys[LCDROWNUM][LCDCOLNUM] = {
@@ -20,6 +20,11 @@ char hexaKeys[LCDROWNUM][LCDCOLNUM] = {
 byte rowPins[LCDROWNUM] = {30, 32, 34, 36, 38};
 byte colPins[LCDCOLNUM] = {22, 24, 26, 28};
 Keypad keypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, LCDROWNUM, LCDCOLNUM);
+
+// Humidity setup 
+int humidityInputPin = 52; 
+
+
 
 void setup()
 {
@@ -71,18 +76,18 @@ void checkAndUpdateMenu()
         lcd.setCursor(0, 0);
         if (menuLocation == 1)
         {
-            lcd.print("Temperature")
+            lcd.print("Temperature");
         }
         else if (menuLocation == 2)
         {
-            lcd.print("Humidity")
+            lcd.print("Humidity");
         }
         else
         {
-            lcd.print("Time")
+            lcd.print("Time");
         }
         lcd.setCursor(0, 1);
-        lcd.print("Click *")
+        lcd.print("Click *");
     }
     
     else
@@ -90,22 +95,22 @@ void checkAndUpdateMenu()
         lcd.setCursor(0, 0);
         if (menuLocation == 1)
         {
-            lcd.print("Temperature is: ")
+            lcd.print("Temperature is: ");
         }
         else if (menuLocation == 2)
         {
-            lcd.print("Humidity is: ")
+            lcd.print("Humidity is: ");
         }
         else
         {
-            lcd.print("Hello")
+            lcd.print("Hello");
         }
         lcd.setCursor(0, 1);
-        lcd.print("For test")
+        lcd.print("For test");
     }
 }
 
 // int updateHumidity(){
 //     int humidity = digitalRead(humidityInputPin);
-//     return humidity
+//     return humidity;
 // }
