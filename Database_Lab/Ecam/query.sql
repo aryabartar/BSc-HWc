@@ -1,0 +1,7 @@
+-- INSERT INTO a5(c1, c2) VALUES (4,5);
+-- INSERT INTO a5(c1, c2) VALUES (4,6);
+-- INSERT INTO a5(c1, c2) VALUES (4,7);
+
+SELECT DISTINCT ON (c1) C1, c2
+FROM a5
+;
