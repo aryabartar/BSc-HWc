@@ -48,3 +48,39 @@
 --         Student VARCHAR(40), geography NUMERIC,History NUMERIC,Language NUMERIC,Maths NUMERIC,Music NUMERIC
 --     )
 -- ;
+
+-- SELECT * 
+-- FROM crosstab3( 
+--     $$ 
+--     select student, subject, result
+--      from evaluations
+--      order by 1,2 -- VIP *****
+--     $$
+--     )
+-- ;
+
+
+CREATE TABLE cth2(rowid text, rowdt timestamp, rowdt1 text, attribute text, val text);
+INSERT INTO cth2 VALUES('test1','01 March 2004', 't1','temperature','42');
+INSERT INTO cth2 VALUES('test1','01 March 2003', 't1','test_result','PASS');
+INSERT INTO cth2 VALUES('test1','01 March 2003', 't1','volts','2.6987');
+INSERT INTO cth2 VALUES('test2','02 March 2003', 't2','temperature','53');
+INSERT INTO cth2 VALUES('test2','02 March 2003', 't2','test_result','FAIL');
+INSERT INTO cth2 VALUES('test2','02 March 2003', 't2','test_startdate','01 March 2003');
+INSERT INTO cth2 VALUES('test2','02 March 2003', 't2','volts','3.1234');
+
+SELECT * FROM crosstab
+(
+  'SELECT rowid, rowdt,rowdt1, attribute, val FROM cth2 ORDER BY 1',
+  'SELECT DISTINCT attribute FROM cth ORDER BY 1'
+)
+AS
+(
+       rowid text,
+       rowdt timestamp,
+       rowdt1 text,
+       temperature int4,
+       test_result text,
+       test_startdate timestamp,
+       volts float8
+);
