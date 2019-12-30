@@ -1,12 +1,11 @@
--- CREATE TABLE a5(
---     c1  INT, 
---     c2  INT,
---     PRIMARY KEY (c1,c2)
--- )
--- ;
+CREATE TABLE a1(
+    c1  INT NOT NULL, 
+    c2  INT NOT NULL
+)
+;
 
--- CREATE TABLE bank(
---     name VARCHAR(128),
---     amount NUMERIC(10,2)
--- )
--- ;
+CREATE TABLE bank(
+    name VARCHAR(128),
+    amount NUMERIC(10,2)
+)
+;

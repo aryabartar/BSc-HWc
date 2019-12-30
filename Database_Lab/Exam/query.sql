@@ -46,3 +46,20 @@
 -- COMMIT;
 
 --------
+
+
+-- SELECT
+--    c1,
+--    COUNT (c1)
+-- FROM
+--    a5
+-- GROUP BY
+--    c1
+-- ;
+
+-- -- Use aggregate functions in HAVING clause
+-- -------
+
+-- SELECT (NOW() + INTERVAL '2 hours 20 minutes');
+
+---------

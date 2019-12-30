@@ -1,0 +1,2 @@
+-- INSERT INTO bank(name, amount) VALUES ('Arya', 10000);
+-- INSERT INTO bank(name, amount) VALUES ('MahSa' , 10000);
