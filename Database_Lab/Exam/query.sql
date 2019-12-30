@@ -63,3 +63,9 @@
 -- SELECT (NOW() + INTERVAL '2 hours 20 minutes');
 
 ---------
+
+
+SELECT LOCALTIME(2); -- 1 is float precision
+SELECT LOCALTIMESTAMP(2);
+
+---------

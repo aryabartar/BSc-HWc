@@ -1,0 +1,50 @@
+-- CREATE TABLE evaluations(
+--     student VARCHAR(60),
+--     subject VARCHAR(60),
+--     result  NUMERIC(3,1),
+--     day TIMESTAMP DEFAULT NOW()
+-- )
+-- ;
+
+-- INSERT INTO evaluations VALUES ('Arya', 'Music' , 7);
+-- INSERT INTO evaluations VALUES ('Arya', 'Maths' , 4);
+-- INSERT INTO evaluations VALUES ('Arya', 'History' , 9);
+-- INSERT INTO evaluations VALUES ('Arya', 'Language' , 7);
+-- INSERT INTO evaluations VALUES ('Arya', 'Geography' , 9);
+-- INSERT INTO evaluations VALUES ('MahSa', 'Music' , 2);
+-- INSERT INTO evaluations VALUES ('MahSa', 'Maths' , 10);
+-- INSERT INTO evaluations VALUES ('MahSa', 'History' , 7);
+-- INSERT INTO evaluations VALUES ('MahSa', 'Language' , 4);
+-- INSERT INTO evaluations VALUES ('MahSa', 'Geography' , 10);
+
+-- SELECT * 
+-- FROM crosstab( 
+--     $$ select student, subject, result
+--      from evaluations
+--      WHERE student = 'Arya'
+--      order by 1,2
+--      $$
+--     )
+--     AS final_result(
+--         Student VARCHAR(40), geography NUMERIC,History NUMERIC,Language NUMERIC,Maths NUMERIC,Music NUMERIC
+--     )
+-- ;
+
+-- SELECT * 
+-- FROM crosstab( 
+--     $$ 
+--     select student, subject, result
+--      from evaluations
+--      order by 1,2 -- VIP *****
+--     $$
+--     ,
+--     $$
+--     select DISTINCT subject
+--     from evaluations
+--     order by 1
+--     $$
+--     )
+--     AS final_result(
+--         Student VARCHAR(40), geography NUMERIC,History NUMERIC,Language NUMERIC,Maths NUMERIC,Music NUMERIC
+--     )
+-- ;
